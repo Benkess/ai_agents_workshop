@@ -1,0 +1,6 @@
+model,device,quantization,wall_clock_seconds,cpu_time_seconds,gpu_time_seconds,file
+meta-llama/Llama-3.2-1B-Instruct,cpu,4,47.288663,42.390625,0.0,llama_3.2_1b_mmlu_results_4bit_20260115_192848.json
+meta-llama/Llama-3.2-1B-Instruct,cuda,4,18.6522,17.359375,18.651017578125,llama_3.2_1b_mmlu_results_4bit_20260115_193841.json
+meta-llama/Llama-3.2-1B-Instruct,cuda,8,31.84831,30.46875,31.84686328125,llama_3.2_1b_mmlu_results_8bit_20260115_193756.json
+meta-llama/Llama-3.2-1B-Instruct,cpu,full,328.924944,2757.875,0.0,llama_3.2_1b_mmlu_results_full_20260115_192102.json
+meta-llama/Llama-3.2-1B-Instruct,cuda,full,12.766592,11.625,12.7663037109375,llama_3.2_1b_mmlu_results_full_20260115_193706.json

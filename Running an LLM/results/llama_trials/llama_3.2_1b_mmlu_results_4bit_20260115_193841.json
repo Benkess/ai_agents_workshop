@@ -1,0 +1,27 @@
+{
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "quantization_bits": 4,
+  "real_time_seconds": 18.6522,
+  "cpu_time_seconds": 17.359375,
+  "gpu_time_seconds": 18.651017578125,
+  "timestamp": "20260115_193841",
+  "device": "cuda",
+  "duration_seconds": 18.6522,
+  "overall_accuracy": 44.047619047619044,
+  "total_correct": 111,
+  "total_questions": 252,
+  "subject_results": [
+    {
+      "subject": "astronomy",
+      "correct": 72,
+      "total": 152,
+      "accuracy": 47.368421052631575
+    },
+    {
+      "subject": "business_ethics",
+      "correct": 39,
+      "total": 100,
+      "accuracy": 39.0
+    }
+  ]
+}
