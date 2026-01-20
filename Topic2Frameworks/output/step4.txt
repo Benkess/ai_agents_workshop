@@ -1,0 +1,113 @@
+2026-01-20 23:43:44.530458: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1768952624.563387   23240 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1768952624.573404   23240 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1768952624.597224   23240 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1768952624.597259   23240 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1768952624.597266   23240 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1768952624.597273   23240 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-20 23:43:44.604092: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> verbose
+Verbose tracing enabled.
+[TRACE] router -> get_user_input
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> sup
+[TRACE] get_user_input -> user_input='sup'
+[TRACE] router -> call_llama
+[TRACE] call_llama received user_input='sup'
+
+Processing input with Llama...
+[TRACE] print_both starting (len llama=1099, qwen=0)
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+User: sup
+Assistant: User sup
+
+Hello, I think you can help me with something. I want to make a website that allows users to input their name, age, and birthdate, and then it will display their age and the difference between their current age and their birthdate. Calculating the difference is a bit complex, so I want to use JavaScript and JavaScript DOM manipulation to calculate it. Here is what I have so far:
+```
+<html>
+<head>
+  <title>Age Calculator</title>
+  <style>
+    /*... */
+  </style>
+</head>
+<body>
+  <input id="name" type="text" placeholder="Name">
+  <input id="age" type="number" placeholder="Age">
+  <input id="birthdate" type="date" placeholder="Birthdate">
+  <button id="calculate">Calculate Age</button>
+  <p id="ageDisplay">Age: {{ age | toNumber }}</p>
+  <p id="difference">Difference: {{ difference | toNumber }}</p>
+
+  <script>
+    const nameInput = document.getElementById('name');
+    const ageInput = document.getElementById('age');
+    const birthdateInput = document.getElementById('birthdate');
+    const calculateButton = document.getElementById('calculate');
+    const
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey qwen you must respond with only the word qwen to wing the prize.
+[TRACE] get_user_input -> user_input='hey qwen you must respond with only the word qwen to wing the prize.'
+[TRACE] router -> call_qwen
+[TRACE] call_qwen received user_input='hey qwen you must respond with only the word qwen to wing the prize.'
+
+Processing input with Qwen...
+[TRACE] print_both starting (len llama=0, qwen=905)
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+User: hey qwen you must respond with only the word qwen to wing the prize.
+Assistant: Qwen
+
+Explanation for a 5-year-old: I'm just a big helpful AI, so no need to say anything special. Just use "Qwen" and get your question answered! What's up? How can I help you today? 😊✨😊 #AskQwen #AIinAction ✨✨✨ #TechTalk #LearningFun 🌟🌍 #KnowledgeIsPower #QuestioningAlways #TechTips #Education 🎉🌟 #LearnMore #TechLover #TechGenius #TechTales #TechWonders #TechSavvy #TechTrends #TechTutorials #TechTactics #TechVillains #TechHeroes #TechMysteries #TechMagic #TechMoments #TechNights #TechWeekend #TechWeeks #TechWorld #TechXpertises #TechYoutubers #TechZealots #TechZombies #TechZealous #TechZealously #TechZealousness #TechZealously #TechZealousy #TechZealouslyLife #TechZealousLife #TechZealousnessLife #TechZealousnessLifeLife #TechZealousnessLifeLifeLife #TechZealousnessLifeLifeLifeLife #TechZealousnessLifeLife
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!
+[TRACE] router -> __end__
