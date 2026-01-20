@@ -65,6 +65,8 @@ class AgentState(TypedDict):
     user_input: str
     should_exit: bool
     llm_response: str
+    verbose: bool
+    mode_changed: bool
 
 def create_llm():
     """
@@ -156,17 +158,42 @@ def create_graph(llm):
         user_input = input()
 
         # Check if user wants to exit
-        if user_input.lower() in ['quit', 'exit', 'q']:
+        lc = user_input.lower()
+        if lc in ['quit', 'exit', 'q']:
             print("Goodbye!")
             return {
                 "user_input": user_input,
-                "should_exit": True        # Signal to exit the graph
+                "should_exit": True,        # Signal to exit the graph
+                "mode_changed": False
             }
 
-        # Any input (including empty) - continue to LLM
+        # Handle mode toggles without calling the LLM
+        if lc == 'verbose':
+            print("Verbose tracing enabled.")
+            return {
+                "user_input": user_input,
+                "should_exit": False,
+                "verbose": True,
+                "mode_changed": True
+            }
+
+        if lc == 'quiet':
+            print("Quiet mode enabled (tracing disabled).")
+            return {
+                "user_input": user_input,
+                "should_exit": False,
+                "verbose": False,
+                "mode_changed": True
+            }
+
+        # Default: Any other input (including empty) - continue to LLM
+        if state.get("verbose", False):
+            print(f"[TRACE] get_user_input -> user_input='{user_input}'")
+
         return {
             "user_input": user_input,
-            "should_exit": False           # Signal to proceed to LLM
+            "should_exit": False,
+            "mode_changed": False
         }
 
     # =========================================================================
@@ -189,6 +216,9 @@ def create_graph(llm):
         """
         user_input = state["user_input"]
 
+        if state.get("verbose", False):
+            print(f"[TRACE] call_llm received user_input='{user_input}'")
+
         # Format the prompt for the instruction-tuned model
         prompt = f"User: {user_input}\nAssistant:"
 
@@ -196,6 +226,9 @@ def create_graph(llm):
 
         # Invoke the LLM and get the response
         response = llm.invoke(prompt)
+
+        if state.get("verbose", False):
+            print("[TRACE] call_llm invoked LLM and received response")
 
         # Return only the field we're updating
         return {"llm_response": response}
@@ -215,6 +248,9 @@ def create_graph(llm):
         Updates state:
             - Nothing (returns empty dict, state unchanged)
         """
+        if state.get("verbose", False):
+            print(f"[TRACE] print_response about to print llm_response (len={len(str(state.get('llm_response','')))} )")
+
         print("\n" + "-" * 50)
         print("LLM Response:")
         print("-" * 50)
@@ -244,10 +280,20 @@ def create_graph(llm):
         """
         # Check if user wants to exit
         if state.get("should_exit", False):
-            return END
+            nxt = END
+
+        # If the user toggled verbose/quiet, don't call the LLM; loop back
+        elif state.get("mode_changed", False):
+            nxt = "get_user_input"
 
         # Default: Proceed to LLM (even for empty input)
-        return "call_llm"
+        else:
+            nxt = "call_llm"
+
+        if state.get("verbose", False):
+            print(f"[TRACE] router -> {nxt}")
+
+        return nxt
 
     # =========================================================================
     # GRAPH CONSTRUCTION
@@ -271,6 +317,7 @@ def create_graph(llm):
         route_after_input,      # Routing function that examines state
         {
             "call_llm": "call_llm",  # Any input -> proceed to LLM
+            "get_user_input": "get_user_input", # Mode change -> loop back to get_user_input
             END: END                  # Quit command -> terminate graph
         }
     )
@@ -348,7 +395,9 @@ def main():
     initial_state: AgentState = {
         "user_input": "",
         "should_exit": False,
-        "llm_response": ""
+        "llm_response": "",
+        "verbose": False,
+        "mode_changed": False
     }
 
     # Single invocation - the graph loops internally via print_response -> get_user_input

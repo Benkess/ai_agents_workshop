@@ -41,6 +41,11 @@ Install the correct PyTorch version:
 ```bash
 pip3 install torch torchvision
 #pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+# Install PyTorch first (CUDA 13.0)
+# python -m pip install torch torchvision `
+#   --index-url https://download.pytorch.org/whl/cu130 `
+#   --extra-index-url https://pypi.org/simple `
+#   --timeout 120
 ```
 > **Note:** 
 > For specific PyTorch installs see [get-started](https://pytorch.org/get-started/locally/).
