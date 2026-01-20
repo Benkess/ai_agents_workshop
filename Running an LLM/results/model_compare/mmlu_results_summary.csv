@@ -1,0 +1,7 @@
+model,device,quantization,wall_clock_seconds,cpu_time_seconds,gpu_time_seconds,file
+meta-llama/Llama-3.2-1B-Instruct,cuda,full,607.826565,488.3365144730001,607.8305,llama_3.2_1b_mmlu_results_full_20260116_000728.json
+Qwen/Qwen2.5-0.5B,cuda,full,617.224114,573.545525202,617.2289375,llama_3.2_1b_mmlu_results_full_20260116_002658.json
+HuggingFaceTB/SmolLM2-135M-Instruct,cuda,full,723.503396,677.374591928,723.5088125,llama_3.2_1b_mmlu_results_full_20260116_004202.json
+allenai/Olmo-3-7B-Instruct,cuda,full,7270.587709,7162.936070966,7270.6515,llama_3.2_1b_mmlu_results_full_20260116_030218.json
+mistralai/Mistral-7B-Instruct-v0.3,cuda,full,896.04945,608.617769184,896.045625,llama_3.2_1b_mmlu_results_full_20260118_172243.json
+Qwen/Qwen2.5-14B-Instruct,cuda,full,1000.705823,891.8444725270001,1000.7006875,llama_3.2_1b_mmlu_results_full_20260118_174936.json

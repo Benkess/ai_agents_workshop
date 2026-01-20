@@ -1,0 +1,357 @@
+{
+  "model": "Qwen/Qwen2.5-14B-Instruct",
+  "quantization_bits": null,
+  "real_time_seconds": 1000.705823,
+  "cpu_time_seconds": 891.8444725270001,
+  "gpu_time_seconds": 1000.7006875,
+  "timestamp": "20260118_174936",
+  "device": "cuda",
+  "duration_seconds": 1000.705823,
+  "overall_accuracy": 74.49081327446233,
+  "total_correct": 10460,
+  "total_questions": 14042,
+  "subject_results": [
+    {
+      "subject": "abstract_algebra",
+      "correct": 59,
+      "total": 100,
+      "accuracy": 59.0
+    },
+    {
+      "subject": "anatomy",
+      "correct": 68,
+      "total": 135,
+      "accuracy": 50.37037037037037
+    },
+    {
+      "subject": "astronomy",
+      "correct": 131,
+      "total": 152,
+      "accuracy": 86.18421052631578
+    },
+    {
+      "subject": "business_ethics",
+      "correct": 77,
+      "total": 100,
+      "accuracy": 77.0
+    },
+    {
+      "subject": "clinical_knowledge",
+      "correct": 167,
+      "total": 265,
+      "accuracy": 63.0188679245283
+    },
+    {
+      "subject": "college_biology",
+      "correct": 122,
+      "total": 144,
+      "accuracy": 84.72222222222221
+    },
+    {
+      "subject": "college_chemistry",
+      "correct": 53,
+      "total": 100,
+      "accuracy": 53.0
+    },
+    {
+      "subject": "college_computer_science",
+      "correct": 70,
+      "total": 100,
+      "accuracy": 70.0
+    },
+    {
+      "subject": "college_mathematics",
+      "correct": 53,
+      "total": 100,
+      "accuracy": 53.0
+    },
+    {
+      "subject": "college_medicine",
+      "correct": 119,
+      "total": 173,
+      "accuracy": 68.78612716763006
+    },
+    {
+      "subject": "college_physics",
+      "correct": 60,
+      "total": 102,
+      "accuracy": 58.82352941176471
+    },
+    {
+      "subject": "computer_security",
+      "correct": 73,
+      "total": 100,
+      "accuracy": 73.0
+    },
+    {
+      "subject": "conceptual_physics",
+      "correct": 175,
+      "total": 235,
+      "accuracy": 74.46808510638297
+    },
+    {
+      "subject": "econometrics",
+      "correct": 81,
+      "total": 114,
+      "accuracy": 71.05263157894737
+    },
+    {
+      "subject": "electrical_engineering",
+      "correct": 52,
+      "total": 145,
+      "accuracy": 35.86206896551724
+    },
+    {
+      "subject": "elementary_mathematics",
+      "correct": 272,
+      "total": 378,
+      "accuracy": 71.95767195767195
+    },
+    {
+      "subject": "formal_logic",
+      "correct": 81,
+      "total": 126,
+      "accuracy": 64.28571428571429
+    },
+    {
+      "subject": "global_facts",
+      "correct": 57,
+      "total": 100,
+      "accuracy": 56.99999999999999
+    },
+    {
+      "subject": "high_school_biology",
+      "correct": 273,
+      "total": 310,
+      "accuracy": 88.06451612903226
+    },
+    {
+      "subject": "high_school_chemistry",
+      "correct": 136,
+      "total": 203,
+      "accuracy": 66.99507389162561
+    },
+    {
+      "subject": "high_school_computer_science",
+      "correct": 90,
+      "total": 100,
+      "accuracy": 90.0
+    },
+    {
+      "subject": "high_school_european_history",
+      "correct": 140,
+      "total": 165,
+      "accuracy": 84.84848484848484
+    },
+    {
+      "subject": "high_school_geography",
+      "correct": 177,
+      "total": 198,
+      "accuracy": 89.39393939393939
+    },
+    {
+      "subject": "high_school_government_and_politics",
+      "correct": 184,
+      "total": 193,
+      "accuracy": 95.33678756476684
+    },
+    {
+      "subject": "high_school_macroeconomics",
+      "correct": 328,
+      "total": 390,
+      "accuracy": 84.1025641025641
+    },
+    {
+      "subject": "high_school_mathematics",
+      "correct": 142,
+      "total": 270,
+      "accuracy": 52.59259259259259
+    },
+    {
+      "subject": "high_school_microeconomics",
+      "correct": 217,
+      "total": 238,
+      "accuracy": 91.17647058823529
+    },
+    {
+      "subject": "high_school_physics",
+      "correct": 103,
+      "total": 151,
+      "accuracy": 68.21192052980133
+    },
+    {
+      "subject": "high_school_psychology",
+      "correct": 489,
+      "total": 545,
+      "accuracy": 89.72477064220183
+    },
+    {
+      "subject": "high_school_statistics",
+      "correct": 168,
+      "total": 216,
+      "accuracy": 77.77777777777779
+    },
+    {
+      "subject": "high_school_us_history",
+      "correct": 185,
+      "total": 204,
+      "accuracy": 90.68627450980392
+    },
+    {
+      "subject": "high_school_world_history",
+      "correct": 216,
+      "total": 237,
+      "accuracy": 91.13924050632912
+    },
+    {
+      "subject": "human_aging",
+      "correct": 163,
+      "total": 223,
+      "accuracy": 73.09417040358744
+    },
+    {
+      "subject": "human_sexuality",
+      "correct": 102,
+      "total": 131,
+      "accuracy": 77.86259541984732
+    },
+    {
+      "subject": "international_law",
+      "correct": 102,
+      "total": 121,
+      "accuracy": 84.29752066115702
+    },
+    {
+      "subject": "jurisprudence",
+      "correct": 85,
+      "total": 108,
+      "accuracy": 78.70370370370371
+    },
+    {
+      "subject": "logical_fallacies",
+      "correct": 141,
+      "total": 163,
+      "accuracy": 86.50306748466258
+    },
+    {
+      "subject": "machine_learning",
+      "correct": 68,
+      "total": 112,
+      "accuracy": 60.71428571428571
+    },
+    {
+      "subject": "management",
+      "correct": 90,
+      "total": 103,
+      "accuracy": 87.37864077669903
+    },
+    {
+      "subject": "marketing",
+      "correct": 216,
+      "total": 234,
+      "accuracy": 92.3076923076923
+    },
+    {
+      "subject": "medical_genetics",
+      "correct": 68,
+      "total": 100,
+      "accuracy": 68.0
+    },
+    {
+      "subject": "miscellaneous",
+      "correct": 693,
+      "total": 783,
+      "accuracy": 88.50574712643679
+    },
+    {
+      "subject": "moral_disputes",
+      "correct": 279,
+      "total": 346,
+      "accuracy": 80.63583815028902
+    },
+    {
+      "subject": "moral_scenarios",
+      "correct": 571,
+      "total": 895,
+      "accuracy": 63.79888268156425
+    },
+    {
+      "subject": "nutrition",
+      "correct": 218,
+      "total": 306,
+      "accuracy": 71.24183006535948
+    },
+    {
+      "subject": "philosophy",
+      "correct": 253,
+      "total": 311,
+      "accuracy": 81.35048231511254
+    },
+    {
+      "subject": "prehistory",
+      "correct": 280,
+      "total": 324,
+      "accuracy": 86.41975308641975
+    },
+    {
+      "subject": "professional_accounting",
+      "correct": 179,
+      "total": 282,
+      "accuracy": 63.47517730496454
+    },
+    {
+      "subject": "professional_law",
+      "correct": 859,
+      "total": 1534,
+      "accuracy": 55.997392438070406
+    },
+    {
+      "subject": "professional_medicine",
+      "correct": 226,
+      "total": 272,
+      "accuracy": 83.08823529411765
+    },
+    {
+      "subject": "professional_psychology",
+      "correct": 464,
+      "total": 612,
+      "accuracy": 75.81699346405229
+    },
+    {
+      "subject": "public_relations",
+      "correct": 86,
+      "total": 110,
+      "accuracy": 78.18181818181819
+    },
+    {
+      "subject": "security_studies",
+      "correct": 203,
+      "total": 245,
+      "accuracy": 82.85714285714286
+    },
+    {
+      "subject": "sociology",
+      "correct": 180,
+      "total": 201,
+      "accuracy": 89.55223880597015
+    },
+    {
+      "subject": "us_foreign_policy",
+      "correct": 89,
+      "total": 100,
+      "accuracy": 89.0
+    },
+    {
+      "subject": "virology",
+      "correct": 78,
+      "total": 166,
+      "accuracy": 46.98795180722892
+    },
+    {
+      "subject": "world_religions",
+      "correct": 149,
+      "total": 171,
+      "accuracy": 87.13450292397661
+    }
+  ]
+}
