@@ -66,7 +66,7 @@ class AgentState(TypedDict):
     should_exit: bool
     llm_response: str
     verbose: bool
-    mode_changed: bool
+    skip_input: bool
 
 def create_llm():
     """
@@ -163,8 +163,17 @@ def create_graph(llm):
             print("Goodbye!")
             return {
                 "user_input": user_input,
-                "should_exit": True,        # Signal to exit the graph
-                "mode_changed": False
+                "should_exit": True        # Signal to exit the graph
+            }
+        
+        # Skip empty inputs
+        if lc == '':
+            if state.get("verbose", False):
+                print("[TRACE] get_user_input received empty input")
+            return {
+                "user_input": user_input,
+                "should_exit": False,
+                "skip_input": True
             }
 
         # Handle mode toggles without calling the LLM
@@ -174,7 +183,7 @@ def create_graph(llm):
                 "user_input": user_input,
                 "should_exit": False,
                 "verbose": True,
-                "mode_changed": True
+                "skip_input": True
             }
 
         if lc == 'quiet':
@@ -183,7 +192,7 @@ def create_graph(llm):
                 "user_input": user_input,
                 "should_exit": False,
                 "verbose": False,
-                "mode_changed": True
+                "skip_input": True
             }
 
         # Default: Any other input (including empty) - continue to LLM
@@ -193,7 +202,7 @@ def create_graph(llm):
         return {
             "user_input": user_input,
             "should_exit": False,
-            "mode_changed": False
+            "skip_input": False
         }
 
     # =========================================================================
@@ -282,8 +291,8 @@ def create_graph(llm):
         if state.get("should_exit", False):
             nxt = END
 
-        # If the user toggled verbose/quiet, don't call the LLM; loop back
-        elif state.get("mode_changed", False):
+        # Don't call the LLM; loop back
+        elif state.get("skip_input", False):
             nxt = "get_user_input"
 
         # Default: Proceed to LLM (even for empty input)
@@ -317,7 +326,7 @@ def create_graph(llm):
         route_after_input,      # Routing function that examines state
         {
             "call_llm": "call_llm",  # Any input -> proceed to LLM
-            "get_user_input": "get_user_input", # Mode change -> loop back to get_user_input
+            "get_user_input": "get_user_input", # skip_input -> loop back to get_user_input
             END: END                  # Quit command -> terminate graph
         }
     )
@@ -397,7 +406,7 @@ def main():
         "should_exit": False,
         "llm_response": "",
         "verbose": False,
-        "mode_changed": False
+        "skip_input": False
     }
 
     # Single invocation - the graph loops internally via print_response -> get_user_input
