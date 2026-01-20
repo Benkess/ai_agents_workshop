@@ -158,7 +158,7 @@ def create_graph(llm):
         user_input = input()
 
         # Check if user wants to exit
-        lc = user_input.lower()
+        lc = user_input.strip().lower()
         if lc in ['quit', 'exit', 'q']:
             print("Goodbye!")
             return {
