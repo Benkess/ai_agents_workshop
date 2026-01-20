@@ -44,6 +44,7 @@ pip3 install torch torchvision
 ```
 > **Note:** 
 > For specific PyTorch installs see [get-started](https://pytorch.org/get-started/locally/).
+> See your CUDA version with `nvidia-smi`.
 
 When you are done working in the virtual environment, you can deactivate it.
 ```bash
