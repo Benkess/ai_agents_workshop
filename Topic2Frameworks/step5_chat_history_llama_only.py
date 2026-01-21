@@ -283,9 +283,14 @@ def create_graph(llm, llm_tokenizer, qwen_llm):
 
         print("\nProcessing input with Llama...")
         try:
-            resp = llm.invoke(prompt)
+            resp = str(llm.invoke(prompt))
         except Exception as e:
             resp = f"<llama error: {e}>"
+            raise e
+        
+        # If the model echoed the prompt, strip it.
+        if resp.startswith(prompt):
+            resp = resp[len(prompt):].lstrip()
 
         return {"llama_response": resp}
 
