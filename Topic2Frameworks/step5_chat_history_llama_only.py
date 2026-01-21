@@ -16,7 +16,11 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain_huggingface import HuggingFacePipeline
 from langgraph.graph import StateGraph, START, END
-from typing import TypedDict
+# from typing import TypedDict
+from typing import Annotated
+from typing_extensions import TypedDict
+from langchain.messages import AnyMessage, HumanMessage, AIMessage, SystemMessage
+from langgraph.graph.message import add_messages
 
 # Determine the best available device for inference
 # Priority: CUDA (NVIDIA GPU) > MPS (Apple Silicon) > CPU
@@ -68,6 +72,7 @@ class AgentState(TypedDict):
     skip_input: bool
     llama_response: str
     qwen_response: str
+    messages: Annotated[list[AnyMessage], add_messages]
 
 def create_llm():
     """
@@ -114,7 +119,7 @@ def create_llm():
     llm = HuggingFacePipeline(pipeline=pipe)
 
     print("Model loaded successfully!")
-    return llm
+    return llm, tokenizer 
 
 
 def create_qwen_llm():
@@ -156,7 +161,21 @@ def create_qwen_llm():
     print("Qwen model loaded successfully!")
     return llm
 
-def create_graph(llm, qwen_llm):
+def messages_to_chat_dicts(messages: list[AnyMessage]) -> list[dict]:
+    chat = []
+    for m in messages:
+        if isinstance(m, SystemMessage):
+            chat.append({"role": "system", "content": m.content})
+        elif isinstance(m, HumanMessage):
+            chat.append({"role": "user", "content": m.content})
+        elif isinstance(m, AIMessage):
+            chat.append({"role": "assistant", "content": m.content})
+        else:
+            raise ValueError(f"Unknown message type: {type(m)}")
+    return chat
+
+
+def create_graph(llm, llm_tokenizer, qwen_llm):
     """
     Create the LangGraph state graph with three separate nodes:
     1. get_user_input: Reads input from stdin
@@ -243,7 +262,8 @@ def create_graph(llm, qwen_llm):
         return {
             "user_input": user_input,
             "should_exit": False,
-            "skip_input": False
+            "skip_input": False,
+            "messages": [HumanMessage(content=user_input)]
         }
 
     # Note: parallel fanout removed — routing now sends input to only one model
@@ -252,16 +272,23 @@ def create_graph(llm, qwen_llm):
     # NODE: call_llama
     # =========================================================================
     def call_llama(state: AgentState) -> dict:
-        user_input = state["user_input"]
         if state.get("verbose", False):
-            print(f"[TRACE] call_llama received user_input='{user_input}'")
-        prompt = f"User: {user_input}\nAssistant:"
+            print(f"[TRACE] call_llama received user_input={state['user_input']!r}")
+
+        chat = messages_to_chat_dicts(state["messages"])
+        prompt = llm_tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
+
+        if state.get("verbose", False):
+            print(f"[TRACE] call_llama prompt=\n{prompt}")
+
         print("\nProcessing input with Llama...")
         try:
             resp = llm.invoke(prompt)
         except Exception as e:
             resp = f"<llama error: {e}>"
+
         return {"llama_response": resp}
+
 
     # =========================================================================
     # NODE: call_qwen
@@ -300,15 +327,23 @@ def create_graph(llm, qwen_llm):
         print("Model Output:")
         print("=" * 50)
 
+        resp = ""
+
         if has_llama:
             print("\n-- Llama Response --\n")
-            print(state.get("llama_response", "<no response>"))
+            resp = state.get("llama_response", "<no response>")
+            print(resp)
 
         if has_qwen:
             print("\n-- Qwen Response --\n")
-            print(state.get("qwen_response", "<no response>"))
+            resp = state.get("qwen_response", "<no response>")
+            print(resp)
 
-        return {"llama_response": "", "qwen_response": ""}
+        return {
+            "llama_response": "", 
+            "qwen_response": "",
+            "messages": [AIMessage(content=str(resp))]
+        }
 
     # (old single-LLM print node removed; use print_both as the join/printer)
 
@@ -337,7 +372,8 @@ def create_graph(llm, qwen_llm):
         else:
             ui = state.get("user_input", "") or ""
             if ui.strip().lower().startswith("hey qwen"):
-                nxt = "call_qwen"
+                # nxt = "call_qwen"
+                nxt = "call_llama" # TODO: Qwen temporarily disabled for testing, undo this line later
             else:
                 nxt = "call_llama"
 
@@ -427,13 +463,13 @@ def main():
     print()
 
     # Step 1: Create and configure the LLM
-    llm = create_llm()
+    llm, tokenizer = create_llm()
     # Also create the Qwen model
     qwen_llm = create_qwen_llm()
 
     # Step 2: Build the LangGraph with both LLMs
     print("\nCreating LangGraph...")
-    graph = create_graph(llm, qwen_llm)
+    graph = create_graph(llm, tokenizer, qwen_llm)
     print("Graph created successfully!")
 
     # Step 3: Save a visual representation of the graph before execution
@@ -453,7 +489,8 @@ def main():
         "llama_response": "",
         "qwen_response": "",
         "verbose": False,
-        "skip_input": False
+        "skip_input": False,
+        "messages": [SystemMessage(content="You are a helpful assistant. Only respond to user queries as assistant. Do not answer as user.")],
     }
 
     # Single invocation - the graph loops internally via print_response -> get_user_input
