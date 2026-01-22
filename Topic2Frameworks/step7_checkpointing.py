@@ -21,6 +21,7 @@ from typing import Annotated
 from typing_extensions import TypedDict
 from langchain.messages import AnyMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph.message import add_messages
+from langgraph.checkpoint.sqlite import SqliteSaver
 
 # Determine the best available device for inference
 # Priority: CUDA (NVIDIA GPU) > MPS (Apple Silicon) > CPU
@@ -265,7 +266,8 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
             print("Goodbye!")
             return {
                 "user_input": user_input,
-                "should_exit": True        # Signal to exit the graph
+                "should_exit": True,        # Signal to exit the graph
+                "skip_input": False
             }
         
         # Skip empty inputs
@@ -491,8 +493,11 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
     # 5. print_both -> get_user_input (loop back for next input)
     graph_builder.add_edge("print_both", "get_user_input")
 
+    # Checkpointing setup
+    checkpointer = SqliteSaver.from_conn_string("topic2_checkpoints.db")
+
     # Compile the graph into an executable form
-    graph = graph_builder.compile()
+    graph = graph_builder.compile(checkpointer=checkpointer)
 
     return graph
 
@@ -569,7 +574,25 @@ def main():
 
     # Single invocation - the graph loops internally via print_response -> get_user_input
     # The graph only exits when route_after_input returns END (user typed quit/exit/q)
-    graph.invoke(initial_state)
+    thread_id = "chat-1"
+    config = {"configurable": {"thread_id": thread_id}}
+
+    state = graph.get_state(config)
+
+    if state.next:
+        print("\n🔄 Resuming from checkpoint...")
+        print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
+        print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
+        print("Next node(s):", state.next)
+        # if state.get("verbose", False):
+        #     print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
+        #     print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
+
+        graph.invoke(None, config=config)
+    else:
+        print("\n▶️ Starting new chat...")
+        graph.invoke(initial_state, config=config)
+
 
 # Entry point - only run main() if this script is executed directly
 if __name__ == "__main__":
