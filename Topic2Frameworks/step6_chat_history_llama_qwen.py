@@ -113,8 +113,18 @@ class ThreeWayChatPromptTemplate:
     user_prompt_prefix = "Human: "
     llama_response_prefix = "Llama: "
     qwen_response_prefix = "Qwen: "
-    llama_system_prompt = f"You are a helpful assistant. You are conversing with a user and another AI named Qwen. Both the user's and Qwen's messages will come from the user role and be prefixed with their names. User messages will be prefixed with '{user_prompt_prefix}'. Qwen messages will be prefixed with '{qwen_response_prefix}'. Answer as Llama only. Do not start your reply with '{llama_response_prefix}'; the wrapper will add names."
+    llama_system_prompt = f"You are a helpful assistant named llama. You are conversing with a user and another AI. Answer only as an AI named Llama. The wrapper will automatically prefix your message with '{llama_response_prefix}' after you reply."
     qwen_system_prompt = f"You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with '{qwen_response_prefix}'; the wrapper will add names."
+
+    def modify_llama_response(response: str) -> str:
+        if response.startswith(ThreeWayChatPromptTemplate.llama_response_prefix):
+            return response
+        return f"{ThreeWayChatPromptTemplate.llama_response_prefix}{response}"
+    
+    def modify_qwen_response(response: str) -> str:
+        if response.startswith(ThreeWayChatPromptTemplate.qwen_response_prefix):
+            return response
+        return f"{ThreeWayChatPromptTemplate.qwen_response_prefix}{response}"
 
 def create_llm():
     """
@@ -395,7 +405,7 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
             print(resp)
 
             # Modify the response to add the prefix
-            modified_resp = f"{ThreeWayChatPromptTemplate.llama_response_prefix}{resp}"
+            modified_resp = ThreeWayChatPromptTemplate.modify_llama_response(resp)
             return {
                 "llama_response": "", 
                 "qwen_response": "",
@@ -408,7 +418,7 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
             print(resp)
 
             # Modify the response to add the prefix
-            modified_resp = f"{ThreeWayChatPromptTemplate.qwen_response_prefix}{resp}"
+            modified_resp = ThreeWayChatPromptTemplate.modify_qwen_response(resp)
             return {
                 "llama_response": "", 
                 "qwen_response": "",
