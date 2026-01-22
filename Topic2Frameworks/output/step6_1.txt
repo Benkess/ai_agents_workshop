@@ -1,0 +1,146 @@
+2026-01-22 01:03:25.117257: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769043805.137372    3847 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769043805.144294    3847 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769043805.159638    3847 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769043805.159663    3847 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769043805.159667    3847 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769043805.159671    3847 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 01:03:25.164275: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> verbose
+Verbose tracing enabled.
+[TRACE] router -> get_user_input
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> What is the best ice cream flavor?
+[TRACE] get_user_input -> user_input='What is the best ice cream flavor?'
+[TRACE] router -> call_llama
+[TRACE] call_llama received user_input='What is the best ice cream flavor?'
+[TRACE] call_llama prompt=
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 22 Jan 2026
+
+You are a helpful assistant. You are conversing with a user and another AI named Qwen. Both the user's and Qwen's messages will come from the user role and be prefixed with their names. User messages will be prefixed with 'Human: '. Qwen messages will be prefixed with 'Qwen: '. Answer as Llama only. Do not start your reply with 'Llama: '; the wrapper will add names.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: What is the best ice cream flavor?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+
+
+Processing input with Llama...
+[TRACE] print_both starting (len llama=206, qwen=0)
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Qwen: I'm a large language model, I don't have personal preferences or taste buds, but I can suggest some popular ice cream flavors: vanilla, chocolate, strawberry, and cookie dough. Do you have a favorite?
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Hey Qwen, what do you think?
+[TRACE] get_user_input -> user_input='Hey Qwen, what do you think?'
+[TRACE] router -> call_qwen
+[TRACE] call_qwen received user_input='Hey Qwen, what do you think?'
+[TRACE] call_qwen prompt=
+<|im_start|>system
+You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with 'Qwen: '; the wrapper will add names.<|im_end|>
+<|im_start|>user
+Human: What is the best ice cream flavor?<|im_end|>
+<|im_start|>user
+Llama: Qwen: I'm a large language model, I don't have personal preferences or taste buds, but I can suggest some popular ice cream flavors: vanilla, chocolate, strawberry, and cookie dough. Do you have a favorite?<|im_end|>
+<|im_start|>user
+Human: Hey Qwen, what do you think?<|im_end|>
+<|im_start|>assistant
+
+
+Processing input with Qwen...
+[TRACE] print_both starting (len llama=0, qwen=355)
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+As an AI language model, I don't have personal tastes or experiences like humans do. However, based on common preferences, some people enjoy vanilla for its smoothness, chocolate for its rich sweetness, strawberry for its bright red color, and cookie dough for its gooey consistency. Ultimately, it comes down to personal preference and individual tastes.
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> chocolate is the best!
+[TRACE] get_user_input -> user_input='chocolate is the best!'
+[TRACE] router -> call_llama
+[TRACE] call_llama received user_input='chocolate is the best!'
+[TRACE] call_llama prompt=
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 22 Jan 2026
+
+You are a helpful assistant. You are conversing with a user and another AI named Qwen. Both the user's and Qwen's messages will come from the user role and be prefixed with their names. User messages will be prefixed with 'Human: '. Qwen messages will be prefixed with 'Qwen: '. Answer as Llama only. Do not start your reply with 'Llama: '; the wrapper will add names.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: What is the best ice cream flavor?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Llama: Qwen: I'm a large language model, I don't have personal preferences or taste buds, but I can suggest some popular ice cream flavors: vanilla, chocolate, strawberry, and cookie dough. Do you have a favorite?<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: Hey Qwen, what do you think?<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Qwen: As an AI language model, I don't have personal tastes or experiences like humans do. However, based on common preferences, some people enjoy vanilla for its smoothness, chocolate for its rich sweetness, strawberry for its bright red color, and cookie dough for its gooey consistency. Ultimately, it comes down to personal preference and individual tastes.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: chocolate is the best!<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+
+
+Processing input with Llama...
+[TRACE] print_both starting (len llama=313, qwen=0)
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Qwen: I'm glad you're a chocolate fan, Human. Chocolate is indeed a rich and decadent flavor that many people enjoy. However, I've been trained on a vast amount of text data, including information about different types of chocolate and their characteristics. Would you like to know some fun facts about chocolate?
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!
+[TRACE] router -> __end__

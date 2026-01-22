@@ -108,17 +108,13 @@ class ThreeWayChatPromptTemplate:
 
     You will also need to add a system prompt for each LLM, stating who the participants are, modified according 
     to whether the prompt is for Llama or Qwen.
-
-    ----------------------------------------------------------------------------
-    I have modified the protocol so that the LLMs own messages are not prefixed while the other messages are. This
-    prevents the LLM from echoing its own name in its responses.
     '''
 
     user_prompt_prefix = "Human: "
     llama_response_prefix = "Llama: "
     qwen_response_prefix = "Qwen: "
-    llama_system_prompt = "You are a helpful assistant. You are conversing with a user and another AI named Qwen. Both the user's and Qwen's messages will come from the user role and be prefixed with their names. Answer as Llama only."
-    qwen_system_prompt = "You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only."
+    llama_system_prompt = f"You are a helpful assistant. You are conversing with a user and another AI named Qwen. Both the user's and Qwen's messages will come from the user role and be prefixed with their names. User messages will be prefixed with '{user_prompt_prefix}'. Qwen messages will be prefixed with '{qwen_response_prefix}'. Answer as Llama only. Do not start your reply with '{llama_response_prefix}'; the wrapper will add names."
+    qwen_system_prompt = f"You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with '{qwen_response_prefix}'; the wrapper will add names."
 
 def create_llm():
     """
@@ -398,12 +394,12 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
             resp = state.get("llama_response", "<no response>")
             print(resp)
 
-            # Modify the response to add the prefix for Qwen
+            # Modify the response to add the prefix
             modified_resp = f"{ThreeWayChatPromptTemplate.llama_response_prefix}{resp}"
             return {
                 "llama_response": "", 
                 "qwen_response": "",
-                "llama_messages": [AIMessage(content=str(resp))],
+                "llama_messages": [AIMessage(content=str(modified_resp))],
                 "qwen_messages": [HumanMessage(content=str(modified_resp))]
             }
         elif has_qwen:
@@ -411,12 +407,12 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
             resp = state.get("qwen_response", "<no response>")
             print(resp)
 
-            # Modify the response to add the prefix for Llama
+            # Modify the response to add the prefix
             modified_resp = f"{ThreeWayChatPromptTemplate.qwen_response_prefix}{resp}"
             return {
                 "llama_response": "", 
                 "qwen_response": "",
-                "qwen_messages": [AIMessage(content=str(resp))],
+                "qwen_messages": [AIMessage(content=str(modified_resp))],
                 "llama_messages": [HumanMessage(content=str(modified_resp))]
             }
         else:
