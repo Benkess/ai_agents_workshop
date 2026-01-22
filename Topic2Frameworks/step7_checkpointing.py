@@ -21,7 +21,7 @@ from typing import Annotated
 from typing_extensions import TypedDict
 from langchain.messages import AnyMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph.message import add_messages
-from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.checkpoint.sqlite import SqliteSaver # pip install langgraph-checkpoint-sqlite
 
 # Determine the best available device for inference
 # Priority: CUDA (NVIDIA GPU) > MPS (Apple Silicon) > CPU
@@ -218,7 +218,7 @@ def messages_to_chat_dicts(messages: list[AnyMessage]) -> list[dict]:
     return chat
 
 
-def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
+def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer, checkpointer=None):
     """
     Create the LangGraph state graph with three separate nodes:
     1. get_user_input: Reads input from stdin
@@ -493,9 +493,6 @@ def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer):
     # 5. print_both -> get_user_input (loop back for next input)
     graph_builder.add_edge("print_both", "get_user_input")
 
-    # Checkpointing setup
-    checkpointer = SqliteSaver.from_conn_string("topic2_checkpoints.db")
-
     # Compile the graph into an executable form
     graph = graph_builder.compile(checkpointer=checkpointer)
 
@@ -540,58 +537,61 @@ def main():
     print("=" * 50)
     print()
 
-    # Step 1: Create and configure the LLM
-    llm, tokenizer = create_llm()
-    # Also create the Qwen model
-    qwen_llm, qwen_tokenizer = create_qwen_llm()
-
-    # Step 2: Build the LangGraph with both LLMs
-    print("\nCreating LangGraph...")
-    graph = create_graph(llm, tokenizer, qwen_llm, qwen_tokenizer)
-    print("Graph created successfully!")
-
-    # Step 3: Save a visual representation of the graph before execution
-    # This happens BEFORE any graph execution, showing the graph structure
-    print("\nSaving graph visualization...")
-    save_graph_image(graph)
-
-    # Step 4: Run the graph - it will loop internally until user quits
-    # Create initial state with empty/default values
-    # The graph will loop continuously, updating state as it goes:
-    #   - get_user_input displays banner, populates user_input and should_exit
-    #   - call_llm populates llm_response
-    #   - print_response displays output, then loops back to get_user_input
-    initial_state: AgentState = {
-        "user_input": "",
-        "should_exit": False,
-        "llama_response": "",
-        "qwen_response": "",
-        "verbose": False,
-        "skip_input": False,
-        "llama_messages": [SystemMessage(content=ThreeWayChatPromptTemplate.llama_system_prompt)],
-        "qwen_messages": [SystemMessage(content=ThreeWayChatPromptTemplate.qwen_system_prompt)],
-    }
-
-    # Single invocation - the graph loops internally via print_response -> get_user_input
-    # The graph only exits when route_after_input returns END (user typed quit/exit/q)
+    # Step 0: Create a checkpointer to persist graph state
     thread_id = "chat-1"
     config = {"configurable": {"thread_id": thread_id}}
+    with SqliteSaver.from_conn_string("topic2_checkpoints.db") as checkpointer:
 
-    state = graph.get_state(config)
+        # Step 1: Create and configure the LLM
+        llm, tokenizer = create_llm()
+        # Also create the Qwen model
+        qwen_llm, qwen_tokenizer = create_qwen_llm()
 
-    if state.next:
-        print("\n🔄 Resuming from checkpoint...")
-        print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
-        print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
-        print("Next node(s):", state.next)
-        # if state.get("verbose", False):
-        #     print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
-        #     print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
+        # Step 2: Build the LangGraph with both LLMs
+        print("\nCreating LangGraph...")
+        graph = create_graph(llm, tokenizer, qwen_llm, qwen_tokenizer, checkpointer=checkpointer)
+        print("Graph created successfully!")
 
-        graph.invoke(None, config=config)
-    else:
-        print("\n▶️ Starting new chat...")
-        graph.invoke(initial_state, config=config)
+        # Step 3: Save a visual representation of the graph before execution
+        # This happens BEFORE any graph execution, showing the graph structure
+        print("\nSaving graph visualization...")
+        save_graph_image(graph)
+
+        # Step 4: Run the graph - it will loop internally until user quits
+        # Create initial state with empty/default values
+        # The graph will loop continuously, updating state as it goes:
+        #   - get_user_input displays banner, populates user_input and should_exit
+        #   - call_llm populates llm_response
+        #   - print_response displays output, then loops back to get_user_input
+        initial_state: AgentState = {
+            "user_input": "",
+            "should_exit": False,
+            "llama_response": "",
+            "qwen_response": "",
+            "verbose": False,
+            "skip_input": False,
+            "llama_messages": [SystemMessage(content=ThreeWayChatPromptTemplate.llama_system_prompt)],
+            "qwen_messages": [SystemMessage(content=ThreeWayChatPromptTemplate.qwen_system_prompt)],
+        }
+
+        # Single invocation - the graph loops internally via print_response -> get_user_input
+        # The graph only exits when route_after_input returns END (user typed quit/exit/q)
+        state = graph.get_state(config)
+        if state.next:
+            print("\n🔄 Resuming from checkpoint...")
+            print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
+            print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
+            print("Next node(s):", state.next)
+            # if state.get("verbose", False):
+            #     print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
+            #     print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
+
+            graph.invoke(None, config=config)
+        else:
+            print("\n▶️ Starting new chat...")
+            # checkpointer.delete_thread(thread_id)
+            # print("\nDeleted existing checkpoint. Starting fresh.")
+            graph.invoke(initial_state, config=config)
 
 
 # Entry point - only run main() if this script is executed directly
