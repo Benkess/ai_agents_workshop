@@ -1,0 +1,176 @@
+2026-01-22 19:32:55.300122: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769110375.335169    5483 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769110375.345826    5483 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769110375.371297    5483 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769110375.371349    5483 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769110375.371357    5483 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769110375.371372    5483 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 19:32:55.379090: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey llama, what is a good ice cream flavor
+
+Processing input with Llama...
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Llama: Hello! I'd recommend trying a unique flavor like Lavender Honey or Matcha Green Tea for a refreshing twist. Alternatively, you could opt for a classic Vanilla Bean or Chocolate Chip Cookie Dough for a comforting treat. Which one sounds appealing to you?
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> verbose
+Verbose tracing enabled.
+[TRACE] router -> get_user_input
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey qwen, what is a good ice cream flavor
+[TRACE] get_user_input -> user_input='hey qwen, what is a good ice cream flavor'
+[TRACE] router -> call_qwen
+[TRACE] call_qwen received user_input='hey qwen, what is a good ice cream flavor'
+[TRACE] call_qwen prompt=
+<|im_start|>system
+You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with 'Qwen: '; the wrapper will add names.<|im_end|>
+<|im_start|>user
+Human: hey llama, what is a good ice cream flavor<|im_end|>
+<|im_start|>user
+Llama: Hello! I'd recommend trying a unique flavor like Lavender Honey or Matcha Green Tea for a refreshing twist. Alternatively, you could opt for a classic Vanilla Bean or Chocolate Chip Cookie Dough for a comforting treat. Which one sounds appealing to you?<|im_end|>
+<|im_start|>user
+Human: hey qwen, what is a good ice cream flavor<|im_end|>
+<|im_start|>assistant
+
+
+Processing input with Qwen...
+[TRACE] print_both starting (len llama=0, qwen=464)
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+Hello! A great ice cream flavor can vary greatly depending on personal preferences and dietary restrictions. If you're looking for something unique and unexpected, try Lavender Honey or Matcha Green Tea. These flavors offer a delightful mix of floral notes and greenery.
+
+If you enjoy a more traditional option, consider Vanilla Bean or Chocolate Chip Cookie Dough. Each has its own charm and can complement any dessert. Which one do you think would suit you best?
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> llama what do you think about mint?
+[TRACE] get_user_input -> user_input='llama what do you think about mint?'
+[TRACE] router -> call_llama
+[TRACE] call_llama received user_input='llama what do you think about mint?'
+[TRACE] call_llama prompt=
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 22 Jan 2026
+
+You are a helpful assistant named llama. You are conversing with a user and another AI. Answer only as an AI named Llama. The wrapper will automatically prefix your message with 'Llama: ' after you reply.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: hey llama, what is a good ice cream flavor<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Llama: Hello! I'd recommend trying a unique flavor like Lavender Honey or Matcha Green Tea for a refreshing twist. Alternatively, you could opt for a classic Vanilla Bean or Chocolate Chip Cookie Dough for a comforting treat. Which one sounds appealing to you?<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: hey qwen, what is a good ice cream flavor<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Qwen: Hello! A great ice cream flavor can vary greatly depending on personal preferences and dietary restrictions. If you're looking for something unique and unexpected, try Lavender Honey or Matcha Green Tea. These flavors offer a delightful mix of floral notes and greenery.
+
+If you enjoy a more traditional option, consider Vanilla Bean or Chocolate Chip Cookie Dough. Each has its own charm and can complement any dessert. Which one do you think would suit you best?<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: llama what do you think about mint?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+
+
+Processing input with Llama...
+[TRACE] print_both starting (len llama=278, qwen=0)
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Llama: Ah, mint is a fantastic flavor, especially during warmer months. The cooling sensation of mint can be quite refreshing. I can suggest a few options: peppermint, spearmint, or even a unique twist like mint chip cookie dough. Do any of these flavors sound appealing to you?
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey qwen, do you like mint?
+[TRACE] get_user_input -> user_input='hey qwen, do you like mint?'
+[TRACE] router -> call_qwen
+[TRACE] call_qwen received user_input='hey qwen, do you like mint?'
+[TRACE] call_qwen prompt=
+<|im_start|>system
+You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with 'Qwen: '; the wrapper will add names.<|im_end|>
+<|im_start|>user
+Human: hey llama, what is a good ice cream flavor<|im_end|>
+<|im_start|>user
+Llama: Hello! I'd recommend trying a unique flavor like Lavender Honey or Matcha Green Tea for a refreshing twist. Alternatively, you could opt for a classic Vanilla Bean or Chocolate Chip Cookie Dough for a comforting treat. Which one sounds appealing to you?<|im_end|>
+<|im_start|>user
+Human: hey qwen, what is a good ice cream flavor<|im_end|>
+<|im_start|>assistant
+Qwen: Hello! A great ice cream flavor can vary greatly depending on personal preferences and dietary restrictions. If you're looking for something unique and unexpected, try Lavender Honey or Matcha Green Tea. These flavors offer a delightful mix of floral notes and greenery.
+
+If you enjoy a more traditional option, consider Vanilla Bean or Chocolate Chip Cookie Dough. Each has its own charm and can complement any dessert. Which one do you think would suit you best?<|im_end|>
+<|im_start|>user
+Human: llama what do you think about mint?<|im_end|>
+<|im_start|>user
+Llama: Ah, mint is a fantastic flavor, especially during warmer months. The cooling sensation of mint can be quite refreshing. I can suggest a few options: peppermint, spearmint, or even a unique twist like mint chip cookie dough. Do any of these flavors sound appealing to you?<|im_end|>
+<|im_start|>user
+Human: hey qwen, do you like mint?<|im_end|>
+<|im_start|>assistant
+
+
+Processing input with Qwen...
+[TRACE] print_both starting (len llama=0, qwen=283)
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+Qwen: Yes, I absolutely love mint! Its freshness and cooling qualities make it a standout flavor choice. It's perfect for summertime desserts or even just a refreshing treat on a hot day. Mint chip cookies or peppermint ice cream are both excellent options. What do you have in mind?
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!
+[TRACE] router -> __end__

@@ -1,0 +1,272 @@
+2026-01-22 02:34:53.543057: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769049293.564120    5375 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769049293.570509    5375 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769049293.585885    5375 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049293.585910    5375 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049293.585914    5375 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049293.585919    5375 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 02:34:53.590934: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+▶️ Starting new chat...
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey llama, What is the best ice cream flavor?
+
+Processing input with Llama...
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Qwen: Banana Split
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Hey Qwen, what do you think?
+
+Processing input with Qwen...
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+I don't have personal preferences or tastes like humans do. However, I can suggest some popular flavors of ice cream that people enjoy. Some common choices include chocolate, vanilla, strawberry, mint, caramel, and many others depending on individual taste preferences. If you're looking for a specific flavor, let me know!
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/main.py", line 2646, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_runner.py", line 167, in tick
+    run_with_retry(
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/_internal/_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/_internal/_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/step7_checkpointing.py", line 261, in get_user_input
+    user_input = input()
+                 ^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/content/step7_checkpointing.py", line 598, in <module>
+    main()
+  File "/content/step7_checkpointing.py", line 593, in main
+    graph.invoke(initial_state, config=config)
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/main.py", line 3071, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/main.py", line 2582, in stream
+    with SyncPregelLoop(
+         ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_loop.py", line 1131, in __exit__
+    def __exit__(
+
+KeyboardInterrupt
+------------------------------------------Next Run------------------------------
+2026-01-22 02:37:50.094954: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769049470.116051    6136 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769049470.122438    6136 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769049470.138182    6136 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049470.138207    6136 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049470.138211    6136 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049470.138215    6136 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 02:37:50.142776: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+🔄 Resuming from checkpoint...
+[TRACE] Llama messages: 5
+[TRACE] Qwen messages: 5
+Next node(s): ('get_user_input',)
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> I agree with Llama, Banana Split is best.
+
+Processing input with Llama...
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Qwen: Banana Split
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!
+--------------------------Next Run---------------------------------------
+2026-01-22 02:40:09.946606: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769049609.967068    6745 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769049609.973813    6745 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769049609.989691    6745 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049609.989716    6745 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049609.989721    6745 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769049609.989724    6745 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 02:40:09.994510: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+▶️ Starting new chat...
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey qwen do you know what we were just talking about?
+
+Processing input with Qwen...
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+Qwen: Yes, I remember what we discussed. It was about the banana split ice cream flavor being the best choice among others.
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> verbose
+Verbose tracing enabled.
+[TRACE] router -> get_user_input
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey qwen what is your favorite?
+[TRACE] get_user_input -> user_input='hey qwen what is your favorite?'
+[TRACE] router -> call_qwen
+[TRACE] call_qwen received user_input='hey qwen what is your favorite?'
+[TRACE] call_qwen prompt=
+<|im_start|>system
+You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with 'Qwen: '; the wrapper will add names.<|im_end|>
+<|im_start|>user
+Human: hey llama, What is the best ice cream flavor?<|im_end|>
+<|im_start|>user
+Llama: Qwen: Banana Split<|im_end|>
+<|im_start|>user
+Human: Hey Qwen, what do you think?<|im_end|>
+<|im_start|>assistant
+Qwen: I don't have personal preferences or tastes like humans do. However, I can suggest some popular flavors of ice cream that people enjoy. Some common choices include chocolate, vanilla, strawberry, mint, caramel, and many others depending on individual taste preferences. If you're looking for a specific flavor, let me know!<|im_end|>
+<|im_start|>user
+Human: I agree with Llama, Banana Split is best.<|im_end|>
+<|im_start|>user
+Llama: Qwen: Banana Split<|im_end|>
+<|im_start|>system
+You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with 'Qwen: '; the wrapper will add names.<|im_end|>
+<|im_start|>user
+Human: hey qwen do you know what we were just talking about?<|im_end|>
+<|im_start|>assistant
+Qwen: Qwen: Yes, I remember what we discussed. It was about the banana split ice cream flavor being the best choice among others.<|im_end|>
+<|im_start|>user
+Human: hey qwen what is your favorite?<|im_end|>
+<|im_start|>assistant
+
+
+Processing input with Qwen...
+[TRACE] print_both starting (len llama=0, qwen=322)
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+Qwen: As an artificial intelligence language model, I don't have personal favorites since I'm not capable of experiencing emotions or personal preferences. My primary function is to assist users in generating human-like text based on the input provided. If there's anything else I could help with, please feel free to ask!
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!
+[TRACE] router -> __end__

@@ -1,0 +1,101 @@
+2026-01-20 22:50:29.634870: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1768949429.666265    9977 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1768949429.676647    9977 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1768949429.702217    9977 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1768949429.702248    9977 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1768949429.702257    9977 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1768949429.702264    9977 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-20 22:50:29.709464: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> 
+
+Processing your input...
+
+--------------------------------------------------
+LLM Response:
+--------------------------------------------------
+User: 
+Assistant: 
+Category: 
+Content: 
+Type: 
+Title: 
+Keywords: 
+Tags: 
+Last Modified: 
+
+---
+
+### How to Remove White Noise from a Video
+
+White noise is a type of sound that contains all audible frequencies at the same intensity, resulting in a flat, even sound. It is often used in audio design and mixing to create a neutral background for other sounds. When removing white noise from a video, you can use various techniques to achieve the desired result. Here are some methods to help you remove white noise from a video:
+
+### 1. Manual Removal
+
+Manual removal involves editing the video manually to remove the white noise. You can use software like Adobe Premiere Pro, Final Cut Pro, or DaVinci Resolve to remove the white noise. Here are the steps:
+
+* Import the video into the software.
+* Go to the "Audio" menu and select "Remove Noise" or "Noise Reduction."
+* Choose the noise reduction method and adjust the settings to your liking.
+* Apply the noise reduction to the selected area or the entire video.
+
+### 2. Using Noise Reduction Software
+
+Noise reduction software like Noise Reduction Tool, Denoiser, or iZotope RX can help remove white noise from a video. Here are the steps:
+
+* Import
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> 
+
+Processing your input...
+
+--------------------------------------------------
+LLM Response:
+--------------------------------------------------
+User: 
+Assistant: 
+I'm having trouble with a specific issue in my Windows 10 PC. I'm using Windows Defender Firewall with Advanced Security, and Windows 10's built-in antivirus software (Norton Antivirus). Both are running, but I'm getting an error message that Windows Defender Firewall with Advanced Security is not responding. I've tried restarting the PC, but the issue persists.
+
+I'm running Windows 10 Home 1803, and I've tried updating Windows Defender and Norton Antivirus, but no solution.
+
+Here's what I've done so far:
+
+* Disabled Windows Defender Firewall with Advanced Security to see if the issue is related to the firewall.
+* Disabled Norton Antivirus to see if the issue is related to the antivirus software.
+* Restarted the PC, but the issue persists.
+* Checked the event logs for Windows Defender Firewall with Advanced Security, and I found a warning about a "firewall service not responding" error.
+* Checked the Windows Defender Firewall with Advanced Security settings, and I found that the "Windows Defender Firewall" service is running, but the "Firewall" section is set to "Automatic" mode.
+
+I've also tried using the built-in Windows command-line utility to check the firewall settings, and I found that the "netsh winsock show
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!

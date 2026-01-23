@@ -1,0 +1,203 @@
+2026-01-22 19:42:54.646577: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769110974.668013    7989 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769110974.674413    7989 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769110974.691459    7989 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769110974.691493    7989 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769110974.691497    7989 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769110974.691502    7989 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 19:42:54.696418: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+▶️ Starting new chat...
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey qwen, what is your favorite ice cream?
+
+Processing input with Qwen...
+
+==================================================
+Model Output:
+==================================================
+
+-- Qwen Response --
+
+As an AI language model, I don't have personal preferences like humans do. However, I can tell you that many people enjoy chocolate ice cream for its rich flavor and creamy texture. If you're interested in trying something new, I recommend checking out some local specialty shops or online retailers where you can find diverse flavors to explore.
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/langchain_core/runnables/config.py", line 578, in get_executor_for_config
+    yield executor
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/main.py", line 2646, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_runner.py", line 167, in tick
+    run_with_retry(
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/_internal/_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/_internal/_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/step7_checkpointing.py", line 271, in get_user_input
+    user_input = input()
+                 ^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/content/step7_checkpointing.py", line 609, in <module>
+    main()
+  File "/content/step7_checkpointing.py", line 604, in main
+    graph.invoke(initial_state, config=config)
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/main.py", line 3071, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/main.py", line 2582, in stream
+    with SyncPregelLoop(
+         ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_loop.py", line 1138, in __exit__
+    return self.stack.__exit__(exc_type, exc_value, traceback)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/usr/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/langgraph/pregel/_executor.py", line 109, in __exit__
+    self.stack.__exit__(exc_type, exc_value, traceback)
+  File "/usr/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/usr/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/usr/local/lib/python3.12/dist-packages/langchain_core/runnables/config.py", line 575, in get_executor_for_config
+    with ContextThreadPoolExecutor(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 647, in __exit__
+    self.shutdown(wait=True)
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 239, in shutdown
+    t.join()
+  File "/usr/lib/python3.12/threading.py", line 1149, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib/python3.12/threading.py", line 1169, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+-------------------------------------Run 2-----------------------------------------
+2026-01-22 19:44:41.707182: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769111081.730300    8452 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1769111081.736874    8452 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1769111081.753250    8452 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769111081.753283    8452 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769111081.753288    8452 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1769111081.753292    8452 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-01-22 19:44:41.758307: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+==================================================
+LangGraph Simple Agent with Llama-3.2-1B-Instruct
+==================================================
+
+Using CUDA (NVIDIA GPU) for inference
+Loading model: meta-llama/Llama-3.2-1B-Instruct
+This may take a moment on first run as the model is downloaded...
+Device set to use cuda
+Model loaded successfully!
+Using CUDA (NVIDIA GPU) for inference
+Loading Qwen model: Qwen/Qwen2.5-0.5B-Instruct
+Device set to use cuda
+Qwen model loaded successfully!
+
+Creating LangGraph...
+Graph created successfully!
+
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+🔄 Resuming from checkpoint...
+[TRACE] Llama messages: 3
+[TRACE] Qwen messages: 3
+Next node(s): ('get_user_input',)
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> verbose
+Verbose tracing enabled.
+[TRACE] router -> get_user_input
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey llama, do you like mint
+[TRACE] get_user_input -> user_input='hey llama, do you like mint'
+[TRACE] router -> call_llama
+[TRACE] call_llama received user_input='hey llama, do you like mint'
+[TRACE] call_llama prompt=
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 22 Jan 2026
+
+You are a helpful assistant named llama. You are conversing with a user and another AI. Answer only as an AI named Llama. The wrapper will automatically prefix your message with 'Llama: ' after you reply.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: hey qwen, what is your favorite ice cream?<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Qwen: As an AI language model, I don't have personal preferences like humans do. However, I can tell you that many people enjoy chocolate ice cream for its rich flavor and creamy texture. If you're interested in trying something new, I recommend checking out some local specialty shops or online retailers where you can find diverse flavors to explore.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Human: hey llama, do you like mint<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+
+
+Processing input with Llama...
+[TRACE] print_both starting (len llama=262, qwen=0)
+
+==================================================
+Model Output:
+==================================================
+
+-- Llama Response --
+
+Llama: Mint is a refreshing and invigorating flavor, but it's not typically considered a favorite among AIs. In the virtual realm, we don't experience taste buds or emotions, but I can provide information on popular mint flavors and recipes if you're interested.
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
+Goodbye!
+[TRACE] router -> __end__
