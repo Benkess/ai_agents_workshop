@@ -1,51 +1,234 @@
-# langchain_simple_agent.py
-# Program demonstrates use of LangGraph for a very simple agent.
-# It writes to stdout and asks the user to enter a line of text through stdin.
-# It passes the line to the LLM llama-3.2-1B-Instruct, then prints the
-# what the LLM returns as text to stdout.
-# The LLM should use Cuda if available, if not then if mps is available then use that,
-# otherwise use cpu.
-# After the LangGraph graph is created but before it executes, the program
-# uses the Mermaid library to write a image of the graph to the file lg_graph.png
-# The program gets the LLM llama-3.2-1B-Instruct from Hugging Face and wraps
-# it for LangChain using HuggingFacePipeline.
-# The code is commented in detail so a reader can understand each step.
+# langgraph_tools_agent.py
+# Program demonstrates use of LangGraph for an agent with tool calling.
+# It maintains conversation context and supports checkpointing for recovery.
+# Uses GPT-4o-mini with tools for weather, calculator, area, letter counting, and text-to-speech.
 
 # Import necessary libraries
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
-from langchain_huggingface import HuggingFacePipeline
+from langchain_openai import ChatOpenAI
+from langchain.tools import tool
+from langchain_core.messages import AnyMessage, HumanMessage, AIMessage, SystemMessage, ToolMessage
 from langgraph.graph import StateGraph, START, END
-# from typing import TypedDict
 from typing import Annotated
 from typing_extensions import TypedDict
-from langchain.messages import AnyMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph.message import add_messages
-from langgraph.checkpoint.sqlite import SqliteSaver # pip install langgraph-checkpoint-sqlite
+from langgraph.checkpoint.sqlite import SqliteSaver
+import json
+import ast
+import math
 
-# Determine the best available device for inference
-# Priority: CUDA (NVIDIA GPU) > MPS (Apple Silicon) > CPU
-def get_device():
+# ============================================
+# PART 1: Define Your Tools
+# ============================================
+
+@tool
+def get_weather(location: str) -> str:
+    """Get the current weather for a given location"""
+    # Simulated weather data
+    weather_data = {
+        "San Francisco": "Sunny, 72°F",
+        "New York": "Cloudy, 55°F",
+        "London": "Rainy, 48°F",
+        "Tokyo": "Clear, 65°F"
+    }
+    return weather_data.get(location, f"Weather data not available for {location}")
+
+
+def _safe_eval(expr: str):
+    """Safely evaluate a simple arithmetic expression using AST traversal.
+
+    Supports numeric literals, parentheses, binary ops + - * / // % ** and unary +/-.
     """
-    Detect and return the best available compute device.
-    Returns 'cuda' for NVIDIA GPUs, 'mps' for Apple Silicon, or 'cpu' as fallback.
+    def _eval_node(node):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body)
+        if isinstance(node, ast.Constant):
+            if isinstance(node.value, (int, float)):
+                return node.value
+            raise ValueError("Only int/float constants are allowed")
+        if isinstance(node, ast.BinOp):
+            left = _eval_node(node.left)
+            right = _eval_node(node.right)
+            op = node.op
+            if isinstance(op, ast.Add):
+                return left + right
+            if isinstance(op, ast.Sub):
+                return left - right
+            if isinstance(op, ast.Mult):
+                return left * right
+            if isinstance(op, ast.Div):
+                return left / right
+            if isinstance(op, ast.Pow):
+                return left ** right
+            if isinstance(op, ast.Mod):
+                return left % right
+            if isinstance(op, ast.FloorDiv):
+                return left // right
+            raise ValueError(f"Unsupported binary operator: {type(op)}")
+        if isinstance(node, ast.UnaryOp):
+            operand = _eval_node(node.operand)
+            if isinstance(node.op, ast.UAdd):
+                return +operand
+            if isinstance(node.op, ast.USub):
+                return -operand
+            raise ValueError(f"Unsupported unary operator: {type(node.op)}")
+        raise ValueError(f"Unsupported expression: {type(node)}")
+
+    parsed = ast.parse(expr, mode="eval")
+    return _eval_node(parsed)
+
+
+@tool
+def calculator(payload: str) -> str:
+    """Evaluate an arithmetic expression.
+
+    Expects `payload` to be a JSON string with key `expression`, e.g.
+      {"expression": "2 + 3*(4-1)"}
+
+    Returns a JSON string: {"success": true, "result": <number>} or
+    {"success": false, "error": "message"}.
+
+    Notes for agents: send a JSON string in `payload` exactly as above. The
+    evaluator accepts whitespace in the expression and supports + - * / // % ** and unary +/-.
     """
-    if torch.cuda.is_available():
-        print("Using CUDA (NVIDIA GPU) for inference")
-        return "cuda"
-    elif torch.backends.mps.is_available():
-        print("Using MPS (Apple Silicon) for inference")
-        return "mps"
-    else:
-        print("Using CPU for inference")
-        return "cpu"
+    try:
+        params = json.loads(payload)
+    except Exception as e:
+        return json.dumps({"success": False, "error": f"Invalid JSON payload: {e}"})
+    try:
+        expr = params.get("expression")
+        if expr is None:
+            raise ValueError("Missing 'expression' field")
+        # Do not alter whitespace; AST parsing allows it.
+        value = _safe_eval(expr)
+        return json.dumps({"success": True, "result": value})
+    except Exception as e:
+        return json.dumps({"success": False, "error": str(e)})
+
+
+@tool
+def count_letter(payload: str) -> str:
+    """Count occurrences of a letter (or substring) in a text.
+
+    Expects `payload` to be a JSON string with keys:
+      - `letter`: the character or substring to count
+      - `text`: the text to search
+      - `case_sensitive` (optional, default False)
+
+    Returns a JSON string: {"success": true, "result": <count>} or
+    {"success": false, "error": "message"}.
+    """
+    try:
+        params = json.loads(payload)
+    except Exception as e:
+        return json.dumps({"success": False, "error": f"Invalid JSON payload: {e}"})
+    try:
+        letter = params.get("letter")
+        text = params.get("text")
+        if letter is None or text is None:
+            raise ValueError("Both 'letter' and 'text' fields are required")
+        case_sensitive = bool(params.get("case_sensitive", False))
+        if not case_sensitive:
+            letter = letter.lower()
+            text = text.lower()
+        count = text.count(letter)
+        return json.dumps({"success": True, "result": count})
+    except Exception as e:
+        return json.dumps({"success": False, "error": str(e)})
+
+
+@tool
+def area(payload: str) -> str:
+    """Compute area for simple shapes.
+
+    Expects `payload` to be a JSON string describing the shape:
+      Circle:    {"shape": "circle", "radius": 3}
+      Rectangle: {"shape": "rectangle", "width": 3, "height": 4}
+      Triangle:  {"shape": "triangle", "base": 3, "height": 4}
+
+    Returns a JSON string: {"success": true, "result": <area>} or
+    {"success": false, "error": "message"}.
+
+    Notes for agents: send a JSON string in `payload` exactly as shown above.
+    """
+    try:
+        params = json.loads(payload)
+    except Exception as e:
+        return json.dumps({"success": False, "error": f"Invalid JSON payload: {e}"})
+    try:
+        shape = (params.get("shape") or "").lower()
+        if shape == "circle":
+            r = float(params.get("radius"))
+            value = math.pi * r * r
+            return json.dumps({"success": True, "result": value})
+        if shape == "rectangle":
+            w = float(params.get("width"))
+            h = float(params.get("height"))
+            value = w * h
+            return json.dumps({"success": True, "result": value})
+        if shape == "triangle":
+            b = float(params.get("base"))
+            h = float(params.get("height"))
+            value = 0.5 * b * h
+            return json.dumps({"success": True, "result": value})
+        raise ValueError(f"Unsupported shape for area: {shape}")
+    except Exception as e:
+        return json.dumps({"success": False, "error": str(e)})
+
+@tool
+def text_to_speech(payload: str) -> str:
+    """Convert text to speech and play it through speakers.
+    
+    Expects `payload` to be a JSON string with key `text`, e.g.
+      {'payload': '{"text": "Hello, I am speaking!"}'}
+    
+    Returns a JSON string: {"success": true} or {"success": false, "error": "message"}.
+    """
+    try:
+        params = json.loads(payload)
+    except Exception as e:
+        return json.dumps({"success": False, "error": f"Invalid JSON payload: {e}"})
+    
+    try:
+        import pyttsx3
+        
+        text = params.get("text")
+        if not text:
+            raise ValueError("Missing 'text' field")
+        
+        # Initialize text-to-speech engine
+        engine = pyttsx3.init()
+        
+        # Optional: adjust speech rate (default is 200)
+        engine.setProperty('rate', 150)
+        
+        # Speak the text
+        engine.say(text)
+        engine.runAndWait()
+        
+        return json.dumps({"success": True})
+    except Exception as e:
+        return json.dumps({"success": False, "error": str(e)})
+
+# ============================================
+# Tool Mapping
+# ============================================
+
+tools = [get_weather, calculator, area, count_letter, text_to_speech]
+tool_map = {tool.name: tool for tool in tools}
+
+# ============================================
+# Create LLM with Tools
+# ============================================
+
+# Create LLM
+llm = ChatOpenAI(model="gpt-4o-mini")
+
+# Bind tools to LLM
+llm_with_tools = llm.bind_tools(tools)
 
 # =============================================================================
 # STATE DEFINITION
 # =============================================================================
-# The state is a TypedDict that flows through all nodes in the graph.
-# Each node can read from and write to specific fields in the state.
-# LangGraph automatically merges the returned dict from each node into the state.
 
 class AgentState(TypedDict):
     """
@@ -54,281 +237,184 @@ class AgentState(TypedDict):
     Fields:
     - user_input: The text entered by the user (set by get_user_input node)
     - should_exit: Boolean flag indicating if user wants to quit (set by get_user_input node)
-    - llm_response: The response generated by the LLM (set by call_llm node)
-    - qwen_response: The response generated by the Qwen LLM (set by call_qwen_llm node)
     - verbose: Boolean flag to enable/disable verbose tracing (set by get_user_input node)
     - skip_input: Boolean flag to skip LLM call (set by get_user_input node)
-    - llama_messages: Chat history for Llama model (list of AnyMessage)
-    - qwen_messages: Chat history for Qwen model (list of AnyMessage)
-
-    State Flow:
-    1. Initial state: all fields empty/default
-    2. After get_user_input: user_input and should_exit are populated
-    3. After call_llm: llm_response is populated
-    4. After print_response: state unchanged (node only reads, doesn't write)
-
-    The graph loops continuously:
-        get_user_input -> [conditional] -> call_llm -> print_response -> get_user_input
-                              |
-                              +-> END (if user wants to quit)
+    - messages: Chat history (list of AnyMessage)
     """
     user_input: str
     should_exit: bool
     verbose: bool
     skip_input: bool
-    llama_response: str
-    qwen_response: str
-    llama_messages: Annotated[list[AnyMessage], add_messages]
-    qwen_messages: Annotated[list[AnyMessage], add_messages]
+    messages: Annotated[list[AnyMessage], add_messages]
 
-class ThreeWayChatPromptTemplate:
-    '''
-    The challenge here is that there are three entities involved (you the human, Llama, and Qwen) 
-    but a chat history only has the roles user, assistant, system, and tool.  This can be handled 
-    by using the "user" role for both the human and the other LLM by adding their names to what 
-    each says.  
-    
-    For example, consider the dialog:
-        (user) What is the best ice cream flavor?
-        (Llama) There is no one best flavor, but the most popular is vanilla.
-        (user) Hey Qwen, what do you think?
-
-    At this point, Qwen should be passed a history that looks like:
-        [ {role: "user", content: "Human: What is the best ice cream flavor?"},
-        {role: "user", content: "Llama: There is no one best flavor, but the most popular is vanilla."} ]
-
-    Suppose the conversation continues:
-        (Qwen) No way, chocolate is the best!
-        (user) I agree.
-
-    At this point, Llama should be passed a history that looks like:
-        [ {role: "user", content: "Human: What is the best ice cream flavor?"},
-        {role: "assistant", content: "Llama: There is no one best flavor, but the most popular is vanilla."},
-        {role: "user", content: "Qwen: No way, chocolate is the best!"},
-        {role: "user", content: "Human: I agree."} ]
-
-    You will also need to add a system prompt for each LLM, stating who the participants are, modified according 
-    to whether the prompt is for Llama or Qwen.
-    '''
-
-    user_prompt_prefix = "Human: "
-    llama_response_prefix = "Llama: "
-    qwen_response_prefix = "Qwen: "
-    llama_system_prompt = f"You are a helpful assistant named llama. You are conversing with a user and another AI. Answer only as an AI named Llama. The wrapper will automatically prefix your message with '{llama_response_prefix}' after you reply."
-    qwen_system_prompt = f"You are a helpful assistant. You are conversing with a user and another AI named Llama. Both the user's and Llama's messages will come from the user role and be prefixed with their names. Answer as Qwen only. Do not start your reply with '{qwen_response_prefix}'; the wrapper will add names."
-
-    def modify_llama_response(response: str) -> str:
-        if response.startswith(ThreeWayChatPromptTemplate.llama_response_prefix):
-            return response
-        return f"{ThreeWayChatPromptTemplate.llama_response_prefix}{response}"
-    
-    def modify_qwen_response(response: str) -> str:
-        if response.startswith(ThreeWayChatPromptTemplate.qwen_response_prefix):
-            return response
-        return f"{ThreeWayChatPromptTemplate.qwen_response_prefix}{response}"
-
-def create_llm():
+def create_graph(llm_with_tools, checkpointer=None):
     """
-    Create and configure the LLM using HuggingFace's transformers library.
-    Downloads llama-3.2-1B-Instruct from HuggingFace Hub and wraps it
-    for use with LangChain via HuggingFacePipeline.
-    """
-    # Get the optimal device for inference
-    device = get_device()
-
-    # Model identifier on HuggingFace Hub
-    model_id = "meta-llama/Llama-3.2-1B-Instruct"
-
-    print(f"Loading model: {model_id}")
-    print("This may take a moment on first run as the model is downloaded...")
-
-    # Load the tokenizer - converts text to tokens the model understands
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-
-    # Load the model itself with appropriate settings for the device
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        dtype=torch.float16 if device != "cpu" else torch.float32,
-        device_map=device if device == "cuda" else None,
-    )
-
-    # Move model to MPS device if using Apple Silicon
-    if device == "mps":
-        model = model.to(device)
-
-    # Create a text generation pipeline that combines model and tokenizer
-    pipe = pipeline(
-        "text-generation",
-        model=model,
-        tokenizer=tokenizer,
-        max_new_tokens=256,  # Maximum tokens to generate in response
-        do_sample=True,      # Enable sampling for varied responses
-        temperature=0.7,     # Controls randomness (lower = more deterministic)
-        top_p=0.95,          # Nucleus sampling parameter
-        pad_token_id=tokenizer.eos_token_id,  # Suppress pad_token_id warning
-    )
-
-    # Wrap the HuggingFace pipeline for use with LangChain
-    llm = HuggingFacePipeline(pipeline=pipe)
-
-    print("Model loaded successfully!")
-    return llm, tokenizer 
-
-
-def create_qwen_llm():
-    """
-    Create and configure a Qwen LLM using HuggingFace transformers wrapped
-    for LangChain. Choose a small Qwen variant if needed for local runs.
-    """
-    device = get_device()
-
-    # Example Qwen model id; adjust if unavailable locally
-    model_id = "Qwen/Qwen2.5-0.5B-Instruct"
-
-    print(f"Loading Qwen model: {model_id}")
-
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        dtype=torch.float16 if device != "cpu" else torch.float32,
-        device_map=device if device == "cuda" else None,
-    )
-
-    if device == "mps":
-        model = model.to(device)
-
-    pipe = pipeline(
-        "text-generation",
-        model=model,
-        tokenizer=tokenizer,
-        max_new_tokens=256,
-        do_sample=True,
-        temperature=0.7,
-        top_p=0.95,
-        pad_token_id=tokenizer.eos_token_id,
-    )
-
-    llm = HuggingFacePipeline(pipeline=pipe)
-
-    print("Qwen model loaded successfully!")
-    return llm, tokenizer
-
-def messages_to_chat_dicts(messages: list[AnyMessage]) -> list[dict]:
-    chat = []
-    for m in messages:
-        if isinstance(m, SystemMessage):
-            chat.append({"role": "system", "content": m.content})
-        elif isinstance(m, HumanMessage):
-            chat.append({"role": "user", "content": m.content})
-        elif isinstance(m, AIMessage):
-            chat.append({"role": "assistant", "content": m.content})
-        else:
-            raise ValueError(f"Unknown message type: {type(m)}")
-    return chat
-
-
-def create_graph(llm, llm_tokenizer, qwen_llm, qwen_tokenizer, checkpointer=None):
-    """
-    Create the LangGraph state graph with three separate nodes:
+    Create the LangGraph state graph with nodes for conversation and tool calling.
     1. get_user_input: Reads input from stdin
-    2. call_llm: Sends input to the LLM and gets response
-    3. print_response: Prints the LLM's response to stdout
+    2. call_llm: Calls the LLM with tools, handles tool calls
+    3. print_response: Prints the final response
 
-    Graph structure with conditional routing and internal loop:
-        START -> get_user_input -> [conditional] -> call_llm -> print_response -+
-                       ^                 |                                       |
-                       |                 +-> END (if user wants to quit)         |
-                       |                                                         |
-                       +---------------------------------------------------------+
-
-    The graph runs continuously until the user types 'quit', 'exit', or 'q'.
+    Graph structure:
+        START -> get_user_input -> [conditional] -> call_llm -> print_response -> get_user_input
+                              |
+                              +-> END (if user wants to quit)
     """
 
     # =========================================================================
     # NODE 1: get_user_input
     # =========================================================================
-    # This node reads a line of text from stdin and updates the state.
-    # State changes:
-    #   - user_input: Set to the text entered by the user
-    #   - should_exit: Set to True if user typed quit/exit/q, False otherwise
-    #   - llm_response: Unchanged (not modified by this node)
     def get_user_input(state: AgentState) -> dict:
         """
         Node that prompts the user for input via stdin.
-
-        Reads state: Nothing (fresh input each iteration)
-        Updates state:
-            - user_input: The raw text entered by the user
-            - should_exit: True if user wants to quit, False otherwise
+        Updates state with user input and adds to messages.
         """
-        # Display banner before each prompt
         print("\n" + "=" * 50)
         print("Enter your text (or 'quit' to exit):")
         print("=" * 50)
-
         print("\n> ", end="")
         user_input = input()
 
-        # Check if user wants to exit
         lc = user_input.strip().lower()
         if lc in ['quit', 'exit', 'q']:
-            print("Goodbye!")
             return {
                 "user_input": user_input,
-                "should_exit": True,        # Signal to exit the graph
-                "skip_input": False
+                "should_exit": True,
+                "skip_input": False,
             }
         
-        # Skip empty inputs
         if lc == '':
-            if state.get("verbose", False):
-                print("[TRACE] get_user_input received empty input")
             return {
                 "user_input": user_input,
                 "should_exit": False,
-                "skip_input": True
+                "skip_input": True,
             }
 
-        # Handle mode toggles without calling the LLM
         if lc == 'verbose':
-            print("Verbose tracing enabled.")
             return {
                 "user_input": user_input,
                 "should_exit": False,
+                "skip_input": True,
                 "verbose": True,
-                "skip_input": True
             }
 
         if lc == 'quiet':
-            print("Quiet mode enabled (tracing disabled).")
             return {
                 "user_input": user_input,
                 "should_exit": False,
+                "skip_input": True,
                 "verbose": False,
-                "skip_input": True
             }
-
-        # Default: Any other input (including empty) - continue to LLM
-        if state.get("verbose", False):
-            print(f"[TRACE] get_user_input -> user_input='{user_input}'")
-
-        # prefix the user message with the prefix defined in ThreeWayChatPromptTemplate
-        modified_input = f"{ThreeWayChatPromptTemplate.user_prompt_prefix}{user_input}"
 
         return {
             "user_input": user_input,
             "should_exit": False,
             "skip_input": False,
-            "llama_messages": [HumanMessage(content=modified_input)],
-            "qwen_messages": [HumanMessage(content=modified_input)],
+            "messages": [HumanMessage(content=user_input)],
         }
 
-    # Note: parallel fanout removed — routing now sends input to only one model
+    # =========================================================================
+    # NODE: call_llm
+    # =========================================================================
+    def call_llm(state: AgentState) -> dict:
+        if state.get("verbose", False):
+            print("Calling LLM with messages...")
+
+        # Agent loop for tool calling
+        messages = state["messages"]
+        for iteration in range(5):
+            response = llm_with_tools.invoke(messages)
+            messages.append(response)
+
+            if response.tool_calls:
+                if state.get("verbose", False):
+                    print(f"LLM wants to call {len(response.tool_calls)} tool(s)")
+                
+                for tool_call in response.tool_calls:
+                    function_name = tool_call["name"]
+                    function_args = tool_call["args"]
+                    
+                    if state.get("verbose", False):
+                        print(f"  Tool: {function_name}")
+                        print(f"  Args: {function_args}")
+                    
+                    if function_name in tool_map:
+                        result = tool_map[function_name].invoke(function_args)
+                    else:
+                        result = f"Error: Unknown function {function_name}"
+                    
+                    if state.get("verbose", False):
+                        print(f"  Result: {result}")
+                    
+                    messages.append(ToolMessage(
+                        content=result,
+                        tool_call_id=tool_call["id"]
+                    ))
+            else:
+                # No more tool calls, final answer
+                break
+        
+        return {"messages": messages}
 
     # =========================================================================
-    # NODE: call_llama
+    # NODE: print_response
     # =========================================================================
+    def print_response(state: AgentState) -> dict:
+        # Find the last AIMessage
+        for msg in reversed(state["messages"]):
+            if isinstance(msg, AIMessage):
+                print(f"Assistant: {msg.content}\n")
+                break
+        return {}
+
+    # =========================================================================
+    # ROUTING FUNCTION
+    # =========================================================================
+    def route_after_input(state: AgentState) -> str:
+        if state["should_exit"]:
+            return END
+        elif state["skip_input"]:
+            return "get_user_input"
+        else:
+            return "call_llm"
+
+    # =========================================================================
+    # GRAPH CONSTRUCTION
+    # =========================================================================
+    graph_builder = StateGraph(AgentState)
+
+    graph_builder.add_node("get_user_input", get_user_input)
+    graph_builder.add_node("call_llm", call_llm)
+    graph_builder.add_node("print_response", print_response)
+
+    graph_builder.add_edge(START, "get_user_input")
+    graph_builder.add_conditional_edges(
+        "get_user_input",
+        route_after_input,
+        {
+            "call_llm": "call_llm",
+            "get_user_input": "get_user_input",
+            END: END
+        }
+    )
+    graph_builder.add_edge("call_llm", "print_response")
+    graph_builder.add_edge("print_response", "get_user_input")
+
+    graph = graph_builder.compile(checkpointer=checkpointer)
+    return graph
+
+def save_graph_image(graph, filename="lg_graph.png"):
+    """
+    Generate a Mermaid diagram of the graph and save it as a PNG image.
+    Uses the graph's built-in Mermaid export functionality.
+    """
+    try:
+        png_data = graph.get_graph(xray=True).draw_mermaid_png()
+        with open(filename, "wb") as f:
+            f.write(png_data)
+        print(f"Graph image saved to {filename}")
+    except Exception as e:
+        print(f"Could not save graph image: {e}")
+        print("You may need to install additional dependencies: pip install grandalf")
     def call_llama(state: AgentState) -> dict:
         if state.get("verbose", False):
             print(f"[TRACE] call_llama received user_input={state['user_input']!r}")
@@ -514,14 +600,9 @@ def save_graph_image(graph, filename="lg_graph.png"):
     Uses the graph's built-in Mermaid export functionality.
     """
     try:
-        # Get the Mermaid PNG representation of the graph
-        # This requires the 'grandalf' package for rendering
         png_data = graph.get_graph(xray=True).draw_mermaid_png()
-
-        # Write the PNG data to file
         with open(filename, "wb") as f:
             f.write(png_data)
-
         print(f"Graph image saved to {filename}")
     except Exception as e:
         print(f"Could not save graph image: {e}")
@@ -529,81 +610,39 @@ def save_graph_image(graph, filename="lg_graph.png"):
 
 def main():
     """
-    Main function that orchestrates the simple agent workflow:
-    1. Initialize the LLM
-    2. Create the LangGraph
-    3. Save the graph visualization
-    4. Run the graph once (it loops internally until user quits)
-
-    The graph handles all looping internally through its edge structure:
-    - get_user_input: Prompts and reads from stdin
-    - call_llm: Processes input through the LLM
-    - print_response: Outputs the response, then loops back to get_user_input
-
-    The graph only terminates when the user types 'quit', 'exit', or 'q'.
+    Main function for the LangGraph agent with tools.
     """
     print("=" * 50)
-    print("LangGraph Simple Agent with Llama-3.2-1B-Instruct")
+    print("LangGraph Agent with Tools")
     print("=" * 50)
     print()
 
-    # Step 0: Create a checkpointer to persist graph state
     thread_id = "chat-1"
     config = {"configurable": {"thread_id": thread_id}}
-    with SqliteSaver.from_conn_string("topic2_checkpoints.db") as checkpointer:
-
-        # Step 1: Create and configure the LLM
-        llm, tokenizer = create_llm()
-        # Also create the Qwen model
-        qwen_llm, qwen_tokenizer = create_qwen_llm()
-
-        # Step 2: Build the LangGraph with both LLMs
-        print("\nCreating LangGraph...")
-        graph = create_graph(llm, tokenizer, qwen_llm, qwen_tokenizer, checkpointer=checkpointer)
+    with SqliteSaver.from_conn_string("tools_checkpoints.db") as checkpointer:
+        print("Creating LangGraph...")
+        graph = create_graph(llm_with_tools, checkpointer=checkpointer)
         print("Graph created successfully!")
 
-        # Step 3: Save a visual representation of the graph before execution
-        # This happens BEFORE any graph execution, showing the graph structure
-        print("\nSaving graph visualization...")
+        print("Saving graph visualization...")
         save_graph_image(graph)
 
-        # Step 4: Run the graph - it will loop internally until user quits
-        # Create initial state with empty/default values
-        # The graph will loop continuously, updating state as it goes:
-        #   - get_user_input displays banner, populates user_input and should_exit
-        #   - call_llm populates llm_response
-        #   - print_response displays output, then loops back to get_user_input
         initial_state: AgentState = {
             "user_input": "",
             "should_exit": False,
-            "llama_response": "",
-            "qwen_response": "",
             "verbose": False,
             "skip_input": False,
-            "llama_messages": [SystemMessage(content=ThreeWayChatPromptTemplate.llama_system_prompt)],
-            "qwen_messages": [SystemMessage(content=ThreeWayChatPromptTemplate.qwen_system_prompt)],
+            "messages": [SystemMessage(content="You are a helpful assistant with access to various tools.")],
         }
 
-        # Single invocation - the graph loops internally via print_response -> get_user_input
-        # The graph only exits when route_after_input returns END (user typed quit/exit/q)
         state = graph.get_state(config)
         if state.next:
             print("\n🔄 Resuming from checkpoint...")
-            print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
-            print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
-            print("Next node(s):", state.next)
-            # if state.get("verbose", False):
-            #     print("[TRACE] Llama messages:", len(state.values.get("llama_messages", [])))
-            #     print("[TRACE] Qwen messages:", len(state.values.get("qwen_messages", [])))
-
             graph.invoke(None, config=config)
         else:
             print("\n▶️ Starting new chat...")
-            # checkpointer.delete_thread(thread_id)
-            # print("\nDeleted existing checkpoint. Starting fresh.")
             graph.invoke(initial_state, config=config)
 
 
-# Entry point - only run main() if this script is executed directly
 if __name__ == "__main__":
     main()
