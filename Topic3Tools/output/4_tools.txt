@@ -1,4 +1,4 @@
-(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> python Topic3Tools\langgraph_tools\4_langgraph_tools.py
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> & C:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/.venv/Scripts/python.exe c:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/Topic3Tools/langgraph_tools/4_langgraph_tools.py
 ============================================================
 TEST 4: Test expression calculation
 ============================================================
@@ -11,7 +11,7 @@ LLM wants to call 1 tool(s)
   Result: {"success": true, "result": 6}
 
 --- Iteration 2 ---
-Assistant: The result of the expression \(2 + 2 \times 2\) is 6.
+Assistant: The result of the expression \(2 + 2 \times 2\) is \(6\).
 
 
 ============================================================
@@ -22,11 +22,11 @@ User: Calculate the expression 2 * (2 + 2)
 --- Iteration 1 ---
 LLM wants to call 1 tool(s)
   Tool: calculator
-  Args: {'payload': '{"expression": "2 * (2 + 2)"}'}
+  Args: {'payload': '{"expression":"2 * (2 + 2)"}'}
   Result: {"success": true, "result": 8}
 
 --- Iteration 2 ---
-Assistant: The result of the expression \(2 * (2 + 2)\) is \(8\).
+Assistant: The result of the expression \( 2 * (2 + 2) \) is 8.
 
 
 ============================================================
@@ -42,3 +42,38 @@ LLM wants to call 1 tool(s)
 
 --- Iteration 2 ---
 Assistant: The area of a circle with a radius of 5 is approximately 78.54 square units.
+
+
+============================================================
+TEST 7: Test letter counting
+============================================================
+User: How many times is 's' in 'Mississippi riverboats'?
+
+--- Iteration 1 ---
+LLM wants to call 1 tool(s)
+  Tool: count_letter
+  Args: {'payload': '{"letter":"s","text":"Mississippi riverboats","case_sensitive":false}'}
+  Result: {"success": true, "result": 5}
+
+--- Iteration 2 ---
+Assistant: The letter 's' appears 5 times in the phrase "Mississippi riverboats".
+
+============================================================
+TEST: Text to Speech
+============================================================
+User: Convert this text to speech: 'Hello from the AI agent!'
+
+--- Iteration 1 ---
+LLM wants to call 1 tool(s)
+  Tool: text_to_speech
+  Args: {'payload': 'Hello from the AI agent!'}
+  Result: {"success": false, "error": "Invalid JSON payload: Expecting value: line 1 column 1 (char 0)"}
+
+--- Iteration 2 ---
+LLM wants to call 1 tool(s)
+  Tool: text_to_speech
+  Args: {'payload': '{"text": "Hello from the AI agent!"}'}
+  Result: {"success": true}
+
+--- Iteration 3 ---
+Assistant: The text has been successfully converted to speech: "Hello from the AI agent!"

@@ -174,7 +174,7 @@ def text_to_speech(payload: str) -> str:
     """Convert text to speech and play it through speakers.
     
     Expects `payload` to be a JSON string with key `text`, e.g.
-      {"text": "Hello, I am speaking!"}
+      '{"text": "Hello, I am speaking!"}'
     
     Returns a JSON string: {"success": true} or {"success": false, "error": "message"}.
     """
