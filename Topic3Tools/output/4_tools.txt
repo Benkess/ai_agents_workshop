@@ -1,0 +1,44 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> python Topic3Tools\langgraph_tools\4_langgraph_tools.py
+============================================================
+TEST 4: Test expression calculation
+============================================================
+User: Calculate the expression 2 + 2 * 2
+
+--- Iteration 1 ---
+LLM wants to call 1 tool(s)
+  Tool: calculator
+  Args: {'payload': '{"expression": "2 + 2 * 2"}'}
+  Result: {"success": true, "result": 6}
+
+--- Iteration 2 ---
+Assistant: The result of the expression \(2 + 2 \times 2\) is 6.
+
+
+============================================================
+TEST 5: Test order of operations
+============================================================
+User: Calculate the expression 2 * (2 + 2)
+
+--- Iteration 1 ---
+LLM wants to call 1 tool(s)
+  Tool: calculator
+  Args: {'payload': '{"expression": "2 * (2 + 2)"}'}
+  Result: {"success": true, "result": 8}
+
+--- Iteration 2 ---
+Assistant: The result of the expression \(2 * (2 + 2)\) is \(8\).
+
+
+============================================================
+TEST 6: Test Area calculations
+============================================================
+User: Calculate the area of a circle with radius 5
+
+--- Iteration 1 ---
+LLM wants to call 1 tool(s)
+  Tool: area
+  Args: {'payload': '{"shape":"circle","radius":5}'}
+  Result: {"success": true, "result": 78.53981633974483}
+
+--- Iteration 2 ---
+Assistant: The area of a circle with a radius of 5 is approximately 78.54 square units.
