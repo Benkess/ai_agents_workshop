@@ -328,7 +328,12 @@ if __name__ == "__main__":
     print("="*60)
     run_agent("How many times is 's' in 'Mississippi riverboats'?")
 
-    print("="*60)
-    print("TEST: Text to Speech")
+    print("\n" + "="*60)
+    print("TEST 8: Text to Speech")
     print("="*60)
     run_agent("Convert this text to speech: 'Hello from the AI agent!'")
+
+    print("\n" + "="*60)
+    print("TEST 9: Test letter counting")
+    print("="*60)
+    run_agent("Can you count the number of times 's' and 'i' each appear in 'Mississippi riverboats'; Then subtract the counts; Then covert the difference into speech?")
