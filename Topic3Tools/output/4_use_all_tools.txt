@@ -1,0 +1,30 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> & C:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/.venv/Scripts/python.exe c:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/Topic3Tools/langgraph_tools/4_langgraph_tools.py
+   
+============================================================
+TEST 9: Test letter counting
+============================================================
+User: Can you count the number of times 's' and 'i' each appear in 'Mississippi riverboats'; Then subtract the counts; Then covert the difference into speech?
+
+--- Iteration 1 ---
+LLM wants to call 2 tool(s)
+  Tool: count_letter
+  Args: {'payload': '{"letter":"s","text":"Mississippi riverboats"}'}
+  Result: {"success": true, "result": 5}
+  Tool: count_letter
+  Args: {'payload': '{"letter":"i","text":"Mississippi riverboats"}'}
+  Result: {"success": true, "result": 5}
+
+--- Iteration 2 ---
+LLM wants to call 1 tool(s)
+  Tool: calculator
+  Args: {'payload': '{"expression": "5 - 5"}'}
+  Result: {"success": true, "result": 0}
+
+--- Iteration 3 ---
+LLM wants to call 1 tool(s)
+  Tool: text_to_speech
+  Args: {'payload': '{"text":"The difference is zero."}'}
+  Result: {"success": true}
+
+--- Iteration 4 ---
+Assistant: I counted the letters in "Mississippi riverboats": 's' appears 5 times and 'i' appears 5 times. The difference between the counts is 0. I have converted this result into speech: "The difference is zero."
