@@ -169,46 +169,11 @@ def area(payload: str) -> str:
     except Exception as e:
         return json.dumps({"success": False, "error": str(e)})
 
-@tool
-def text_to_speech(payload: str) -> str:
-    """Convert text to speech and play it through speakers.
-    
-    Expects `payload` to be a JSON string with key `text`, e.g.
-      {"text": "Hello, I am speaking!"}
-    
-    Returns a JSON string: {"success": true} or {"success": false, "error": "message"}.
-    """
-    try:
-        params = json.loads(payload)
-    except Exception as e:
-        return json.dumps({"success": False, "error": f"Invalid JSON payload: {e}"})
-    
-    try:
-        import pyttsx3
-        
-        text = params.get("text")
-        if not text:
-            raise ValueError("Missing 'text' field")
-        
-        # Initialize text-to-speech engine
-        engine = pyttsx3.init()
-        
-        # Optional: adjust speech rate (default is 200)
-        engine.setProperty('rate', 150)
-        
-        # Speak the text
-        engine.say(text)
-        engine.runAndWait()
-        
-        return json.dumps({"success": True})
-    except Exception as e:
-        return json.dumps({"success": False, "error": str(e)})
-
 # ============================================
 # Tool Mapping
 # ============================================
 
-tools = [get_weather, calculator, area, count_letter, text_to_speech]
+tools = [get_weather, calculator, area, count_letter]
 tool_map = {tool.name: tool for tool in tools}
 
 # ============================================
@@ -327,8 +292,3 @@ if __name__ == "__main__":
     print("TEST 7: Test letter counting")
     print("="*60)
     run_agent("How many times is 's' in 'Mississippi riverboats'?")
-
-    print("="*60)
-    print("TEST: Text to Speech")
-    print("="*60)
-    run_agent("Convert this text to speech: 'Hello from the AI agent!'")
