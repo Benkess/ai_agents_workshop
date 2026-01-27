@@ -6,5 +6,14 @@ tqdm
 huggingface_hub
 bitsandbytes
 
+# Requirements for T2
+# torch
+# transformers
+# langchain-huggingface
+# langgraph
+# grandalf
+
 # Requirements for T3
 openai 
+langchain_openai
+langchain
