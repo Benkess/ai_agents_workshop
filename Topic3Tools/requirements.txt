@@ -6,5 +6,5 @@ tqdm
 huggingface_hub
 bitsandbytes
 
-# Requirements for graphing
-matplotlib
+# Requirements for T3
+openai 
