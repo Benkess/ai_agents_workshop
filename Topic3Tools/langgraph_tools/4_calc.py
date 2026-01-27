@@ -101,37 +101,6 @@ def calculator(payload: str) -> str:
 
 
 @tool
-def count_letter(payload: str) -> str:
-    """Count occurrences of a letter (or substring) in a text.
-
-    Expects `payload` to be a JSON string with keys:
-      - `letter`: the character or substring to count
-      - `text`: the text to search
-      - `case_sensitive` (optional, default False)
-
-    Returns a JSON string: {"success": true, "result": <count>} or
-    {"success": false, "error": "message"}.
-    """
-    try:
-        params = json.loads(payload)
-    except Exception as e:
-        return json.dumps({"success": False, "error": f"Invalid JSON payload: {e}"})
-    try:
-        letter = params.get("letter")
-        text = params.get("text")
-        if letter is None or text is None:
-            raise ValueError("Both 'letter' and 'text' fields are required")
-        case_sensitive = bool(params.get("case_sensitive", False))
-        if not case_sensitive:
-            letter = letter.lower()
-            text = text.lower()
-        count = text.count(letter)
-        return json.dumps({"success": True, "result": count})
-    except Exception as e:
-        return json.dumps({"success": False, "error": str(e)})
-
-
-@tool
 def area(payload: str) -> str:
     """Compute area for simple shapes.
 
@@ -173,7 +142,7 @@ def area(payload: str) -> str:
 # Tool Mapping
 # ============================================
 
-tools = [get_weather, calculator, area, count_letter]
+tools = [get_weather, calculator, area]
 tool_map = {tool.name: tool for tool in tools}
 
 # ============================================
@@ -287,8 +256,3 @@ if __name__ == "__main__":
     print("TEST 6: Test Area calculations")
     print("="*60)
     run_agent("Calculate the area of a circle with radius 5")
-
-    print("\n" + "="*60)
-    print("TEST 7: Test letter counting")
-    print("="*60)
-    run_agent("How many times is 's' in 'Mississippi riverboats'?")
