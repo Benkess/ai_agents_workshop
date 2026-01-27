@@ -64,11 +64,83 @@ deactivate
 ## Tree
 
 ```text
-
+Topic3Tools
+│   OpenAI_GPT4o_Mini_Test.py
+│   readme.md
+│   requirements.txt
+│   requirements_explicit.txt
+│
+├───langgraph_tools
+│   │   4_calc.py
+│   │   4_langgraph_tools.py
+│   │   4_letter_count.py
+│   │   5_langgraph_framework.py
+│   │   langgraph-tool-handling.py
+│   │
+│   └───__pycache__
+│           5_langgraph_framework.cpython-312.pyc
+│
+├───manual-tool-handling
+│       3_calculator_tool.py
+│       manual-tool-handling.py
+│
+├───ollama
+│       llama_mmlu_eval.py
+│       llama_mmlu_eval_ollama.py
+│       ollama_test.py
+│
+└───output
+        3_calc.txt
+        3_startercode.txt
+        4_letter_count.txt
+        4_startercode.txt
+        4_tools.txt
+        4_use_all_tools.txt
+        5.txt
+        5_lg_graph.png
 ```
 
 ---
 
 ## Table of contents
+
+### 1: Timing Ollama
+- [Topic3Tools\ollama\llama_mmlu_eval_ollama.py](): Code for part 1.
+
+Discussion: 
+I observed that it was incredably slow. I had to cut it off because it was taking to long. I am not sure where i messed up. I was running locally and it would get to like 20 minutes.
+
+### 2: API setup 
+```bash
+# set up a client to communicate using oOpenAI's API
+client = OpenAI()
+# saves the response from the request sent using the open ai client
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "Say: Working!"}],
+ max_tokens=5
+```
+### 3: Manual tool handling
+- [/Topic3Tools/manual-tool-handling/3_calculator_tool.py](/Topic3Tools/manual-tool-handling/3_calculator_tool.py): code for question 3.
+- [/Topic3Tools/output/3_calc.txt](/Topic3Tools/output/3_calc.txt): Output from calculator tool.
+- [/Topic3Tools/output/3_startercode.txt](/Topic3Tools/output/3_startercode.txt): Starter Code Output.
+
+### 4: LangGraph tool handling
+- [Topic3Tools\langgraph_tools\4_langgraph_tools.py](): Full code for using all tools with langgraph.
+- [Topic3Tools\output\4_tools.txt](): Out puts from each tool.
+- [Topic3Tools\output\4_use_all_tools.txt](): Uses all 3 tools in one prompt.
+
+Discussion:
+I was able to make a querry that used all 3 tools. I also was able to hit the turn limit by just asking it too use the tools repeatedly. 
+
+### 5: LangGraph Conversation Framework
+- [Topic3Tools\langgraph_tools\5_langgraph_framework.py](): Code for part 5.
+- [Topic3Tools\output\5.txt](): A conversation that demonstrates tool use, the conversation context, and recovery.
+- [Topic3Tools\output\5_lg_graph.png](): Mermaid diagram of the system.
+
+### 6: Question
+Question: where is there an opportunity for parallelization in your agent that is not yet being taken advantage of?
+
+Answer: I feel like the speaking tool could run parallel to the agent since the response is not needed to continue. This could allow for speaking to happen while the user is typing their next prompt. Maybe submitting the next prompt will interupt the tool. 
 
 ---
