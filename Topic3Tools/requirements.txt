@@ -1,0 +1,10 @@
+# Requirements for LLaMA MMLU Evaluation and Simple Chat Agent
+transformers
+datasets
+accelerate
+tqdm
+huggingface_hub
+bitsandbytes
+
+# Requirements for graphing
+matplotlib
