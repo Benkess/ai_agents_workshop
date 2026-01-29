@@ -125,6 +125,9 @@ response = client.chat.completions.create(
 - [/Topic3Tools/output/3_calc.txt](/Topic3Tools/output/3_calc.txt): Output from calculator tool.
 - [/Topic3Tools/output/3_startercode.txt](/Topic3Tools/output/3_startercode.txt): Starter Code Output.
 
+Discussion:
+I didn't have any problems with it using the tools.
+
 ### 4: LangGraph tool handling
 - [Topic3Tools\langgraph_tools\4_langgraph_tools.py](): Full code for using all tools with langgraph.
 - [Topic3Tools\output\4_tools.txt](): Out puts from each tool.
