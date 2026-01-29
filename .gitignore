@@ -1,3 +1,6 @@
+# Data files
+*.db
+
 # venv/ virtual environment
 #  If you are using a standard virtual environment created by python -m venv venv,
 #  you should ignore the venv/ directory. If you are using a different name for your

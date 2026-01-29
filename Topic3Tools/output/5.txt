@@ -1,0 +1,140 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> & C:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/.venv/Scripts/python.exe c:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/Topic3Tools/langgraph_tools/5_langgraph_framework.py
+==================================================
+LangGraph Agent with Tools
+==================================================
+
+Creating LangGraph...
+Graph created successfully!
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+▶️ Starting new chat...
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> hey
+Assistant: Hello! How can I assist you today?
+
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Are you able to tell me what is 5 * 2 + 7 *5?
+Assistant: The result of the expression \( 5 \times 2 + 7 \times 5 \) is 45.
+
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> verbose
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Can you count the number of times 's' and 'i' each appear in 'Mississippi riverboats'; Then subtract the counts; Then covert the difference into speech?
+Calling LLM with messages...
+LLM wants to call 2 tool(s)
+  Tool: count_letter
+  Args: {'payload': '{"letter": "s", "text": "Mississippi riverboats"}'}
+  Result: {"success": true, "result": 5}
+  Tool: count_letter
+  Args: {'payload': '{"letter": "i", "text": "Mississippi riverboats"}'}
+  Result: {"success": true, "result": 5}
+LLM wants to call 1 tool(s)
+  Tool: text_to_speech
+  Args: {'payload': '{"text": "The difference between the counts of \'s\' and \'i\' is 0."}'}
+  Result: {"success": true}
+Assistant: The letter 's' appears 5 times, and the letter 'i' also appears 5 times in the phrase "Mississippi riverboats". The difference between the counts is 0, and I've converted that information into speech.
+
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> can you repeat the last answer
+Calling LLM with messages...
+Assistant: The letter 's' appears 5 times, and the letter 'i' also appears 5 times in the phrase "Mississippi riverboats". The difference between the counts is 0.
+
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Traceback (most recent call last):
+  File "c:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\Topic3Tools\langgraph_tools\5_langgraph_framework.py", line 648, in <module>
+    main()
+  File "c:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\Topic3Tools\langgraph_tools\5_langgraph_framework.py", line 644, in main
+    graph.invoke(initial_state, config=config)
+  File "C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3071, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2646, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 167, in tick
+    run_with_retry(
+  File "C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 656, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 400, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\Topic3Tools\langgraph_tools\5_langgraph_framework.py", line 275, in get_user_input
+    user_input = input()
+                 ^^^^^^^
+KeyboardInterrupt
+-------------------------------------------------------Run 2------------------------------
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> & C:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/.venv/Scripts/python.exe c:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/Topic3Tools/langgraph_tools/5_langgraph_framework.py
+==================================================
+LangGraph Agent with Tools
+==================================================
+
+Creating LangGraph...
+Graph created successfully!
+Saving graph visualization...
+Graph image saved to lg_graph.png
+
+🔄 Resuming from checkpoint...
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> what was the last message about?
+Calling LLM with messages...
+Assistant: The last message was about counting the occurrences of the letters 's' and 'i' in the phrase "Mississippi riverboats." Both letters appeared 5 times each, resulting in a difference of 0 between their counts.
+
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> Can you now do the same thing but add the two counts?
+Calling LLM with messages...
+LLM wants to call 2 tool(s)
+  Tool: count_letter
+  Args: {'payload': '{"letter": "s", "text": "Mississippi riverboats"}'}
+  Result: {"success": true, "result": 5}
+  Tool: count_letter
+  Args: {'payload': '{"letter": "i", "text": "Mississippi riverboats"}'}
+  Result: {"success": true, "result": 5}
+LLM wants to call 1 tool(s)
+  Tool: text_to_speech
+  Args: {'payload': '{"text": "The sum of the counts of \'s\' and \'i\' is 10."}'}
+  Result: {"success": true}
+Assistant: The letter 's' appears 5 times, and the letter 'i' also appears 5 times in the phrase "Mississippi riverboats". The sum of the counts is 10, and I've converted that information into speech.
+
+
+==================================================
+Enter your text (or 'quit' to exit):
+==================================================
+
+> quit
