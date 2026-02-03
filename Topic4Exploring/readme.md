@@ -71,6 +71,13 @@ Topic4Exploring
 ---
 
 ## Table of contents
-TODO
-
+### Part 3: Tool Node vs React Agent
+- What features of Python does ToolNode use to dispatch tools in parallel?  What kinds of tools would most benefit from parallel dispatch?
+  - Answer: 
+- How do the two programs handle special inputs such as "verbose" and "exit"?
+  - Answer: 
+- Compare the graph diagrams of the two programs.  How do they differ if at all?
+  - Answer: 
+- What is an example of a case where the structure imposed by the LangChain react agent is too restrictive and you'd want to pursue the toolnode approach?  
+  - Answer: 
 ---
