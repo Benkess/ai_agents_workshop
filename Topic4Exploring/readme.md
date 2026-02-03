@@ -66,18 +66,50 @@ deactivate
 ```text
 Topic4Exploring
 │   readme.md
+│
+├───output
+│       langchain_conversation_graph.png
+│       langchain_manual_tool_graph.png
+│       langchain_react_agent.png
+│
+├───part3
+│       react_agent_example.py
+│       toolnode_example.py
+│
+└───part5
+        doc.md
+        readme.md
+        topic4_youtube_video_analyzer.py
+        youtube_tool_test.py
 ```
 
 ---
 
 ## Table of contents
 ### Part 3: Tool Node vs React Agent
+**Files:**
+- [Topic4Exploring\part3\react_agent_example.py](): LangGraph ReAct Agent with Persistent Multi-Turn Conversation
+- [Topic4Exploring\part3\toolnode_example.py](): Manual ToolNode Implementation
+- [Topic4Exploring\output\langchain_conversation_graph.png](): Mermaid from react agent showing Conversation loop wrapper.
+- [Topic4Exploring\output\langchain_manual_tool_graph.png](): Mermaid from Manual tool calling agent
+- [Topic4Exploring\output\langchain_react_agent.png](): Mermaid from react agent showing ReAct agent (thought/action/observation)
+
+**Questions:**
 - What features of Python does ToolNode use to dispatch tools in parallel?  What kinds of tools would most benefit from parallel dispatch?
-  - Answer: 
+  - Answer: It uses `asyncio` to dispatch tools in parallel. This might be usefull for search tools where multiple searches could run at the same time.
 - How do the two programs handle special inputs such as "verbose" and "exit"?
-  - Answer: 
+  - Answer: Both the `react_agent_example.py` and `toolnode_example.py` uses an input node that parses the user input and routes to the special location if there is a special input.
 - Compare the graph diagrams of the two programs.  How do they differ if at all?
-  - Answer: 
+  - Answer: The `react_agent_example.py` has a sub graph that contains the agent and tool nodes and a wrapper graph for everything else. The `toolnode_example.py` has all the nodes on the same graph.
 - What is an example of a case where the structure imposed by the LangChain react agent is too restrictive and you'd want to pursue the toolnode approach?  
-  - Answer: 
+  - Answer: The react approach does not allow for branching based on tool results or running multiple actions in parallel. If we wanted to have the agent run multiple tools then depending on the tool branch to an aggrigate results node then return them to the model, react would not work.
+
+### Part 5: 2-Hour Agent Projects
+**Files:**
+- [Topic4Exploring\part5\topic4_youtube_video_analyzer.py](/Topic4Exploring/part5/topic4_youtube_video_analyzer.py): The code for the youtube transcript agent.
+- [readme](/Topic4Exploring/part5/readme.md): Description and Usage Instructions.
+
+
+**Description:**
+I did "Option 3: YouTube Transcript" and made an agent that gives summaries of educational videos.
 ---
