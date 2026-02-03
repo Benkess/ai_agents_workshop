@@ -1,0 +1,68 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> & C:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/.venv/Scripts/python.exe c:/Users/benpk/School/CSFiles/AI_Agent/ai_agents_workshop/Topic4Exploring/part5/topic4_youtube_video_analyzer.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+c:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\Topic4Exploring\part5\topic4_youtube_video_analyzer.py:85: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(llm, tools=[get_youtube_transcript])
+The transcript retrieved is from the song "Never Gonna Give You Up" by Rick Astley. Here’s the requested information based on the content of the song:
+
+### Concise Summary
+- The song expresses a deep commitment to love and loyalty.
+- It emphasizes the importance of trust and honesty in relationships.
+- The singer reassures their partner that they will never abandon them.
+- The lyrics convey a sense of understanding and mutual feelings.
+- The repetition of key phrases reinforces the message of unwavering support.
+
+### Key Concepts
+1. **Commitment**: The song highlights the importance of being fully committed in a relationship, suggesting that true love requires dedication and reliability.
+2. **Trust**: Trust is a central theme, as the singer promises never to betray or hurt their partner, which is essential for a healthy relationship.
+3. **Emotional Vulnerability**: The lyrics touch on the idea that both partners may have unspoken feelings, emphasizing the need for open communication.
+4. **Reassurance**: The repeated affirmations serve to reassure the partner of the singer's intentions and feelings, which can help strengthen the bond between them.
+
+### Quiz Questions
+1. **What is the main theme of the song "Never Gonna Give You Up"?**
+   - A) Betrayal
+   - B) Commitment and loyalty
+   - **Answer**: B) Commitment and loyalty
+
+2. **What does the singer promise never to do?**
+   - A) To leave their partner
+   - B) To tell a lie
+   - C) Both A and B
+   - **Answer**: C) Both A and B
+
+3. **How does the singer feel about their partner?**
+   - A) Indifferent
+   - B) Deeply committed
+   - C) Angry
+   - **Answer**: B) Deeply committed
+
+4. **What emotion does the singer suggest their partner is feeling?**
+   - A) Happiness
+   - B) Heartache
+   - C) Anger
+   - **Answer**: B) Heartache
+
+5. **What does the phrase "never gonna run around and desert you" imply?**
+   - A) The singer will always be there for their partner.
+   - B) The singer will travel frequently.
+   - C) The singer will change their mind.
+   - **Answer**: A) The singer will always be there for their partner.
+
+6. **What is the significance of the repetition in the song?**
+   - A) It makes the song longer.
+   - B) It emphasizes the singer's promises.
+   - C) It confuses the listener.
+   - **Answer**: B) It emphasizes the singer's promises.
+
+7. **What does the singer want to communicate to their partner?**
+   - A) They are moving on.
+   - B) They are unsure about their feelings.
+   - C) They want to express their true feelings.
+   - **Answer**: C) They want to express their true feelings.
+
+8. **What role does emotional vulnerability play in the song?**
+   - A) It shows weakness.
+   - B) It highlights the importance of open communication.
+   - C) It is not mentioned.
+   - **Answer**: B) It highlights the importance of open communication.
+
+If you have any further questions or need additional information, feel free to ask!
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop> 

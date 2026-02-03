@@ -71,6 +71,7 @@ Topic4Exploring
 │       langchain_conversation_graph.png
 │       langchain_manual_tool_graph.png
 │       langchain_react_agent.png
+│       youtube_agent.txt
 │
 ├───part3
 │       react_agent_example.py
@@ -108,8 +109,10 @@ Topic4Exploring
 **Files:**
 - [Topic4Exploring\part5\topic4_youtube_video_analyzer.py](/Topic4Exploring/part5/topic4_youtube_video_analyzer.py): The code for the youtube transcript agent.
 - [readme](/Topic4Exploring/part5/readme.md): Description and Usage Instructions.
+- [Topic4Exploring\output\youtube_agent.txt](/Topic4Exploring/output/youtube_agent.txt): Example Output.
 
 
 **Description:**
 I did "Option 3: YouTube Transcript" and made an agent that gives summaries of educational videos.
+
 ---
