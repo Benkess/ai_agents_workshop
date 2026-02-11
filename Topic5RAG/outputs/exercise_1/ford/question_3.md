@@ -1,4 +1,4 @@
-# Question 2: 
+# Question 3: 
 "How do I fix a slipping transmission band?"
 
 ## Response:
