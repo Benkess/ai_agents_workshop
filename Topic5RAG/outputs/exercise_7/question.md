@@ -94,6 +94,12 @@ Under “Visa Information System”, what is the Regulation number listed in poi
 ```
 good because seperate chunks.
 
+### Q3
+```text
+Under “Visa Information System”, which Regulation establishes conditions for accessing other EU information systems, and which Regulation reforms the Visa Information System?
+```
+
+
 ## Response:
 ```
  Answer this question:
