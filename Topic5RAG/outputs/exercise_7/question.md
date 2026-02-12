@@ -1,4 +1,132 @@
-# Question
+# Exercise 7: Chunk Overlap Experiment
+Test how overlap between chunks affects retrieval of information that spans chunk boundaries. You can use any of the copora and your own queries. Note: this exercise takes a long time to run.  Only try it on CoLab or a similar platform with T4 or better GPUs.
+
+**Setup:** Re-chunk your corpus with different overlap values while keeping chunk size constant (e.g., 512 characters):
+
+- Overlap = 0 (no overlap)
+
+- Overlap = 64
+
+- Overlap = 128
+
+- Overlap = 256
+
+**For each configuration:**
+
+- Rebuild the index
+
+- Find a question whose answer spans what would be a chunk boundary
+
+- Test retrieval quality
+
+**Document:**
+
+- Does higher overlap improve retrieval of complete information?
+
+- What's the cost? (Index size, redundant information in context)
+
+- Is there a point of diminishing returns?
+
+## Answers
+### Does higher overlap improve retrieval of complete information?
+Surprising not really. For all the questions I could come up with (that landed on a chunk bound), both relevant chunks would pop up. So with 0 overlap it basically always got the needed info. The overlap increased redundant info but also made it less likely that the full needed context would get found since more overlapping chunks were found. See example of 0 over lap bellow:
+``` text
+ Answer this question:
+For the Quality management system, what should the application of the provider include?
+
+Answer:
+WITH CHUNK SIZE 512 and CHUNK OVERLAP 0 (using retrieved context):
+----------------------------------------
+Batches: 100% 42/42 [00:01<00:00, 26.93it/s]Rebuilt: 1339 chunks, chunk_size=512, chunk_overlap=0
+============================================================
+RETRIEVED CONTEXT:
+============================================================
+[Source: EU_AI_Act.txt, Relevance: 0.763]
+The application of the provider shall include:
+(a) the name and address of the provider and, if the application is lodged by an authorised representative, also their
+name and address;
+(b) the list of AI systems covered under the same quality management system;
+(c) the technical documentation for each AI system covered under the same quality management system;
+(d) the documentation concerning the quality management system which shall cover all the aspects listed under
+Article 17;
+(e) a description of the pro
+
+---
+
+[Source: EU_AI_Act.txt, Relevance: 0.612]
+The provider should establish a sound quality management system, ensure the accomplishment of the required
+conformity assessment procedure, draw up the relevant documentation and establish a robust post-market
+monitoring system. Providers of high-risk AI systems that are subject to obligations regarding quality management
+systems under relevant sectoral Union law should have the possibility to include the elements of the quality
+management system provided for in this Regulation as part of the existing quali
+
+---
+
+[Source: EU_AI_Act.txt, Relevance: 0.611]
+quality management system and the reasoned
+assessment decision.
+
+3.3.
+
+The quality management system as approved shall continue to be implemented and maintained by the provider so
+that it remains adequate and efficient.
+
+3.4.
+
+Any intended change to the approved quality management system or the list of AI systems covered by the latter shall
+be brought to the attention of the notified body by the provider.
+The proposed changes shall be examined by the notified body, which shall decide whether the modified q
+
+---
+
+[Source: EU_AI_Act.txt, Relevance: 0.589]
+cedures in place to ensure that the quality management system remains adequate and
+effective;
+(f) a written declaration that the same application has not been lodged with any other notified body.
+
+3.2.
+
+The quality management system shall be assessed by the notified body, which shall determine whether it satisfies the
+requirements referred to in Article 17.
+The decision shall be notified to the provider or its authorised representative.
+The notification shall contain the conclusions of the assessment of the
+
+---
+
+[Source: EU_AI_Act.txt, Relevance: 0.547]
+In addition to the application referred to in point 3, an application with a notified body of their choice shall be
+lodged by the provider for the assessment of the technical documentation relating to the AI system which the
+provider intends to place on the market or put into service and which is covered by the quality management system
+referred to under point 3.
+
+4.2.
+============================================================
+
+The application of the provider for the Quality management system should include:
+
+(a) the name and address of the provider and, if the application is lodged by an authorised representative, also their name and address;
+
+(b) the list of AI systems covered under the same quality management system;
+
+(c) the technical documentation for each AI system covered under the same quality management system;
+
+(d) the documentation concerning the quality management system which shall cover all the aspects listed under Article 17;
+
+(e) a description of the procedures involved in the quality management system; 
+
+(f) a written declaration that the same application has not been lodged with any other notified body. 
+
+Additionally, providers of high-risk AI systems must ensure that the quality management system includes the elements specified in the Regulation, and any modifications to the system or the list of AI systems must be reported to the notified body for examination. To maintain the adequacy and effectiveness of the quality management system, the provider must also undergo regular assessments by the notified body.
+
+```
+
+### What's the cost? (Index size, redundant information in context)
+More redundant info but also less space for the full needed context because more overlap is found.
+
+### Is there a point of diminishing returns?
+yes: 0 overlap was best i think. I assume that there must be some benefit to overlap but did not find evidence of that with my questions.
+
+## Info
 Normal sizes
 ```
 CHUNK_SIZE = 512      # Try: 256, 512, 1024
