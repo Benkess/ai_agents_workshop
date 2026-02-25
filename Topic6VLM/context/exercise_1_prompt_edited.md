@@ -19,14 +19,15 @@ Use **Python**, **Gradio** for the web UI, **LangGraph** for the agent/state mac
 2. The workflow:
 
    * User uploads an image.
-   * User sends the **first message**, and that first message **includes the image**.
+   * The app immediately adds a **pinned image-anchor user message** to the conversation history (right after the system prompt) that includes the image.
+   * Then the user sends their first *typed* prompt as a **separate** user message.
    * After that, user continues chatting with the model about the same image.
    * The model responses appear in the chat.
 
 3. Constraints:
 
    * **Message History:** Keep full message history in memory for the session. Later we will add a sliding context window on all messages except the system prompt and user message with the image.
-   * Still use **good LangGraph style**: typed state, clear nodes, minimal custom formatting, no manual role backs.
+   * Still use **good LangGraph style**: typed state, clear nodes, minimal custom formatting, no manual role hacks.
 
 ### Backend requirements (LangGraph + messages)
 
@@ -44,8 +45,13 @@ Use **Python**, **Gradio** for the web UI, **LangGraph** for the agent/state mac
 * Model call:
 
   * Use `ollama.chat(model="llava", messages=[...])`.
-  * For the **first** user message only, include the image via the `images` field (list containing either a file path or base64 string).
-  * For subsequent turns, omit the `images` field but preserve chat context (messages).
+  * Persist chat history in LangChain message objects (`SystemMessage`, `HumanMessage`, `AIMessage`).
+  * **Image anchoring strategy (no context management phase):**
+    - After the user uploads an image, append a **pinned** `HumanMessage` to the history with content like `"Reference this image in the conversation."`.
+    - Store the image path in state (`image_path`).
+    - Mark the pinned image message with metadata so it can be converted to the Ollama `images=[...]` field at call time (e.g., `HumanMessage(content=..., additional_kwargs={"images": [image_path], "pinned": True})`).
+    - The user's typed prompt is added as a **separate** `HumanMessage` after the pinned image message.
+  * **When calling Ollama**, convert LangChain messages to Ollama message dicts. For any message that has `additional_kwargs["images"]`, include that as the Ollama `images` field on that message.
 
 * System prompt:
 
@@ -82,16 +88,24 @@ Most models will resize and format images internally. For now there is not need 
 
 ### How turns should work (important)
 
-* First user turn:
+* On image upload:
 
-  * Requires that an image is uploaded.
-  * The LangGraph state should store `image_path`.
-  * The ollama call includes the image.
+  * Require an image upload before any chat.
+  * Save `image_path` in state.
+  * Reset chat history for that session.
+  * Initialize history with:
+    1) `SystemMessage` (instructions)
+    2) **Pinned image-anchor `HumanMessage`** with `additional_kwargs={"images": [image_path], "pinned": True}` and content like `"Reference this image in the conversation."`
 
-* Later turns:
+* On first typed prompt (and all later prompts):
 
-  * Use the stored `image_path` only if the model needs it, but **do not attach the image again** unless you decide it’s required.
-  * Continue multi-turn chat using the accumulating message list.
+  * Append the user's typed input as a **separate** `HumanMessage`.
+  * Run the LangGraph node to call the model.
+  * Append the model response as an `AIMessage`.
+
+* Note:
+
+  * In the initial (no context management) version, **do not trim**. Always send the full message history. The pinned image-anchor message stays in history, so the image remains available across turns.
 
 ### Implementation details (be explicit)
 
