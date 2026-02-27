@@ -6,8 +6,9 @@ from assistant import Assistant
 
 # Import different assistant agents
 from open_ai_assistant import OpenAIAssistant
-# from qwen25vl_assistant import Qwen25VLAssistant
-# from qwen3vl_assistant import Qwen3VLAssistant
+from qwen25vl_assistant import Qwen25VLAssistant
+from qwen3_transformers_assistant import Qwen3TransformersAssistant
+from qwen3vl_assistant import Qwen3VLAssistant
 
 class AgentFactory:
     """
@@ -17,8 +18,9 @@ class AgentFactory:
     """Agent Dict mapping agent type strings to their corresponding classes."""
     _agent_dict = {
         "openai": OpenAIAssistant,
-        # "qwen25vl": Qwen25VLAssistant,
-        # "qwen3vl": Qwen3VLAssistant
+        "qwen25vl": Qwen25VLAssistant,
+        "qwen3vl_transformers": Qwen3TransformersAssistant,
+        "qwen3vl": Qwen3VLAssistant,
     }
 
     @staticmethod
@@ -33,12 +35,15 @@ class AgentFactory:
         """
         if agent_type.lower() == "openai":
             return OpenAIAssistant()
-        # elif agent_type.lower() == "qwen25vl":
-        #     model_name = model_name or "Qwen/Qwen2.5-VL-3B-Instruct"
-        #     return Qwen25VLAssistant(model_name=model_name)
-        # elif agent_type.lower() == "qwen3vl":
-        #     model_name = model_name or "Qwen/Qwen3-VL-4B-Instruct"
-        #     return Qwen3VLAssistant(model_name=model_name)
+        elif agent_type.lower() == "qwen25vl":
+            model_name = model_name or "Qwen/Qwen2.5-VL-3B-Instruct"
+            return Qwen25VLAssistant(model_name=model_name)
+        elif agent_type.lower() == "qwen3vl":
+            model_name = model_name or "Qwen/Qwen3-VL-4B-Instruct"
+            return Qwen3VLAssistant(model_name=model_name)
+        elif agent_type.lower() == "qwen3vl_transformers":
+            model_name = model_name or "Qwen/Qwen3-VL-4B-Instruct"
+            return Qwen3TransformersAssistant(model_name=model_name)
         else:
             raise ValueError(f"Unsupported agent type: {agent_type}.")
         
