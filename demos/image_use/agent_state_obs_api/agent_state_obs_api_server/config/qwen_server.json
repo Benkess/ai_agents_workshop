@@ -1,0 +1,13 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 5000
+  },
+  "agent": {
+    "implementation": "openai",
+    "model": "qwen3-vl:4b",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "ollama",
+    "api_key_env": null
+  }
+}

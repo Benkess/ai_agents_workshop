@@ -28,13 +28,30 @@ Set your OpenAI API key before starting the server:
 export OPENAI_API_KEY=your_key_here
 ```
 
-The default server config file is `agent_state_obs_api_server/config/server.json`.
+The server supports OpenAI-compatible providers through the same `OpenAIObsAgent` class. The default config files are:
 
-Start the server:
+- `agent_state_obs_api_server/config/server.json` for cloud OpenAI
+- `agent_state_obs_api_server/config/qwen_server.json` for local Ollama + qwen
+
+Start the server with the default OpenAI config:
 
 ```bash
 cd agent_state_obs_api_server
 python -m agent_state_obs_api_server.server --config config/server.json
+```
+
+Start the server with the qwen/Ollama config:
+
+```bash
+cd agent_state_obs_api_server
+python -m agent_state_obs_api_server.server --config config/qwen_server.json
+```
+
+Or override provider settings from the CLI:
+
+```bash
+cd agent_state_obs_api_server
+python -m agent_state_obs_api_server.server --config config/server.json --model qwen3-vl:4b --base-url http://localhost:11434/v1 --api-key ollama
 ```
 
 Or override host and port directly:
@@ -44,7 +61,21 @@ cd agent_state_obs_api_server
 python -m agent_state_obs_api_server.server --config config/server.json --host 0.0.0.0 --port 5000
 ```
 
-The server currently supports a single agent implementation configured in `agent_state_obs_api_server/config/server.json`. The default and only supported implementation is `openai`.
+The server currently supports a single agent implementation value, `openai`. This is also used for Ollama because Ollama is accessed through its OpenAI-compatible API.
+
+Agent config fields:
+
+- `model`: model name passed to `ChatOpenAI`
+- `base_url`: optional OpenAI-compatible endpoint URL
+- `api_key`: optional literal API key
+- `api_key_env`: optional environment variable name used when `api_key` is not set
+
+API key resolution precedence:
+
+1. CLI `--api-key`
+2. config `agent.api_key`
+3. environment variable named by `api_key_env`
+4. provider default resolution when nothing is supplied
 
 ## Client setup
 
@@ -136,4 +167,4 @@ python ../test/test_observe.py path/to/image.jpg --prompt "Describe what you obs
 
 ## Extending
 
-To add another backend, subclass `agent_state_obs_api_agent/agents/base_obs_agent.py` and implement `query(image_b64, mime_type, prompt) -> dict`. Then update `agent_state_obs_api_server/config/server.json` and the server agent factory to select the new implementation.
+To add another backend, subclass `agent_state_obs_api_agent/agents/base_obs_agent.py` and implement `query(image_b64, mime_type, prompt) -> dict`. Then update the server config files and the server agent factory to select the new implementation.

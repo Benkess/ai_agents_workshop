@@ -9,21 +9,37 @@ from flask import Flask, jsonify, request
 
 from agent_state_obs_api_agent.agents import OpenAIObsAgent
 
-from .config_loader import load_config
+from .config_loader import load_config, resolve_agent_config
 
 
 def create_agent(agent_config: dict[str, Any]):
     implementation = str(agent_config["implementation"])
-    model = str(agent_config["model"])
     if implementation == "openai":
-        return OpenAIObsAgent(model=model)
+        return OpenAIObsAgent(
+            model=str(agent_config["model"]),
+            api_key=agent_config.get("api_key"),
+            base_url=agent_config.get("base_url"),
+        )
     raise ValueError(f"Unsupported agent implementation: {implementation}")
 
-def create_app(config_path: str | None = None) -> Flask:
+def create_app(
+    config_path: str | None = None,
+    agent_overrides: dict[str, Any] | None = None,
+    server_overrides: dict[str, Any] | None = None,
+) -> Flask:
     app = Flask(__name__)
     config = load_config(config_path)
+    effective_agent_config = resolve_agent_config(config["agent"], agent_overrides)
+    effective_server_config = dict(config["server"])
+    if server_overrides:
+        for key, value in server_overrides.items():
+            if value is not None:
+                effective_server_config[key] = value
+
+    app.config["SERVER_CONFIG"] = effective_server_config
+    app.config["AGENT_CONFIG"] = effective_agent_config
     agent_lock = threading.Lock()
-    agent = create_agent(config["agent"])
+    agent = create_agent(effective_agent_config)
 
     @app.route("/observe", methods=["POST"])
     def observe():

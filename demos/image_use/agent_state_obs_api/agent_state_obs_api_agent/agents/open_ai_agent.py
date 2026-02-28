@@ -27,9 +27,20 @@ class OpenAIObsAgent(BaseObsAgent):
         "Never respond with plain text."
     )
 
-    def __init__(self, model: str = "gpt-4o-mini"):
+    def __init__(
+        self,
+        model: str = "gpt-4o-mini",
+        api_key: str | None = None,
+        base_url: str | None = None,
+    ):
         self.model = model
-        llm = ChatOpenAI(model=model)
+        llm_kwargs = {"model": model}
+        if api_key is not None:
+            llm_kwargs["api_key"] = api_key
+        if base_url is not None:
+            llm_kwargs["base_url"] = base_url
+
+        llm = ChatOpenAI(**llm_kwargs)
         self.llm_with_tools = llm.bind_tools([obs_result_tool], tool_choice="required")
         self.graph = self._create_graph()
 
