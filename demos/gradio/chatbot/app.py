@@ -4,6 +4,7 @@ import argparse
 from dataclasses import asdict, dataclass
 import json
 from pathlib import Path
+import threading
 
 import gradio as gr
 
@@ -201,7 +202,9 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                                 label="Allow Partial",
                                 value=default_config.allow_partial,
                             )
-                    start_button = gr.Button("Start Chat", variant="primary")
+                    with gr.Row():
+                        start_button = gr.Button("Start Chat", variant="primary")
+                        close_button = gr.Button("Close App", variant="stop")
 
                 with gr.Column(scale=1):
                     gr.Markdown("### Saved Agents")
@@ -337,6 +340,67 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                 gr.update(interactive=False),
             )
 
+        def return_to_start(
+            session_config: dict[str, str],
+            advanced_visible: bool,
+        ):
+            restored_config = SessionConfig(
+                model=session_config.get("model") or default_config.model,
+                api_key=session_config.get("api_key") or "",
+                base_url=session_config.get("base_url") or "",
+                api_key_env=session_config.get("api_key_env") or "",
+                system_prompt=(
+                    session_config.get("system_prompt") or default_config.system_prompt
+                ),
+                trim_strategy=(
+                    session_config.get("trim_strategy") or default_config.trim_strategy
+                ),
+                token_counter=(
+                    session_config.get("token_counter") or default_config.token_counter
+                ),
+                max_tokens=int(
+                    session_config.get("max_tokens", default_config.max_tokens)
+                ),
+                start_on=session_config.get("start_on") or default_config.start_on,
+                include_system=bool(
+                    session_config.get("include_system", default_config.include_system)
+                ),
+                allow_partial=bool(
+                    session_config.get("allow_partial", default_config.allow_partial)
+                ),
+            )
+            return (
+                None,
+                [],
+                [],
+                [],
+                False,
+                gr.update(visible=True),
+                gr.update(visible=advanced_visible),
+                gr.update(visible=False),
+                gr.update(visible=False),
+                gr.update(value=[]),
+                gr.update(value=""),
+                gr.update(value=""),
+                gr.update(value="Ready."),
+                gr.update(value=restored_config.model),
+                gr.update(value=restored_config.api_key),
+                gr.update(value=restored_config.api_key_env),
+                gr.update(value=restored_config.base_url),
+                gr.update(value=restored_config.system_prompt),
+                gr.update(value=restored_config.trim_strategy),
+                gr.update(value=restored_config.token_counter),
+                gr.update(value=restored_config.max_tokens),
+                gr.update(value=restored_config.start_on),
+                gr.update(value=restored_config.include_system),
+                gr.update(value=restored_config.allow_partial),
+                gr.update(value=""),
+                gr.update(interactive=False),
+            )
+
+        def close_app():
+            threading.Timer(0.2, app.close).start()
+
         def toggle_internals(visible: bool):
             next_visible = not visible
             return next_visible, gr.update(visible=next_visible)
@@ -417,33 +481,31 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
             model_context: list[dict[str, str]],
             session_config: dict[str, str],
             session_closed: bool,
+            advanced_visible: bool,
         ):
-            if session_closed:
-                return (
+            if not session_closed:
+                submit_message(
+                    "quit",
                     current_agent_state,
                     chat_history,
                     debug_log,
                     model_context,
-                    True,
-                    gr.update(value=chat_history),
-                    _format_debug_log(debug_log),
-                    _format_model_context(model_context),
-                    "Session closed.",
-                    gr.update(value=""),
-                    gr.update(interactive=False),
+                    session_config,
+                    session_closed,
                 )
 
-            return submit_message(
-                "quit",
-                current_agent_state,
-                chat_history,
-                debug_log,
-                model_context,
-                session_config,
-                session_closed,
+            return return_to_start(
+                session_config=session_config,
+                advanced_visible=advanced_visible,
             )
 
         if show_start_screen:
+            close_button.click(
+                fn=close_app,
+                inputs=[],
+                outputs=[],
+            )
+
             advanced_button.click(
                 fn=toggle_advanced,
                 inputs=[advanced_visible_state],
@@ -543,6 +605,7 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                 model_context_state,
                 session_config_state,
                 session_closed_state,
+                advanced_visible_state,
             ],
             outputs=[
                 agent_state,
@@ -550,10 +613,25 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                 debug_log_state,
                 model_context_state,
                 session_closed_state,
+                start_screen,
+                advanced_panel,
+                chat_screen,
+                internals_panel,
                 chatbot,
                 debug_output,
                 context_output,
                 status_output,
+                start_model,
+                start_api_key,
+                start_api_key_env,
+                start_base_url,
+                start_system_prompt,
+                start_trim_strategy,
+                start_token_counter,
+                start_max_tokens,
+                start_start_on,
+                start_include_system,
+                start_allow_partial,
                 message_box,
                 send_button,
             ],
