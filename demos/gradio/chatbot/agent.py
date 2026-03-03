@@ -44,8 +44,29 @@ class GradioChatAgent:
         api_key: str | None = None,
         base_url: str | None = None,
         api_key_env: str | None = None,
+        system_prompt: str | None = None,
+        trim_strategy: str | None = None,
+        token_counter: str | Any | None = None,
+        max_tokens: int | None = None,
+        start_on: str | None = None,
+        include_system: bool | None = None,
+        allow_partial: bool | None = None,
     ) -> None:
         self.model = model
+        if system_prompt is not None:
+            self.system_prompt = system_prompt
+        if trim_strategy is not None:
+            self.trim_strategy = trim_strategy
+        if token_counter is not None:
+            self.token_counter = token_counter
+        if max_tokens is not None:
+            self.max_tokens = max_tokens
+        if start_on is not None:
+            self.start_on = start_on
+        if include_system is not None:
+            self.include_system = include_system
+        if allow_partial is not None:
+            self.allow_partial = allow_partial
         resolved_api_key = api_key
         if not resolved_api_key and api_key_env:
             resolved_api_key = os.getenv(api_key_env)

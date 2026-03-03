@@ -19,6 +19,13 @@ class SessionConfig:
     api_key: str = ""
     base_url: str = ""
     api_key_env: str = "OPENAI_API_KEY"
+    system_prompt: str = "You are a helpful assistant."
+    trim_strategy: str = "last"
+    token_counter: str = "approximate"
+    max_tokens: int = 512
+    start_on: str = "human"
+    include_system: bool = True
+    allow_partial: bool = False
 
 
 CONFIGS_DIR = Path(__file__).resolve().parent / "configs"
@@ -30,6 +37,13 @@ DEFAULT_SAVED_AGENT = {
         "base_url": None,
         "api_key": None,
         "api_key_env": "OPENAI_API_KEY",
+        "system_prompt": "You are a helpful assistant.",
+        "trim_strategy": "last",
+        "token_counter": "approximate",
+        "max_tokens": 512,
+        "start_on": "human",
+        "include_system": True,
+        "allow_partial": False,
     },
 }
 
@@ -39,6 +53,13 @@ def create_app(
     api_key: str = "",
     base_url: str = "",
     api_key_env: str = "OPENAI_API_KEY",
+    system_prompt: str = "You are a helpful assistant.",
+    trim_strategy: str = "last",
+    token_counter: str = "approximate",
+    max_tokens: int = 512,
+    start_on: str = "human",
+    include_system: bool = True,
+    allow_partial: bool = False,
 ) -> gr.Blocks:
     return _build_chat_app(
         SessionConfig(
@@ -46,6 +67,13 @@ def create_app(
             api_key=api_key,
             base_url=base_url,
             api_key_env=api_key_env,
+            system_prompt=system_prompt,
+            trim_strategy=trim_strategy,
+            token_counter=token_counter,
+            max_tokens=max_tokens,
+            start_on=start_on,
+            include_system=include_system,
+            allow_partial=allow_partial,
         ),
         show_start_screen=False,
     )
@@ -62,6 +90,13 @@ def launch_app(
     api_key: str = "",
     base_url: str = "",
     api_key_env: str = "OPENAI_API_KEY",
+    system_prompt: str = "You are a helpful assistant.",
+    trim_strategy: str = "last",
+    token_counter: str = "approximate",
+    max_tokens: int = 512,
+    start_on: str = "human",
+    include_system: bool = True,
+    allow_partial: bool = False,
     **kwargs,
 ) -> gr.Blocks:
     app = create_app(
@@ -69,6 +104,13 @@ def launch_app(
         api_key=api_key,
         base_url=base_url,
         api_key_env=api_key_env,
+        system_prompt=system_prompt,
+        trim_strategy=trim_strategy,
+        token_counter=token_counter,
+        max_tokens=max_tokens,
+        start_on=start_on,
+        include_system=include_system,
+        allow_partial=allow_partial,
     )
     app.launch(**kwargs)
     return app
@@ -102,6 +144,7 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
         model_context_state = gr.State([])
         session_closed_state = gr.State(False)
         internals_visible_state = gr.State(False)
+        advanced_visible_state = gr.State(False)
 
         gr.Markdown("# Gradio LangGraph Chatbot Demo")
 
@@ -123,6 +166,41 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                         label="Base URL",
                         value=default_config.base_url,
                     )
+                    advanced_button = gr.Button("Advanced Settings")
+                    with gr.Column(visible=False) as advanced_panel:
+                        start_system_prompt = gr.Textbox(
+                            label="System Prompt",
+                            value=default_config.system_prompt,
+                            lines=4,
+                        )
+                        with gr.Row():
+                            start_trim_strategy = gr.Textbox(
+                                label="Trim Strategy",
+                                value=default_config.trim_strategy,
+                            )
+                            start_token_counter = gr.Textbox(
+                                label="Token Counter",
+                                value=default_config.token_counter,
+                            )
+                        with gr.Row():
+                            start_max_tokens = gr.Number(
+                                label="Max Tokens",
+                                value=default_config.max_tokens,
+                                precision=0,
+                            )
+                            start_start_on = gr.Textbox(
+                                label="Start On",
+                                value=default_config.start_on,
+                            )
+                        with gr.Row():
+                            start_include_system = gr.Checkbox(
+                                label="Include System",
+                                value=default_config.include_system,
+                            )
+                            start_allow_partial = gr.Checkbox(
+                                label="Allow Partial",
+                                value=default_config.allow_partial,
+                            )
                     start_button = gr.Button("Start Chat", variant="primary")
 
                 with gr.Column(scale=1):
@@ -188,6 +266,13 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                     gr.update(),
                     gr.update(),
                     gr.update(),
+                    gr.update(),
+                    gr.update(),
+                    gr.update(),
+                    gr.update(),
+                    gr.update(),
+                    gr.update(),
+                    gr.update(),
                 )
 
             return (
@@ -195,19 +280,44 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                 gr.update(value=agent_config.api_key),
                 gr.update(value=agent_config.api_key_env),
                 gr.update(value=agent_config.base_url),
+                gr.update(value=agent_config.system_prompt),
+                gr.update(value=agent_config.trim_strategy),
+                gr.update(value=agent_config.token_counter),
+                gr.update(value=agent_config.max_tokens),
+                gr.update(value=agent_config.start_on),
+                gr.update(value=agent_config.include_system),
+                gr.update(value=agent_config.allow_partial),
             )
+
+        def toggle_advanced(visible: bool):
+            next_visible = not visible
+            return next_visible, gr.update(visible=next_visible)
 
         def start_session(
             model: str,
             api_key: str,
             api_key_env: str,
             base_url: str,
+            system_prompt: str,
+            trim_strategy: str,
+            token_counter: str,
+            max_tokens: float,
+            start_on: str,
+            include_system: bool,
+            allow_partial: bool,
         ):
             config = {
                 "model": model.strip() or default_config.model,
                 "api_key": api_key,
                 "api_key_env": api_key_env.strip(),
                 "base_url": base_url.strip(),
+                "system_prompt": system_prompt.strip() or default_config.system_prompt,
+                "trim_strategy": trim_strategy.strip() or default_config.trim_strategy,
+                "token_counter": token_counter.strip() or default_config.token_counter,
+                "max_tokens": int(max_tokens),
+                "start_on": start_on.strip() or default_config.start_on,
+                "include_system": bool(include_system),
+                "allow_partial": bool(allow_partial),
             }
             return (
                 config,
@@ -260,6 +370,13 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                 api_key=session_config["api_key"] or None,
                 base_url=session_config["base_url"] or None,
                 api_key_env=session_config.get("api_key_env") or None,
+                system_prompt=session_config.get("system_prompt"),
+                trim_strategy=session_config.get("trim_strategy"),
+                token_counter=session_config.get("token_counter"),
+                max_tokens=session_config.get("max_tokens"),
+                start_on=session_config.get("start_on"),
+                include_system=session_config.get("include_system"),
+                allow_partial=session_config.get("allow_partial"),
             )
             initial_state = current_agent_state or agent.get_initial_state()
             result = agent.run_turn(initial_state, user_input)
@@ -327,6 +444,12 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
             )
 
         if show_start_screen:
+            advanced_button.click(
+                fn=toggle_advanced,
+                inputs=[advanced_visible_state],
+                outputs=[advanced_visible_state, advanced_panel],
+            )
+
             saved_agents_radio.change(
                 fn=populate_saved_agent,
                 inputs=[saved_agents_radio],
@@ -335,6 +458,13 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                     start_api_key,
                     start_api_key_env,
                     start_base_url,
+                    start_system_prompt,
+                    start_trim_strategy,
+                    start_token_counter,
+                    start_max_tokens,
+                    start_start_on,
+                    start_include_system,
+                    start_allow_partial,
                 ],
             )
 
@@ -345,6 +475,13 @@ def _build_chat_app(default_config: SessionConfig, show_start_screen: bool) -> g
                     start_api_key,
                     start_api_key_env,
                     start_base_url,
+                    start_system_prompt,
+                    start_trim_strategy,
+                    start_token_counter,
+                    start_max_tokens,
+                    start_start_on,
+                    start_include_system,
+                    start_allow_partial,
                 ],
                 outputs=[
                     session_config_state,
@@ -574,6 +711,15 @@ def load_saved_agent_file(path: Path) -> dict | None:
             "base_url": agent_payload.get("base_url"),
             "api_key": agent_payload.get("api_key"),
             "api_key_env": agent_payload.get("api_key_env", "OPENAI_API_KEY"),
+            "system_prompt": agent_payload.get(
+                "system_prompt", "You are a helpful assistant."
+            ),
+            "trim_strategy": agent_payload.get("trim_strategy", "last"),
+            "token_counter": agent_payload.get("token_counter", "approximate"),
+            "max_tokens": agent_payload.get("max_tokens", 512),
+            "start_on": agent_payload.get("start_on", "human"),
+            "include_system": agent_payload.get("include_system", True),
+            "allow_partial": agent_payload.get("allow_partial", False),
         },
     }
 
@@ -585,6 +731,13 @@ def session_config_from_saved_agent(saved_agent: dict) -> SessionConfig:
         api_key=agent_payload.get("api_key") or "",
         base_url=agent_payload.get("base_url") or "",
         api_key_env=agent_payload.get("api_key_env") or "",
+        system_prompt=agent_payload.get("system_prompt") or "You are a helpful assistant.",
+        trim_strategy=agent_payload.get("trim_strategy") or "last",
+        token_counter=agent_payload.get("token_counter") or "approximate",
+        max_tokens=int(agent_payload.get("max_tokens", 512)),
+        start_on=agent_payload.get("start_on") or "human",
+        include_system=bool(agent_payload.get("include_system", True)),
+        allow_partial=bool(agent_payload.get("allow_partial", False)),
     )
 
 

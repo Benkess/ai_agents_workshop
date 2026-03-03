@@ -16,6 +16,7 @@ This demo wraps a simple LangGraph OpenAI chat agent in a Gradio GUI.
   - direct launch with `model`, `api_key`, and `base_url` passed as arguments
   - start screen that collects provider settings before entering chat
 - Saved-agent configs loaded from `demos/gradio/chatbot/configs`
+- Advanced agent settings available from the start screen and persisted in saved-agent configs
 
 ## Files
 
@@ -85,3 +86,4 @@ python demos/gradio/chatbot/app.py --mode direct --api-key-env OPENAI_API_KEY
 - The conversation shown in the chat window is separate from the trimmed context sent to the model.
 - Entering `verbose` or `quiet` as a user message toggles the agent's verbose flag to mirror the CLI example.
 - The start screen loads saved agents from `configs/*.json` and falls back to a built-in default if none are present.
+- Advanced settings are hidden until `Advanced Settings` is selected on the start screen.
