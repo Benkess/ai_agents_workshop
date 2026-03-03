@@ -1,15 +1,15 @@
 {
-  "name": "OpenAI Default",
+  "name": "Test Context",
   "agent": {
     "implementation": "openai",
     "model": "gpt-4o-mini",
     "base_url": null,
     "api_key": null,
     "api_key_env": "OPENAI_API_KEY",
-    "system_prompt": "You are a helpful assistant.",
+    "system_prompt": "The user is trying to test your context management capabilities.",
     "trim_strategy": "last",
     "token_counter": "approximate",
-    "max_tokens": 16384,
+    "max_tokens": 512,
     "start_on": "human",
     "include_system": true,
     "allow_partial": false
