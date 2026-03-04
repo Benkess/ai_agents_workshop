@@ -3,9 +3,15 @@
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 from typing import Any
+
+try:
+    from agent_state_obs_api.config_loader import resolve_agent_config as resolve_local_agent_config
+except ModuleNotFoundError:  # pragma: no cover - fallback for repo-root imports
+    from Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api.config_loader import (
+        resolve_agent_config as resolve_local_agent_config,
+    )
 
 
 def default_config_path() -> Path:
@@ -49,24 +55,4 @@ def resolve_agent_config(
     agent_cfg: dict[str, Any],
     overrides: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    effective = dict(agent_cfg)
-    if overrides:
-        for key, value in overrides.items():
-            if value is not None:
-                effective[key] = value
-
-    implementation = str(effective["implementation"])
-    model = str(effective["model"])
-    base_url = effective.get("base_url")
-    api_key = effective.get("api_key")
-    api_key_env = effective.get("api_key_env")
-
-    if api_key is None and api_key_env:
-        api_key = os.environ.get(str(api_key_env))
-
-    return {
-        "implementation": implementation,
-        "model": model,
-        "base_url": None if base_url is None else str(base_url),
-        "api_key": None if api_key is None else str(api_key),
-    }
+    return resolve_local_agent_config(agent_cfg, overrides)

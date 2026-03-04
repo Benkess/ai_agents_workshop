@@ -8,6 +8,8 @@ setup(
     packages=find_packages(
         where="..",
         include=[
+            "agent_state_obs_api",
+            "agent_state_obs_api.*",
             "agent_state_obs_api_server",
             "agent_state_obs_api_server.*",
             "agent_state_obs_api_agent",

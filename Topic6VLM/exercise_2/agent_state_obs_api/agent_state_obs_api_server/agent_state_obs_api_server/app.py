@@ -7,20 +7,12 @@ from typing import Any
 
 from flask import Flask, jsonify, request
 
-from agent_state_obs_api_agent.agents import OpenAIObsAgent
+try:
+    from agent_state_obs_api import create_agent
+except ModuleNotFoundError:  # pragma: no cover - fallback for repo-root imports
+    from Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api import create_agent
 
 from .config_loader import load_config, resolve_agent_config
-
-
-def create_agent(agent_config: dict[str, Any]):
-    implementation = str(agent_config["implementation"])
-    if implementation == "openai":
-        return OpenAIObsAgent(
-            model=str(agent_config["model"]),
-            api_key=agent_config.get("api_key"),
-            base_url=agent_config.get("base_url"),
-        )
-    raise ValueError(f"Unsupported agent implementation: {implementation}")
 
 def create_app(
     config_path: str | None = None,

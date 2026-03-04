@@ -2,82 +2,89 @@
 
 ## Overview
 
-This system exposes a vision-language observation agent behind a small HTTP API. A client sends an image plus a prompt such as `"is the red cube on the table"`, and the server returns a structured observation result with `value`, `failure_mode`, and `reason`.
+This exercise now supports two ways to query the observation agent:
 
-The project is split into two installable packages:
+- direct in-process calls through `agent_state_obs_api.ObservationAgent`
+- the original HTTP server/client split through `agent_state_obs_api_server` and `agent_state_obs_api_client`
 
-- `agent_state_obs_api_server`: Flask server plus the LangGraph/OpenAI agent implementation
-- `agent_state_obs_api_client`: minimal client package that only depends on `requests`
+Both paths return the same structured observation fields: `value`, `failure_mode`, and `reason`.
 
-## Note on environments
+The exercise also includes a separate video workflow in `Topic6VLM/exercise_2/video_surveillance_agent` that samples frames from a video, asks the observation agent whether a person is present, and reports enter/exit timestamps.
 
-The client is designed to run in a separate Python environment from the server. The client package only requires `requests`, so it can be installed without LangChain, LangGraph, or OpenAI-related dependencies.
+## Packages
 
-## Server setup
+- `agent_state_obs_api`: shared local wrapper and config helpers
+- `agent_state_obs_api_server`: Flask server package
+- `agent_state_obs_api_client`: HTTP client package
+- `agent_state_obs_api_agent`: LangGraph/OpenAI-compatible agent implementation
 
-Install the server package from `agent_state_obs_api_server/`:
+## Dependencies
+
+Install the server-side dependencies from `agent_state_obs_api_server/`:
 
 ```bash
 cd agent_state_obs_api_server
 python -m pip install -e .
 ```
 
-Set your OpenAI API key before starting the server:
+For the video surveillance workflow, install OpenCV:
 
 ```bash
-export OPENAI_API_KEY=your_key_here
+python -m pip install opencv-python
 ```
 
-The server supports OpenAI-compatible providers through the same `OpenAIObsAgent` class. The default config files are:
+## Direct-call usage
+
+The new local wrapper defaults to the LLaVA config in [llava_agent.json](/home/user/projects/school/ai_agents_workshop/Topic6VLM/exercise_2/agent_state_obs_api/config/llava_agent.json):
+
+```json
+{
+  "agent": {
+    "implementation": "openai",
+    "model": "llava",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "ollama",
+    "api_key_env": null
+  }
+}
+```
+
+Example:
+
+```python
+from agent_state_obs_api import ObservationAgent
+
+agent = ObservationAgent()
+result = agent.observe_image_path("example.jpg", "Is there a person visible in this frame?")
+print(result)
+```
+
+Pass `config_path` if you want to use a different provider config.
+
+## HTTP server setup
+
+The original HTTP server and client remain available.
+
+Server configs:
 
 - `agent_state_obs_api_server/config/server.json` for cloud OpenAI
 - `agent_state_obs_api_server/config/qwen_server.json` for local Ollama + qwen
 
-Start the server with the default OpenAI config:
+Start the server:
 
 ```bash
 cd agent_state_obs_api_server
 python -m agent_state_obs_api_server.server --config config/server.json
 ```
 
-Start the server with the qwen/Ollama config:
+Or with local Ollama:
 
 ```bash
 cd agent_state_obs_api_server
 python -m agent_state_obs_api_server.server --config config/qwen_server.json
 ```
 
-Or override provider settings from the CLI:
-
-```bash
-cd agent_state_obs_api_server
-python -m agent_state_obs_api_server.server --config config/server.json --model qwen3-vl:4b --base-url http://localhost:11434/v1 --api-key ollama
-```
-
-Or override host and port directly:
-
-```bash
-cd agent_state_obs_api_server
-python -m agent_state_obs_api_server.server --config config/server.json --host 0.0.0.0 --port 5000
-```
-
-The server currently supports a single agent implementation value, `openai`. This is also used for Ollama because Ollama is accessed through its OpenAI-compatible API.
-
-Agent config fields:
-
-- `model`: model name passed to `ChatOpenAI`
-- `base_url`: optional OpenAI-compatible endpoint URL
-- `api_key`: optional literal API key
-- `api_key_env`: optional environment variable name used when `api_key` is not set
-
-API key resolution precedence:
-
-1. CLI `--api-key`
-2. config `agent.api_key`
-3. environment variable named by `api_key_env`
-4. provider default resolution when nothing is supplied
-
-## Client setup
+## HTTP client usage
 
 Install the client package from `agent_state_obs_api_client/`:
 
@@ -86,19 +93,13 @@ cd agent_state_obs_api_client
 python -m pip install -e .
 ```
 
-Import and call the client:
+Then call:
 
 ```python
 from agent_state_obs_api_client import observe
 
 result = observe("example.jpg", "is the red cube on the table")
 print(result)
-```
-
-This editable install works for external scripts outside this repository. After `python -m pip install -e .` from `agent_state_obs_api_client/`, any script in that Python environment can import:
-
-```python
-from agent_state_obs_api_client import observe
 ```
 
 ## API reference
@@ -119,7 +120,7 @@ Request body:
 }
 ```
 
-Success response (`200`):
+Success response:
 
 ```json
 {
@@ -130,41 +131,29 @@ Success response (`200`):
 }
 ```
 
-Busy response (`503`):
+## Video surveillance CLI
 
-```json
-{
-  "busy": true
-}
+Run the surveillance workflow from the repo root:
+
+```bash
+python -m Topic6VLM.exercise_2.video_surveillance_agent.cli --video-path path/to/video.mp4
 ```
 
-Error response (`400` or `500`):
+Optional arguments:
 
-```json
-{
-  "success": false,
-  "error": "Missing required field: prompt"
-}
-```
+- `--config` to point at a different agent config
+- `--interval-seconds` to change frame sampling cadence
 
-The server handles only one request at a time. Concurrent requests are rejected immediately with `503`; they are not queued.
+The CLI prints each sampled frame response as it is analyzed, then prints the final ordered list of `enter` and `exit` events.
 
-## Running the test
+## Running the existing HTTP test
 
-The test script lives at `test/test_observe.py`, which is outside the client package directory.
-
-Run it from `agent_state_obs_api/`:
+From `agent_state_obs_api/`:
 
 ```bash
 python test/test_observe.py path/to/image.jpg --prompt "Describe what you observe in this image." --host http://localhost:5000
 ```
 
-Or, if you are currently inside `agent_state_obs_api_client/`:
-
-```bash
-python ../test/test_observe.py path/to/image.jpg --prompt "Describe what you observe in this image." --host http://localhost:5000
-```
-
 ## Extending
 
-To add another backend, subclass `agent_state_obs_api_agent/agents/base_obs_agent.py` and implement `query(image_b64, mime_type, prompt) -> dict`. Then update the server config files and the server agent factory to select the new implementation.
+To add another backend, subclass `agent_state_obs_api_agent/agents/base_obs_agent.py` and implement `query(image_b64, mime_type, prompt) -> dict`. Then update the shared factory in `agent_state_obs_api/factory.py` and any relevant config files.
