@@ -87,6 +87,9 @@ class GradioChatAgent:
         if base_url:
             self._llm_kwargs["base_url"] = base_url
         self.llm: ChatOpenAI | None = None
+        self._debug_log: list[str] = []
+        self._model_context: list[dict[str, Any]] = []
+        self.graph = self._build_graph()
 
     def get_initial_state(
         self,
@@ -104,135 +107,21 @@ class GradioChatAgent:
         )
 
     def run_turn(self, state: AgentState, user_input: str) -> TurnResult:
-        current_state = state
-        debug_log: list[str] = []
-        model_context: list[dict[str, Any]] = []
-
-        def log(message: str) -> None:
-            debug_log.append(message)
-
-        def get_user_input_node(_: AgentState) -> dict[str, Any]:
-            normalized = (user_input or "").strip()
-            lowered = normalized.lower()
-            log(f"get_user_input: received text length={len(user_input or '')}")
-
-            if lowered in {"quit", "exit", "q"}:
-                log("get_user_input: quit command detected")
-                return {
-                    "user_input": user_input,
-                    "should_exit": True,
-                    "skip_input": False,
-                }
-
-            if normalized == "":
-                log("get_user_input: empty input detected; skipping model call")
-                return {
-                    "user_input": user_input,
-                    "should_exit": False,
-                    "skip_input": True,
-                }
-
-            if lowered == "verbose":
-                log("get_user_input: enabling verbose mode")
-                return {
-                    "user_input": user_input,
-                    "should_exit": False,
-                    "skip_input": True,
-                    "verbose": True,
-                }
-
-            if lowered == "quiet":
-                log("get_user_input: disabling verbose mode")
-                return {
-                    "user_input": user_input,
-                    "should_exit": False,
-                    "skip_input": True,
-                    "verbose": False,
-                }
-
-            log("get_user_input: appending human message to chat history")
-            return {
-                "user_input": user_input,
-                "should_exit": False,
-                "skip_input": False,
-                "chat_messages": [HumanMessage(content=user_input)],
-            }
-
-        def call_llm_node(node_state: AgentState) -> dict[str, Any]:
-            log("call_llm: preparing trimmed chat history")
-            trimmed_chat_messages = trim_messages(
-                node_state["chat_messages"],
-                strategy=self.trim_strategy,
-                token_counter=self.token_counter,
-                max_tokens=self.max_tokens,
-                start_on=self.start_on,
-                include_system=self.include_system,
-                allow_partial=self.allow_partial,
-            )
-            base_messages = build_base_messages(
-                image_path=node_state["image_path"],
-                mime_type=node_state["image_mime_type"],
-                system_prompt=self.system_prompt,
-            )
-            full_model_messages = base_messages + trimmed_chat_messages
-
-            model_context.clear()
-            model_context.extend(_messages_to_debug_records(full_model_messages))
-            log(
-                "call_llm: invoking model with "
-                f"{len(full_model_messages)} messages "
-                f"({len(base_messages)} base + "
-                f"{len(trimmed_chat_messages)} chat)"
-            )
-
-            response = self._get_llm().invoke(full_model_messages)
-            log("call_llm: model invocation completed")
-            return {"chat_messages": [response]}
-
-        def route_after_input(node_state: AgentState) -> str:
-            if node_state["should_exit"]:
-                log("route_after_input: routing to END")
-                return END
-            if node_state["skip_input"]:
-                log("route_after_input: skipping model call")
-                return "finish_turn"
-            log("route_after_input: routing to call_llm")
-            return "call_llm"
-
-        def finish_turn_node(node_state: AgentState) -> dict[str, Any]:
-            if not model_context:
-                base_messages = build_base_messages(
-                    image_path=node_state["image_path"],
-                    mime_type=node_state["image_mime_type"],
-                    system_prompt=self.system_prompt,
-                )
-                model_context.extend(
-                    _messages_to_debug_records(base_messages + node_state["chat_messages"])
-                )
-            log("finish_turn: completing graph turn")
-            return {}
-
-        graph_builder = StateGraph(AgentState)
-        graph_builder.add_node("get_user_input", get_user_input_node)
-        graph_builder.add_node("call_llm", call_llm_node)
-        graph_builder.add_node("finish_turn", finish_turn_node)
-        graph_builder.add_edge(START, "get_user_input")
-        graph_builder.add_conditional_edges(
-            "get_user_input",
-            route_after_input,
-            {
-                "call_llm": "call_llm",
-                "finish_turn": "finish_turn",
-                END: END,
-            },
+        self._debug_log = []
+        self._model_context = []
+        current_state = AgentState(
+            user_input=user_input,
+            should_exit=state["should_exit"],
+            verbose=state["verbose"],
+            skip_input=state["skip_input"],
+            image_path=state["image_path"],
+            image_mime_type=state["image_mime_type"],
+            chat_messages=list(state["chat_messages"]),
         )
-        graph_builder.add_edge("call_llm", "finish_turn")
-        graph_builder.add_edge("finish_turn", END)
-        graph = graph_builder.compile()
 
-        log("graph: invoking turn graph")
-        next_state = graph.invoke(current_state)
-        log("graph: turn graph finished")
+        self._log("graph: invoking turn graph")
+        next_state = self.graph.invoke(current_state)
+        self._log("graph: turn graph finished")
 
         reply_text = _extract_last_ai_message(next_state["chat_messages"])
         full_history = _messages_to_chat_history(next_state["chat_messages"])
@@ -241,8 +130,8 @@ class GradioChatAgent:
 
         return TurnResult(
             state=next_state,
-            debug_log=debug_log,
-            model_context=model_context,
+            debug_log=self._debug_log,
+            model_context=self._model_context,
             full_history=full_history,
             reply_text=reply_text,
             session_closed=session_closed,
@@ -253,6 +142,109 @@ class GradioChatAgent:
         if self.llm is None:
             self.llm = ChatOpenAI(**self._llm_kwargs)
         return self.llm
+
+    def _build_graph(self):
+        graph_builder = StateGraph(AgentState)
+        graph_builder.add_node("get_user_input", self._get_user_input_node)
+        graph_builder.add_node("call_llm", self._call_llm_node)
+        graph_builder.add_node("finish_turn", self._finish_turn_node)
+        graph_builder.add_edge(START, "get_user_input")
+        graph_builder.add_conditional_edges(
+            "get_user_input",
+            self._route_after_input,
+            {
+                "call_llm": "call_llm",
+                "finish_turn": "finish_turn",
+                END: END,
+            },
+        )
+        graph_builder.add_edge("call_llm", "finish_turn")
+        graph_builder.add_edge("finish_turn", END)
+        return graph_builder.compile()
+
+    def _log(self, message: str) -> None:
+        self._debug_log.append(message)
+
+    def _get_user_input_node(self, state: AgentState) -> dict[str, Any]:
+        user_input = state["user_input"]
+        normalized = (user_input or "").strip()
+        lowered = normalized.lower()
+        self._log(f"get_user_input: received text length={len(user_input or '')}")
+
+        if lowered in {"quit", "exit", "q"}:
+            self._log("get_user_input: quit command detected")
+            return {"should_exit": True, "skip_input": False}
+
+        if normalized == "":
+            self._log("get_user_input: empty input detected; skipping model call")
+            return {"should_exit": False, "skip_input": True}
+
+        if lowered == "verbose":
+            self._log("get_user_input: enabling verbose mode")
+            return {"should_exit": False, "skip_input": True, "verbose": True}
+
+        if lowered == "quiet":
+            self._log("get_user_input: disabling verbose mode")
+            return {"should_exit": False, "skip_input": True, "verbose": False}
+
+        self._log("get_user_input: appending human message to chat history")
+        return {
+            "should_exit": False,
+            "skip_input": False,
+            "chat_messages": [HumanMessage(content=user_input)],
+        }
+
+    def _call_llm_node(self, state: AgentState) -> dict[str, Any]:
+        self._log("call_llm: preparing trimmed chat history")
+        trimmed_chat_messages = trim_messages(
+            state["chat_messages"],
+            strategy=self.trim_strategy,
+            token_counter=self.token_counter,
+            max_tokens=self.max_tokens,
+            start_on=self.start_on,
+            include_system=self.include_system,
+            allow_partial=self.allow_partial,
+        )
+        base_messages = build_base_messages(
+            image_path=state["image_path"],
+            mime_type=state["image_mime_type"],
+            system_prompt=self.system_prompt,
+        )
+        full_model_messages = base_messages + trimmed_chat_messages
+
+        self._model_context = _messages_to_debug_records(full_model_messages)
+        self._log(
+            "call_llm: invoking model with "
+            f"{len(full_model_messages)} messages "
+            f"({len(base_messages)} base + {len(trimmed_chat_messages)} chat)"
+        )
+
+        response = self._get_llm().invoke(full_model_messages)
+        self._log("call_llm: model invocation completed")
+        return {"chat_messages": [response]}
+
+    def _route_after_input(self, state: AgentState) -> str:
+        if state["should_exit"]:
+            self._log("route_after_input: routing to END")
+            return END
+        if state["skip_input"]:
+            self._log("route_after_input: skipping model call")
+            return "finish_turn"
+        self._log("route_after_input: routing to call_llm")
+        return "call_llm"
+
+    def _finish_turn_node(self, state: AgentState) -> dict[str, Any]:
+        if not self._model_context:
+            base_messages = build_base_messages(
+                image_path=state["image_path"],
+                mime_type=state["image_mime_type"],
+                system_prompt=self.system_prompt,
+            )
+            self._model_context = _messages_to_debug_records(
+                base_messages + state["chat_messages"]
+            )
+        self._log("finish_turn: completing graph turn")
+        return {}
 
 
 def build_base_messages(
@@ -267,7 +259,7 @@ def build_base_messages(
     return [
         SystemMessage(content=system_prompt or DEFAULT_SYSTEM_PROMPT),
         HumanMessage(
-            content_blocks=[
+            content=[
                 {"type": "text", "text": DEFAULT_IMAGE_PROMPT},
                 {
                     "type": "image",

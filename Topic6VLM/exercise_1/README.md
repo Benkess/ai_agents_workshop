@@ -2,9 +2,9 @@
 
 This exercise extends the starter Gradio chatbot into a multimodal chat app that carries on a multi-turn conversation about a single uploaded image.
 
-The app uses a LangGraph agent with two message collections:
+The app uses a LangGraph agent with:
 
-- `base_messages`: fixed session context containing the system prompt and the uploaded image
+- fixed session context built from the system prompt and the uploaded image
 - `chat_messages`: ongoing conversational turns managed with a sliding window
 
 Before each model call, the agent sends:
@@ -114,14 +114,14 @@ python3 Topic6VLM/exercise_1/app.py --mode start --server-port 7861 --no-inbrows
 2. Continue to the image upload step.
 3. Upload the image for the session.
 4. Open the chat screen and ask follow-up questions about that image.
-5. Use `Quit` to return to setup and start over with a new image.
+5. Use `New Session` to return to setup and start over with a new image.
 
 The uploaded image is fixed for the session. To discuss a different image, return to the earlier screen and start a new session.
 
 ## Notes
 
 - Empty messages are blocked in the UI and skipped safely if submitted anyway.
-- The uploaded image is always included in model context through `base_messages`.
+- The uploaded image is always included in model context through the fixed session context.
 - The visible chat history does not show the auto-generated base multimodal prompt.
 - The `Exact Model Context` panel redacts image base64 while preserving the message structure.
 - Advanced settings remain available from the start screen for experimentation with trimming behavior.
