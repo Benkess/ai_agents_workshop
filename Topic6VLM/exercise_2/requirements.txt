@@ -1,0 +1,10 @@
+flask
+langchain
+langchain-core
+langchain-openai
+langgraph
+numpy
+opencv-python
+pydantic
+pytest
+requests

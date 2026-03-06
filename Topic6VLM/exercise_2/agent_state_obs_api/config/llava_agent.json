@@ -1,0 +1,9 @@
+{
+  "agent": {
+    "implementation": "openai",
+    "model": "llava",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "ollama",
+    "api_key_env": null
+  }
+}

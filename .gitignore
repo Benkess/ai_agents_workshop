@@ -1,3 +1,9 @@
+# context directory
+context/
+
+# examples directory
+examples/
+
 # Data files
 *.db
 
