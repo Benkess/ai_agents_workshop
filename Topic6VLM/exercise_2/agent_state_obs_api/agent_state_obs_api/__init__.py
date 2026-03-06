@@ -18,6 +18,10 @@ def __getattr__(name: str):
         from .factory import create_agent
 
         return create_agent
+    if name == "create_text_fallback_agent":
+        from .factory import create_text_fallback_agent
+
+        return create_text_fallback_agent
     if name == "ObservationAgent":
         from .observer import ObservationAgent
 

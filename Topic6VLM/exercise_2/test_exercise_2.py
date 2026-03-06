@@ -7,11 +7,13 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+import pytest
 
 from Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api.config_loader import (
     load_config,
     resolve_agent_config,
 )
+from Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api.observer import ObservationAgent
 from Topic6VLM.exercise_2.video_surveillance_agent.surveillance import run_surveillance
 from Topic6VLM.exercise_2.video_surveillance_agent.video_utils import sample_video_frames
 
@@ -103,3 +105,27 @@ def test_run_surveillance_tracks_enter_and_exit(tmp_path: Path) -> None:
         {"timestamp_seconds": 2.0, "event": "enter"},
         {"timestamp_seconds": 5.0, "event": "exit"},
     ]
+
+
+def test_observer_falls_back_when_tools_not_supported(monkeypatch) -> None:
+    class ToolAgent:
+        def query(self, image_b64: str, mime_type: str, prompt: str) -> dict:
+            raise RuntimeError("registry.ollama.ai/library/llava:latest does not support tools")
+
+    class FallbackAgent:
+        def query(self, image_b64: str, mime_type: str, prompt: str) -> dict:
+            return {"value": "FALSE", "failure_mode": "CONFIDENT", "reason": "fallback"}
+
+    monkeypatch.setattr(
+        "Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api.observer.create_agent",
+        lambda config: ToolAgent(),
+    )
+    monkeypatch.setattr(
+        "Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api.observer.create_text_fallback_agent",
+        lambda config: FallbackAgent(),
+    )
+
+    observer = ObservationAgent()
+    result = observer.observe_bytes(b"test", "image/jpeg", "Is there a person?")
+    assert result["failure_mode"] == "CONFIDENT"
+    assert result["reason"] == "fallback"

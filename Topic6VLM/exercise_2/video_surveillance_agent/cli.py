@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import argparse
 
-from Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api import ObservationAgent
+try:
+    from Topic6VLM.exercise_2.agent_state_obs_api.agent_state_obs_api import ObservationAgent
+except ModuleNotFoundError:  # pragma: no cover - fallback for exercise-local execution
+    from agent_state_obs_api.agent_state_obs_api import ObservationAgent
 
 from .surveillance import run_surveillance
 
