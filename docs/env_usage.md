@@ -88,19 +88,19 @@ pip install python-dotenv
 Then run scripts like this:
 
 ```bash
-python scripts/run_with_env.py path/to/your_script.py
+python3 scripts/run_with_env.py path/to/your_script.py
 ```
 
 Example:
 
 ```bash
-python scripts/run_with_env.py Topic7MCP/mcp/exercise_b/exercise_b_save_json.py
+.venv/bin/python scripts/run_with_env.py Topic7MCP/mcp/exercise_b/exercise_b_save_json.py
 ```
 
 If your script takes arguments:
 
 ```bash
-python scripts/run_with_env.py app/main.py --input data.json --verbose
+python3 scripts/run_with_env.py app/main.py --input data.json --verbose
 ```
 
 And your `.env` can just sit at the repo root:
@@ -115,7 +115,7 @@ A good `AGENTS.md` note for Codex would be:
 ```md
 - Environment variables are stored in `.env` at the repo root.
 - Run Python scripts with:
-  `python scripts/run_with_env.py <script> [args...]`
+  `.venv/bin/python scripts/run_with_env.py <script> [args...]`
 - Do not rely on shell activation persisting across commands.
 ```
 
