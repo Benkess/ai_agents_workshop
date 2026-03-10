@@ -1,38 +1,34 @@
 ## Drill 1: Recent LLM agent papers
-Using tool: search_papers_by_relevance
-1. Untitled (Unknown year)
-2. Untitled (Unknown year)
-3. Untitled (Unknown year)
-4. Untitled (Unknown year)
+- Tool call: `search_papers_by_relevance`
+- Arguments: `{"keyword": "large language model agents", "fields": "title,abstract,year,authors", "limit": 5}`
+1. InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents (2024)
+2. Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning (2025)
+3. A Survey of Large Language Model Agents for Question Answering (2025)
+4. Emergence of human-like polarization among large language model agents (2025)
+5. Large Language Model Agents for Radio Map Generation and Wireless Network Planning (2025)
 ## Drill 2: Citations to the original BERT paper
-Total citations returned: 4
-- Untitled
-- Untitled
-- Untitled
-- Untitled
+- Tool call: `get_citations`
+- Arguments: `{"paper_id": "ARXIV:1810.04805", "fields": "title,year,authors", "limit": 10, "publication_date_range": "2023-01-01:"}`
+Total citations returned: 10
+- Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting
+- Multi-view dynamic perception framework for Chinese harmful meme detection
+- SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition
+- Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox
+- SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning
 ## Drill 3: References used in the ReAct paper
-Using tool fallback: get_paper(fields="title,references")
+- Tool call: `get_paper`
+- Arguments: `{"paper_id": "ARXIV:2210.03629", "fields": "title,references"}`
 - A Simple Language Model for Task-Oriented Dialogue (Unknown year)
-- A generalist agent, 2022 (Unknown year)
 - ALFRED: A Benchmark for Interpreting Grounded Instructions for Everyday Tasks (Unknown year)
-- ALFWORLD TRAJECTORIES We provide an example trajectory of ReAct, Act, and ReAct-IM on the same ALFWorld game, pick_clean_then_place_in_recep-Knife-None-CounterTop-10/ trial_T20190909_110445_675754 (Unknown year)
 - ALFWorld: Aligning Text and Embodied Environments for Interactive Learning (Unknown year)
-- Action 2: Search[Linda Hart (Unknown year)
-- Action 2: Search[William J. Crowe] Observation 2: William J. Crowe is (Unknown year)
-- Action: click B0061IVFZE Observation: Back to Search Prev flavor name (Unknown year)
-- Action: think[For sixteen pack of apple cinnamon freeze dried banana chips, the item has options 'apple cinnamon' and '0.53 ounce (pack of (Unknown year)
 - Adaptive Information Seeking for Open-Domain Question Answering (Unknown year)
 - BlenderBot 3: a deployed conversational agent that continually learns to responsibly engage (Unknown year)
-- Brothers-ALL-Natural Fruit Crisps, Strawberry Banana, 0 (Unknown year)
 - Chain of Thought Prompting Elicits Reasoning in Large Language Models (Unknown year)
-- Coster-Waldau appeared in the 2009 Fox television film Virtuality, so he has worked with the Fox Broadcasting Company (Unknown year)
 - Do As I Can, Not As I Say: Grounding Language in Robotic Affordances (Unknown year)
 - ELI5: Long Form Question Answering (Unknown year)
 - FEVER: a Large-scale Dataset for Fact Extraction and VERification (Unknown year)
 - Faithful Reasoning Using Large Language Models (Unknown year)
-- Harvey Fierstein is an actor, playwright, and screenwriter. I need to search Linda Hart next (Unknown year)
 - HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering (Unknown year)
-- I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common (Unknown year)
 - Imitating Interactive Intelligence (Unknown year)
 - Improving alignment of dialogue agents via targeted human judgements (Unknown year)
 - Inner Monologue: Embodied Reasoning through Planning with Language Models (Unknown year)
@@ -47,31 +43,16 @@ Using tool fallback: get_paper(fields="title,references")
 - Language Models that Seek for Knowledge: Modular Search & Generation for Dialogue and Prompt Completion (Unknown year)
 - Large Language Models are Zero-Shot Reasoners (Unknown year)
 - Least-to-Most Prompting Enables Complex Reasoning in Large Language Models (Unknown year)
-- Milhouse Mussolini Van Houten (Unknown year)
-- Musician and satirist Allie (Unknown year)
-- Nature's Turn Freeze-Dried Fruit Snacks -Banana Crisps -Perfect For School Lunches or an On-The-Go Snack -No Sugar Added (Unknown year)
-- Observation 1 Could not find [Beautiful] (Unknown year)
-- Observation 2 (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous (Unknown year)
-- Oriol Vinyals, Mahyar Bordbar, and Nando de Freitas. A generalist agent (Unknown year)
 - PaLM: Scaling Language Modeling with Pathways (Unknown year)
 - Pre-Trained Language Models for Interactive Decision-Making (Unknown year)
-- Question Which magazine was started first Arthurâs Magazine or First for Women? Thought 1 I need to search Arthurâs Magazine and First for Women, and find which was started first (Unknown year)
 - Rationale-Augmented Ensembles in Language Models (Unknown year)
-- Result 1 (Unknown year)
 - Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (Unknown year)
 - Selection-Inference: Exploiting Large Language Models for Interpretable Logical Reasoning (Unknown year)
 - Self-Consistency Improves Chain of Thought Reasoning in Language Models (Unknown year)
 - Show Your Work: Scratchpads for Intermediate Computation with Language Models (Unknown year)
-- Star: Bootstrapping reasoning with reasoning, 2022 (Unknown year)
 - Text and Patterns: For Effective Chain of Thought, It Takes Two to Tango (Unknown year)
 - Thinking and Speech (Unknown year)
-- Thought 2: I need to search Frigg instead (Unknown year)
-- Vanderbilt University was founded in 1873. Emory University was founded in 1836. 1873 (Vanderbilt University) > 1836 (Emory University), so Vanderbilt University was founded first (Unknown year)
 - Vygotsky, Luria, and the social brain. (Unknown year)
 - WebGPT: Browser-assisted question-answering with human feedback (Unknown year)
 - WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents (Unknown year)
-- Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture? (Unknown year)
 - Working memory (Unknown year)
-- need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups (Unknown year)
-- put knife 1 in/on countertop 1 Nothing (Unknown year)
-- take lettuce 1 from diningtable 1 (Unknown year)

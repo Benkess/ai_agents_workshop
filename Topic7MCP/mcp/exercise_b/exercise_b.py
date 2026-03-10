@@ -1,9 +1,9 @@
 """
 Exercise B note:
-- The live Asta MCP server currently exposes `search_papers_by_relevance` instead
-  of `search_papers`, so Drill 1 uses `search_papers_by_relevance`.
-- The live Asta MCP server does not advertise `get_references`, so Drill 3 uses
-  `get_paper(..., fields="title,references")` and extracts the references list.
+- The live Asta MCP server tool names for this exercise are:
+  - Drill 1: `search_papers_by_relevance`
+  - Drill 2: `get_citations`
+  - Drill 3: `get_paper` with `fields="title,references"`
 """
 
 import argparse
@@ -83,16 +83,50 @@ def call_tool(name: str, arguments: dict[str, Any], request_id: int) -> Any:
         raise RuntimeError(f"Asta MCP returned a JSON-RPC error: {mcp_payload['error']}")
 
     try:
-        text_content = mcp_payload["result"]["content"][0]["text"]
-    except (KeyError, IndexError, TypeError) as exc:
+        result_payload = mcp_payload["result"]
+    except (KeyError, TypeError) as exc:
         raise RuntimeError(
             f"Unexpected tool response shape for {name}: {mcp_payload}"
         ) from exc
 
-    try:
-        return json.loads(text_content)
-    except json.JSONDecodeError:
-        return text_content
+    if result_payload.get("isError"):
+        content = result_payload.get("content")
+        if isinstance(content, list):
+            parts = []
+            for item in content:
+                if isinstance(item, dict):
+                    parts.append(str(item.get("text", item)))
+                else:
+                    parts.append(str(item))
+            raise RuntimeError("\n".join(parts))
+        raise RuntimeError(str(result_payload))
+
+    structured = result_payload.get("structuredContent")
+    if isinstance(structured, dict) and "result" in structured:
+        return structured["result"]
+    if structured is not None:
+        return structured
+
+    content = result_payload.get("content")
+    if isinstance(content, list):
+        parsed_items = []
+        for item in content:
+            if not isinstance(item, dict):
+                parsed_items.append(item)
+                continue
+            text_content = item.get("text")
+            if not isinstance(text_content, str):
+                parsed_items.append(item)
+                continue
+            try:
+                parsed_items.append(json.loads(text_content))
+            except json.JSONDecodeError:
+                parsed_items.append(text_content)
+        if len(parsed_items) == 1:
+            return parsed_items[0]
+        return parsed_items
+
+    return result_payload
 
 
 def first_list_in_payload(payload: Any) -> list[Any] | None:
@@ -130,27 +164,6 @@ def normalize_result(payload: Any) -> list[dict[str, Any]]:
     return [unwrap_record(record) for record in records]
 
 
-def call_tool_with_fallback(
-    primary_name: str,
-    primary_arguments: dict[str, Any],
-    request_id: int,
-    fallback_name: str | None = None,
-    fallback_arguments: dict[str, Any] | None = None,
-) -> tuple[Any, str]:
-    try:
-        payload = call_tool(primary_name, primary_arguments, request_id)
-        if isinstance(payload, str) and "Unknown tool:" in payload:
-            raise RuntimeError(payload)
-        return payload, primary_name
-    except RuntimeError:
-        if fallback_name is None or fallback_arguments is None:
-            raise
-    payload = call_tool(fallback_name, fallback_arguments, request_id)
-    if isinstance(payload, str) and "Unknown tool:" in payload:
-        raise RuntimeError(payload)
-    return payload, fallback_name
-
-
 def format_title_and_year(item: dict[str, Any], index: int | None = None) -> str:
     title = item.get("title") or "Untitled"
     year = item.get("year")
@@ -165,23 +178,21 @@ def render_section(title: str, lines: list[str], output_format: str) -> str:
     return f"=== {title} ===\n" + "\n".join(lines) + "\n"
 
 
+def render_tool_call_lines(name: str, arguments: dict[str, Any], output_format: str) -> list[str]:
+    payload_text = json.dumps(arguments, ensure_ascii=False)
+    if output_format == "md":
+        return [f"- Tool call: `{name}`", f"- Arguments: `{payload_text}`"]
+    return [f"Tool call: {name}", f"Arguments: {payload_text}"]
+
+
 def run_drill_1(output_format: str) -> str:
-    result, tool_name = call_tool_with_fallback(
-        "search_papers",
-        {
-            "query": "large language model agents",
-            "fields": "title,abstract,year,authors",
-            "limit": 5,
-        },
-        request_id=1,
-        fallback_name="search_papers_by_relevance",
-        fallback_arguments={
-            "keyword": "large language model agents",
-            "fields": "title,abstract,year,authors",
-            "limit": 5,
-        },
-    )
-    lines = [f"Using tool: {tool_name}"]
+    arguments = {
+        "keyword": "large language model agents",
+        "fields": "title,abstract,year,authors",
+        "limit": 5,
+    }
+    result = call_tool("search_papers_by_relevance", arguments, request_id=1)
+    lines = render_tool_call_lines("search_papers_by_relevance", arguments, output_format)
 
     papers = normalize_result(result)
     for index, paper in enumerate(papers[:5], start=1):
@@ -190,19 +201,17 @@ def run_drill_1(output_format: str) -> str:
 
 
 def run_drill_2(output_format: str) -> str:
-    result = call_tool(
-        "get_citations",
-        {
-            "paper_id": "ARXIV:1810.04805",
-            "fields": "title,year,authors",
-            "limit": 10,
-            "publication_date_range": "2023-01-01:",
-        },
-        request_id=2,
-    )
+    arguments = {
+        "paper_id": "ARXIV:1810.04805",
+        "fields": "title,year,authors",
+        "limit": 10,
+        "publication_date_range": "2023-01-01:",
+    }
+    result = call_tool("get_citations", arguments, request_id=2)
 
     citations = normalize_result(result)
-    lines = [f"Total citations returned: {len(citations)}"]
+    lines = render_tool_call_lines("get_citations", arguments, output_format)
+    lines.append(f"Total citations returned: {len(citations)}")
     for citation in citations[:5]:
         lines.append(f"- {citation.get('title', 'Untitled')}")
     return render_section("Drill 2: Citations to the original BERT paper", lines, output_format)
@@ -210,13 +219,15 @@ def run_drill_2(output_format: str) -> str:
 
 def extract_references(payload: Any) -> list[dict[str, Any]]:
     if isinstance(payload, dict) and isinstance(payload.get("references"), list):
-        return [unwrap_record(reference) for reference in payload["references"]]
+        refs = [unwrap_record(reference) for reference in payload["references"]]
+        return [ref for ref in refs if ref.get("paperId") or ref.get("year")]
 
     records = normalize_result(payload)
     first_record = records[0] if records else {}
     references = first_list_in_payload(first_record.get("references"))
     if references is not None:
-        return [unwrap_record(reference) for reference in references]
+        refs = [unwrap_record(reference) for reference in references]
+        return [ref for ref in refs if ref.get("paperId") or ref.get("year")]
     return records
 
 
@@ -232,23 +243,12 @@ def sort_references_by_year(references: list[dict[str, Any]]) -> list[dict[str, 
 
 
 def run_drill_3(output_format: str) -> str:
-    result, tool_name = call_tool_with_fallback(
-        "get_references",
-        {
-            "paper_id": "ARXIV:2210.03629",
-            "fields": "title,year,authors",
-        },
-        request_id=3,
-        fallback_name="get_paper",
-        fallback_arguments={
-            "paper_id": "ARXIV:2210.03629",
-            "fields": "title,references",
-        },
-    )
-    if tool_name == "get_references":
-        lines = ["Using tool: get_references"]
-    else:
-        lines = ['Using tool fallback: get_paper(fields="title,references")']
+    arguments = {
+        "paper_id": "ARXIV:2210.03629",
+        "fields": "title,references",
+    }
+    result = call_tool("get_paper", arguments, request_id=3)
+    lines = render_tool_call_lines("get_paper", arguments, output_format)
 
     references = extract_references(result)
     sorted_references = sort_references_by_year(references)
