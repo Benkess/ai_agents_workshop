@@ -1,0 +1,317 @@
+{
+  "tool": "get_paper",
+  "arguments": {
+    "paper_id": "ARXIV:2210.03629",
+    "fields": "title,references"
+  },
+  "request_id": 3,
+  "mcp_payload": {
+    "jsonrpc": "2.0",
+    "id": 3,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"paperId\": \"99832586d55f540f603637e458a292406a0ed75d\",\n  \"title\": \"ReAct: Synergizing Reasoning and Acting in Language Models\",\n  \"openAccessPdf\": {\n    \"url\": \"\",\n    \"status\": null,\n    \"license\": null,\n    \"disclaimer\": \"Notice: Paper or abstract available at https://arxiv.org/abs/2210.03629, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.\"\n  },\n  \"authors\": [\n    {\n      \"authorId\": \"2093302161\",\n      \"name\": \"Shunyu Yao\"\n    },\n    {\n      \"authorId\": \"2144551262\",\n      \"name\": \"Jeffrey Zhao\"\n    },\n    {\n      \"authorId\": \"150978762\",\n      \"name\": \"Dian Yu\"\n    },\n    {\n      \"authorId\": \"2140321952\",\n      \"name\": \"Nan Du\"\n    },\n    {\n      \"authorId\": \"1697494\",\n      \"name\": \"Izhak Shafran\"\n    },\n    {\n      \"authorId\": \"144958935\",\n      \"name\": \"Karthik Narasimhan\"\n    },\n    {\n      \"authorId\": \"145144022\",\n      \"name\": \"Yuan Cao\"\n    }\n  ],\n  \"references\": [\n    {\n      \"paperId\": \"74eae12620bd1c1393e268bddcb6f129a5025166\",\n      \"title\": \"Improving alignment of dialogue agents via targeted human judgements\"\n    },\n    {\n      \"paperId\": \"4988b3d378b79eb8669112620baf1ff4e3e536fd\",\n      \"title\": \"Text and Patterns: For Effective Chain of Thought, It Takes Two to Tango\"\n    },\n    {\n      \"paperId\": \"f0a0e8b6e84207f50db4d24cc4016e40601214ef\",\n      \"title\": \"Faithful Reasoning Using Large Language Models\"\n    },\n    {\n      \"paperId\": \"a3076ecfed0571fbbb5217a5cc6b4b6f24f6f7dd\",\n      \"title\": \"BlenderBot 3: a deployed conversational agent that continually learns to responsibly engage\"\n    },\n    {\n      \"paperId\": \"f3cf71c51b882fe3111d71c4bf104297d38197f8\",\n      \"title\": \"Inner Monologue: Embodied Reasoning through Planning with Language Models\"\n    },\n    {\n      \"paperId\": \"23525374cfd3af714f3ffb7a203b1ef3253333fe\",\n      \"title\": \"WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents\"\n    },\n    {\n      \"paperId\": \"b17cc18e4130505b939f7d527082eb6be2a7fd5b\",\n      \"title\": \"Rationale-Augmented Ensembles in Language Models\"\n    },\n    {\n      \"paperId\": \"e7ad08848d5d7c5c47673ffe0da06af443643bda\",\n      \"title\": \"Large Language Models are Zero-Shot Reasoners\"\n    },\n    {\n      \"paperId\": \"5437e8adab596d7294124c0e798708e050e25321\",\n      \"title\": \"Least-to-Most Prompting Enables Complex Reasoning in Large Language Models\"\n    },\n    {\n      \"paperId\": \"d48b29889241551e1ee6622fa78c3fa4159255dd\",\n      \"title\": \"Selection-Inference: Exploiting Large Language Models for Interpretable Logical Reasoning\"\n    },\n    {\n      \"paperId\": \"094ff971d6a8b8ff870946c9b3ce5aa173617bfb\",\n      \"title\": \"PaLM: Scaling Language Modeling with Pathways\"\n    },\n    {\n      \"paperId\": \"cb5e3f085caefd1f3d5e08637ab55d39e61234fc\",\n      \"title\": \"Do As I Can, Not As I Say: Grounding Language in Robotic Affordances\"\n    },\n    {\n      \"paperId\": \"f8292d4ddf7a6dfe240eeaa9685f5d18eed9a3f6\",\n      \"title\": \"Language Models that Seek for Knowledge: Modular Search & Generation for Dialogue and Prompt Completion\"\n    },\n    {\n      \"paperId\": \"5f19ae1135a9500940978104ec15a5b8751bc7d2\",\n      \"title\": \"Self-Consistency Improves Chain of Thought Reasoning in Language Models\"\n    },\n    {\n      \"paperId\": \"c70eb74e09c41e8fcc71dd59e3b4d631f657f7cd\",\n      \"title\": \"Internet-augmented language models through few-shot prompting for open-domain question answering\"\n    },\n    {\n      \"paperId\": \"b9b220b485d2add79118ffdc2aaa148b67fa53ef\",\n      \"title\": \"Pre-Trained Language Models for Interactive Decision-Making\"\n    },\n    {\n      \"paperId\": \"1b6e810ce0afd0dd093f789d2b2742d047e316d5\",\n      \"title\": \"Chain of Thought Prompting Elicits Reasoning in Large Language Models\"\n    },\n    {\n      \"paperId\": \"92a8f7f09f3705cb5a6009a42220a6f01ea084e8\",\n      \"title\": \"Language Models as Zero-Shot Planners: Extracting Actionable Knowledge for Embodied Agents\"\n    },\n    {\n      \"paperId\": \"2f3efe44083af91cef562c1a3451eee2f8601d22\",\n      \"title\": \"WebGPT: Browser-assisted question-answering with human feedback\"\n    },\n    {\n      \"paperId\": \"92173d081b15824d22a9ef070e118744ceee8052\",\n      \"title\": \"Show Your Work: Scratchpads for Intermediate Computation with Language Models\"\n    },\n    {\n      \"paperId\": \"bfba05093314e52317536b6cfc8b7fded8371e02\",\n      \"title\": \"LILA: Language-Informed Latent Actions\"\n    },\n    {\n      \"paperId\": \"7a025a90cc36e668fb69f980ee809cd7d752854e\",\n      \"title\": \"Adaptive Information Seeking for Open-Domain Question Answering\"\n    },\n    {\n      \"paperId\": \"6263f69b0154fb090fc76f792c1a4aa182e24294\",\n      \"title\": \"Language Models are Few-Shot Butlers\"\n    },\n    {\n      \"paperId\": \"4c5d4601a3a19c31da6588d2a34adfb161f68c0e\",\n      \"title\": \"Imitating Interactive Intelligence\"\n    },\n    {\n      \"paperId\": \"398a0625e8707a0b41ac58eaec51e8feb87dd7cb\",\n      \"title\": \"ALFWorld: Aligning Text and Embodied Environments for Interactive Learning\"\n    },\n    {\n      \"paperId\": \"8aed57b61457655e8354f1b68b34ed1cc0a222ef\",\n      \"title\": \"Keep CALM and Explore: Language Models for Action Generation in Text-based Games\"\n    },\n    {\n      \"paperId\": \"90abbc2cf38462b954ae1b772fac9532e2ccd8b0\",\n      \"title\": \"Language Models are Few-Shot Learners\"\n    },\n    {\n      \"paperId\": \"659bf9ce7175e1ec266ff54359e2bd76e0b7ff31\",\n      \"title\": \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\"\n    },\n    {\n      \"paperId\": \"01ec011977fc6cda03e8b447e1b5eb0551f1c961\",\n      \"title\": \"A Simple Language Model for Task-Oriented Dialogue\"\n    },\n    {\n      \"paperId\": \"f4cf4246f3882aa6337e9c05d5675a3b8463a32e\",\n      \"title\": \"ALFRED: A Benchmark for Interpreting Grounded Instructions for Everyday Tasks\"\n    },\n    {\n      \"paperId\": \"ebf59587f8f170ff4241c42263bbfb9da5bd2135\",\n      \"title\": \"ELI5: Long Form Question Answering\"\n    },\n    {\n      \"paperId\": \"22655979df781d222eaf812b0d325fa9adf11594\",\n      \"title\": \"HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering\"\n    },\n    {\n      \"paperId\": \"b1d24e8e08435b7c52335485a0d635abf9bc604c\",\n      \"title\": \"FEVER: a Large-scale Dataset for Fact Extraction and VERification\"\n    },\n    {\n      \"paperId\": \"60ffc252bd4c055d6f6ab7d34a64d221e47aa741\",\n      \"title\": \"Inner Speech: Development, Cognitive Functions, Phenomenology, and Neurobiology\"\n    },\n    {\n      \"paperId\": \"35a2b204ee6da98232674728e82f7fedd9f46931\",\n      \"title\": \"Working memory\"\n    },\n    {\n      \"paperId\": \"89ad3c55d74466983d8312b24142aae1f4b4879c\",\n      \"title\": \"L.S. Vygotsky and the problem of localization of functions\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Oriol Vinyals, Mahyar Bordbar, and Nando de Freitas. A generalist agent\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Star: Bootstrapping reasoning with reasoning, 2022\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"A generalist agent, 2022\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"ALFWORLD TRAJECTORIES We provide an example trajectory of ReAct, Act, and ReAct-IM on the same ALFWorld game, pick_clean_then_place_in_recep-Knife-None-CounterTop-10/ trial_T20190909_110445_675754\"\n    },\n    {\n      \"paperId\": \"b05a1fcb66c81a5e11f742bfc871df2fbf09798e\",\n      \"title\": \"Thinking and Speech\"\n    },\n    {\n      \"paperId\": \"5d798bcee3aa66e591d627a09e27f6da56eea782\",\n      \"title\": \"Vygotsky, Luria, and the social brain.\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Coster-Waldau appeared in the 2009 Fox television film Virtuality, so he has worked with the Fox Broadcasting Company\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"put knife 1 in/on countertop 1 Nothing\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Action 2: Search[Linda Hart\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Observation 1 Could not find [Beautiful]\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Result 1\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Milhouse Mussolini Van Houten\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Thought 2: I need to search Frigg instead\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Musician and satirist Allie\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Question Which magazine was started first Arthurâs Magazine or First for Women? Thought 1 I need to search Arthurâs Magazine and First for Women, and find which was started first\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Observation 2 (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Vanderbilt University was founded in 1873. Emory University was founded in 1836. 1873 (Vanderbilt University) > 1836 (Emory University), so Vanderbilt University was founded first\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Action 2: Search[William J. Crowe] Observation 2: William J. Crowe is\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Harvey Fierstein is an actor, playwright, and screenwriter. I need to search Linda Hart next\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Action: click B0061IVFZE Observation: Back to Search Prev flavor name\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Brothers-ALL-Natural Fruit Crisps, Strawberry Banana, 0\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"take lettuce 1 from diningtable 1\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Nature's Turn Freeze-Dried Fruit Snacks -Banana Crisps -Perfect For School Lunches or an On-The-Go Snack -No Sugar Added\"\n    },\n    {\n      \"paperId\": null,\n      \"title\": \"Action: think[For sixteen pack of apple cinnamon freeze dried banana chips, the item has options 'apple cinnamon' and '0.53 ounce (pack of\"\n    }\n  ]\n}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "structured_result": null,
+  "parsed_content": {
+    "paperId": "99832586d55f540f603637e458a292406a0ed75d",
+    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2210.03629, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "authors": [
+      {
+        "authorId": "2093302161",
+        "name": "Shunyu Yao"
+      },
+      {
+        "authorId": "2144551262",
+        "name": "Jeffrey Zhao"
+      },
+      {
+        "authorId": "150978762",
+        "name": "Dian Yu"
+      },
+      {
+        "authorId": "2140321952",
+        "name": "Nan Du"
+      },
+      {
+        "authorId": "1697494",
+        "name": "Izhak Shafran"
+      },
+      {
+        "authorId": "144958935",
+        "name": "Karthik Narasimhan"
+      },
+      {
+        "authorId": "145144022",
+        "name": "Yuan Cao"
+      }
+    ],
+    "references": [
+      {
+        "paperId": "74eae12620bd1c1393e268bddcb6f129a5025166",
+        "title": "Improving alignment of dialogue agents via targeted human judgements"
+      },
+      {
+        "paperId": "4988b3d378b79eb8669112620baf1ff4e3e536fd",
+        "title": "Text and Patterns: For Effective Chain of Thought, It Takes Two to Tango"
+      },
+      {
+        "paperId": "f0a0e8b6e84207f50db4d24cc4016e40601214ef",
+        "title": "Faithful Reasoning Using Large Language Models"
+      },
+      {
+        "paperId": "a3076ecfed0571fbbb5217a5cc6b4b6f24f6f7dd",
+        "title": "BlenderBot 3: a deployed conversational agent that continually learns to responsibly engage"
+      },
+      {
+        "paperId": "f3cf71c51b882fe3111d71c4bf104297d38197f8",
+        "title": "Inner Monologue: Embodied Reasoning through Planning with Language Models"
+      },
+      {
+        "paperId": "23525374cfd3af714f3ffb7a203b1ef3253333fe",
+        "title": "WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents"
+      },
+      {
+        "paperId": "b17cc18e4130505b939f7d527082eb6be2a7fd5b",
+        "title": "Rationale-Augmented Ensembles in Language Models"
+      },
+      {
+        "paperId": "e7ad08848d5d7c5c47673ffe0da06af443643bda",
+        "title": "Large Language Models are Zero-Shot Reasoners"
+      },
+      {
+        "paperId": "5437e8adab596d7294124c0e798708e050e25321",
+        "title": "Least-to-Most Prompting Enables Complex Reasoning in Large Language Models"
+      },
+      {
+        "paperId": "d48b29889241551e1ee6622fa78c3fa4159255dd",
+        "title": "Selection-Inference: Exploiting Large Language Models for Interpretable Logical Reasoning"
+      },
+      {
+        "paperId": "094ff971d6a8b8ff870946c9b3ce5aa173617bfb",
+        "title": "PaLM: Scaling Language Modeling with Pathways"
+      },
+      {
+        "paperId": "cb5e3f085caefd1f3d5e08637ab55d39e61234fc",
+        "title": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances"
+      },
+      {
+        "paperId": "f8292d4ddf7a6dfe240eeaa9685f5d18eed9a3f6",
+        "title": "Language Models that Seek for Knowledge: Modular Search & Generation for Dialogue and Prompt Completion"
+      },
+      {
+        "paperId": "5f19ae1135a9500940978104ec15a5b8751bc7d2",
+        "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models"
+      },
+      {
+        "paperId": "c70eb74e09c41e8fcc71dd59e3b4d631f657f7cd",
+        "title": "Internet-augmented language models through few-shot prompting for open-domain question answering"
+      },
+      {
+        "paperId": "b9b220b485d2add79118ffdc2aaa148b67fa53ef",
+        "title": "Pre-Trained Language Models for Interactive Decision-Making"
+      },
+      {
+        "paperId": "1b6e810ce0afd0dd093f789d2b2742d047e316d5",
+        "title": "Chain of Thought Prompting Elicits Reasoning in Large Language Models"
+      },
+      {
+        "paperId": "92a8f7f09f3705cb5a6009a42220a6f01ea084e8",
+        "title": "Language Models as Zero-Shot Planners: Extracting Actionable Knowledge for Embodied Agents"
+      },
+      {
+        "paperId": "2f3efe44083af91cef562c1a3451eee2f8601d22",
+        "title": "WebGPT: Browser-assisted question-answering with human feedback"
+      },
+      {
+        "paperId": "92173d081b15824d22a9ef070e118744ceee8052",
+        "title": "Show Your Work: Scratchpads for Intermediate Computation with Language Models"
+      },
+      {
+        "paperId": "bfba05093314e52317536b6cfc8b7fded8371e02",
+        "title": "LILA: Language-Informed Latent Actions"
+      },
+      {
+        "paperId": "7a025a90cc36e668fb69f980ee809cd7d752854e",
+        "title": "Adaptive Information Seeking for Open-Domain Question Answering"
+      },
+      {
+        "paperId": "6263f69b0154fb090fc76f792c1a4aa182e24294",
+        "title": "Language Models are Few-Shot Butlers"
+      },
+      {
+        "paperId": "4c5d4601a3a19c31da6588d2a34adfb161f68c0e",
+        "title": "Imitating Interactive Intelligence"
+      },
+      {
+        "paperId": "398a0625e8707a0b41ac58eaec51e8feb87dd7cb",
+        "title": "ALFWorld: Aligning Text and Embodied Environments for Interactive Learning"
+      },
+      {
+        "paperId": "8aed57b61457655e8354f1b68b34ed1cc0a222ef",
+        "title": "Keep CALM and Explore: Language Models for Action Generation in Text-based Games"
+      },
+      {
+        "paperId": "90abbc2cf38462b954ae1b772fac9532e2ccd8b0",
+        "title": "Language Models are Few-Shot Learners"
+      },
+      {
+        "paperId": "659bf9ce7175e1ec266ff54359e2bd76e0b7ff31",
+        "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+      },
+      {
+        "paperId": "01ec011977fc6cda03e8b447e1b5eb0551f1c961",
+        "title": "A Simple Language Model for Task-Oriented Dialogue"
+      },
+      {
+        "paperId": "f4cf4246f3882aa6337e9c05d5675a3b8463a32e",
+        "title": "ALFRED: A Benchmark for Interpreting Grounded Instructions for Everyday Tasks"
+      },
+      {
+        "paperId": "ebf59587f8f170ff4241c42263bbfb9da5bd2135",
+        "title": "ELI5: Long Form Question Answering"
+      },
+      {
+        "paperId": "22655979df781d222eaf812b0d325fa9adf11594",
+        "title": "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
+      },
+      {
+        "paperId": "b1d24e8e08435b7c52335485a0d635abf9bc604c",
+        "title": "FEVER: a Large-scale Dataset for Fact Extraction and VERification"
+      },
+      {
+        "paperId": "60ffc252bd4c055d6f6ab7d34a64d221e47aa741",
+        "title": "Inner Speech: Development, Cognitive Functions, Phenomenology, and Neurobiology"
+      },
+      {
+        "paperId": "35a2b204ee6da98232674728e82f7fedd9f46931",
+        "title": "Working memory"
+      },
+      {
+        "paperId": "89ad3c55d74466983d8312b24142aae1f4b4879c",
+        "title": "L.S. Vygotsky and the problem of localization of functions"
+      },
+      {
+        "paperId": null,
+        "title": "Oriol Vinyals, Mahyar Bordbar, and Nando de Freitas. A generalist agent"
+      },
+      {
+        "paperId": null,
+        "title": "Star: Bootstrapping reasoning with reasoning, 2022"
+      },
+      {
+        "paperId": null,
+        "title": "A generalist agent, 2022"
+      },
+      {
+        "paperId": null,
+        "title": "ALFWORLD TRAJECTORIES We provide an example trajectory of ReAct, Act, and ReAct-IM on the same ALFWorld game, pick_clean_then_place_in_recep-Knife-None-CounterTop-10/ trial_T20190909_110445_675754"
+      },
+      {
+        "paperId": "b05a1fcb66c81a5e11f742bfc871df2fbf09798e",
+        "title": "Thinking and Speech"
+      },
+      {
+        "paperId": "5d798bcee3aa66e591d627a09e27f6da56eea782",
+        "title": "Vygotsky, Luria, and the social brain."
+      },
+      {
+        "paperId": null,
+        "title": "Coster-Waldau appeared in the 2009 Fox television film Virtuality, so he has worked with the Fox Broadcasting Company"
+      },
+      {
+        "paperId": null,
+        "title": "Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?"
+      },
+      {
+        "paperId": null,
+        "title": "put knife 1 in/on countertop 1 Nothing"
+      },
+      {
+        "paperId": null,
+        "title": "need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups"
+      },
+      {
+        "paperId": null,
+        "title": "Action 2: Search[Linda Hart"
+      },
+      {
+        "paperId": null,
+        "title": "Observation 1 Could not find [Beautiful]"
+      },
+      {
+        "paperId": null,
+        "title": "Result 1"
+      },
+      {
+        "paperId": null,
+        "title": "Milhouse Mussolini Van Houten"
+      },
+      {
+        "paperId": null,
+        "title": "Thought 2: I need to search Frigg instead"
+      },
+      {
+        "paperId": null,
+        "title": "Musician and satirist Allie"
+      },
+      {
+        "paperId": null,
+        "title": "I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common"
+      },
+      {
+        "paperId": null,
+        "title": "Question Which magazine was started first Arthurâs Magazine or First for Women? Thought 1 I need to search Arthurâs Magazine and First for Women, and find which was started first"
+      },
+      {
+        "paperId": null,
+        "title": "Observation 2 (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous"
+      },
+      {
+        "paperId": null,
+        "title": "Vanderbilt University was founded in 1873. Emory University was founded in 1836. 1873 (Vanderbilt University) > 1836 (Emory University), so Vanderbilt University was founded first"
+      },
+      {
+        "paperId": null,
+        "title": "Action 2: Search[William J. Crowe] Observation 2: William J. Crowe is"
+      },
+      {
+        "paperId": null,
+        "title": "Harvey Fierstein is an actor, playwright, and screenwriter. I need to search Linda Hart next"
+      },
+      {
+        "paperId": null,
+        "title": "Action: click B0061IVFZE Observation: Back to Search Prev flavor name"
+      },
+      {
+        "paperId": null,
+        "title": "Brothers-ALL-Natural Fruit Crisps, Strawberry Banana, 0"
+      },
+      {
+        "paperId": null,
+        "title": "take lettuce 1 from diningtable 1"
+      },
+      {
+        "paperId": null,
+        "title": "Nature's Turn Freeze-Dried Fruit Snacks -Banana Crisps -Perfect For School Lunches or an On-The-Go Snack -No Sugar Added"
+      },
+      {
+        "paperId": null,
+        "title": "Action: think[For sixteen pack of apple cinnamon freeze dried banana chips, the item has options 'apple cinnamon' and '0.53 ounce (pack of"
+      }
+    ]
+  },
+  "raw_response_text": "event: message\r\ndata: {\"jsonrpc\":\"2.0\",\"id\":3,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\n  \\\"paperId\\\": \\\"99832586d55f540f603637e458a292406a0ed75d\\\",\\n  \\\"title\\\": \\\"ReAct: Synergizing Reasoning and Acting in Language Models\\\",\\n  \\\"openAccessPdf\\\": {\\n    \\\"url\\\": \\\"\\\",\\n    \\\"status\\\": null,\\n    \\\"license\\\": null,\\n    \\\"disclaimer\\\": \\\"Notice: Paper or abstract available at https://arxiv.org/abs/2210.03629, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.\\\"\\n  },\\n  \\\"authors\\\": [\\n    {\\n      \\\"authorId\\\": \\\"2093302161\\\",\\n      \\\"name\\\": \\\"Shunyu Yao\\\"\\n    },\\n    {\\n      \\\"authorId\\\": \\\"2144551262\\\",\\n      \\\"name\\\": \\\"Jeffrey Zhao\\\"\\n    },\\n    {\\n      \\\"authorId\\\": \\\"150978762\\\",\\n      \\\"name\\\": \\\"Dian Yu\\\"\\n    },\\n    {\\n      \\\"authorId\\\": \\\"2140321952\\\",\\n      \\\"name\\\": \\\"Nan Du\\\"\\n    },\\n    {\\n      \\\"authorId\\\": \\\"1697494\\\",\\n      \\\"name\\\": \\\"Izhak Shafran\\\"\\n    },\\n    {\\n      \\\"authorId\\\": \\\"144958935\\\",\\n      \\\"name\\\": \\\"Karthik Narasimhan\\\"\\n    },\\n    {\\n      \\\"authorId\\\": \\\"145144022\\\",\\n      \\\"name\\\": \\\"Yuan Cao\\\"\\n    }\\n  ],\\n  \\\"references\\\": [\\n    {\\n      \\\"paperId\\\": \\\"74eae12620bd1c1393e268bddcb6f129a5025166\\\",\\n      \\\"title\\\": \\\"Improving alignment of dialogue agents via targeted human judgements\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"4988b3d378b79eb8669112620baf1ff4e3e536fd\\\",\\n      \\\"title\\\": \\\"Text and Patterns: For Effective Chain of Thought, It Takes Two to Tango\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"f0a0e8b6e84207f50db4d24cc4016e40601214ef\\\",\\n      \\\"title\\\": \\\"Faithful Reasoning Using Large Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"a3076ecfed0571fbbb5217a5cc6b4b6f24f6f7dd\\\",\\n      \\\"title\\\": \\\"BlenderBot 3: a deployed conversational agent that continually learns to responsibly engage\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"f3cf71c51b882fe3111d71c4bf104297d38197f8\\\",\\n      \\\"title\\\": \\\"Inner Monologue: Embodied Reasoning through Planning with Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"23525374cfd3af714f3ffb7a203b1ef3253333fe\\\",\\n      \\\"title\\\": \\\"WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"b17cc18e4130505b939f7d527082eb6be2a7fd5b\\\",\\n      \\\"title\\\": \\\"Rationale-Augmented Ensembles in Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"e7ad08848d5d7c5c47673ffe0da06af443643bda\\\",\\n      \\\"title\\\": \\\"Large Language Models are Zero-Shot Reasoners\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"5437e8adab596d7294124c0e798708e050e25321\\\",\\n      \\\"title\\\": \\\"Least-to-Most Prompting Enables Complex Reasoning in Large Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"d48b29889241551e1ee6622fa78c3fa4159255dd\\\",\\n      \\\"title\\\": \\\"Selection-Inference: Exploiting Large Language Models for Interpretable Logical Reasoning\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"094ff971d6a8b8ff870946c9b3ce5aa173617bfb\\\",\\n      \\\"title\\\": \\\"PaLM: Scaling Language Modeling with Pathways\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"cb5e3f085caefd1f3d5e08637ab55d39e61234fc\\\",\\n      \\\"title\\\": \\\"Do As I Can, Not As I Say: Grounding Language in Robotic Affordances\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"f8292d4ddf7a6dfe240eeaa9685f5d18eed9a3f6\\\",\\n      \\\"title\\\": \\\"Language Models that Seek for Knowledge: Modular Search & Generation for Dialogue and Prompt Completion\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"5f19ae1135a9500940978104ec15a5b8751bc7d2\\\",\\n      \\\"title\\\": \\\"Self-Consistency Improves Chain of Thought Reasoning in Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"c70eb74e09c41e8fcc71dd59e3b4d631f657f7cd\\\",\\n      \\\"title\\\": \\\"Internet-augmented language models through few-shot prompting for open-domain question answering\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"b9b220b485d2add79118ffdc2aaa148b67fa53ef\\\",\\n      \\\"title\\\": \\\"Pre-Trained Language Models for Interactive Decision-Making\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"1b6e810ce0afd0dd093f789d2b2742d047e316d5\\\",\\n      \\\"title\\\": \\\"Chain of Thought Prompting Elicits Reasoning in Large Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"92a8f7f09f3705cb5a6009a42220a6f01ea084e8\\\",\\n      \\\"title\\\": \\\"Language Models as Zero-Shot Planners: Extracting Actionable Knowledge for Embodied Agents\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"2f3efe44083af91cef562c1a3451eee2f8601d22\\\",\\n      \\\"title\\\": \\\"WebGPT: Browser-assisted question-answering with human feedback\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"92173d081b15824d22a9ef070e118744ceee8052\\\",\\n      \\\"title\\\": \\\"Show Your Work: Scratchpads for Intermediate Computation with Language Models\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"bfba05093314e52317536b6cfc8b7fded8371e02\\\",\\n      \\\"title\\\": \\\"LILA: Language-Informed Latent Actions\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"7a025a90cc36e668fb69f980ee809cd7d752854e\\\",\\n      \\\"title\\\": \\\"Adaptive Information Seeking for Open-Domain Question Answering\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"6263f69b0154fb090fc76f792c1a4aa182e24294\\\",\\n      \\\"title\\\": \\\"Language Models are Few-Shot Butlers\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"4c5d4601a3a19c31da6588d2a34adfb161f68c0e\\\",\\n      \\\"title\\\": \\\"Imitating Interactive Intelligence\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"398a0625e8707a0b41ac58eaec51e8feb87dd7cb\\\",\\n      \\\"title\\\": \\\"ALFWorld: Aligning Text and Embodied Environments for Interactive Learning\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"8aed57b61457655e8354f1b68b34ed1cc0a222ef\\\",\\n      \\\"title\\\": \\\"Keep CALM and Explore: Language Models for Action Generation in Text-based Games\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"90abbc2cf38462b954ae1b772fac9532e2ccd8b0\\\",\\n      \\\"title\\\": \\\"Language Models are Few-Shot Learners\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"659bf9ce7175e1ec266ff54359e2bd76e0b7ff31\\\",\\n      \\\"title\\\": \\\"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"01ec011977fc6cda03e8b447e1b5eb0551f1c961\\\",\\n      \\\"title\\\": \\\"A Simple Language Model for Task-Oriented Dialogue\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"f4cf4246f3882aa6337e9c05d5675a3b8463a32e\\\",\\n      \\\"title\\\": \\\"ALFRED: A Benchmark for Interpreting Grounded Instructions for Everyday Tasks\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"ebf59587f8f170ff4241c42263bbfb9da5bd2135\\\",\\n      \\\"title\\\": \\\"ELI5: Long Form Question Answering\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"22655979df781d222eaf812b0d325fa9adf11594\\\",\\n      \\\"title\\\": \\\"HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"b1d24e8e08435b7c52335485a0d635abf9bc604c\\\",\\n      \\\"title\\\": \\\"FEVER: a Large-scale Dataset for Fact Extraction and VERification\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"60ffc252bd4c055d6f6ab7d34a64d221e47aa741\\\",\\n      \\\"title\\\": \\\"Inner Speech: Development, Cognitive Functions, Phenomenology, and Neurobiology\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"35a2b204ee6da98232674728e82f7fedd9f46931\\\",\\n      \\\"title\\\": \\\"Working memory\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"89ad3c55d74466983d8312b24142aae1f4b4879c\\\",\\n      \\\"title\\\": \\\"L.S. Vygotsky and the problem of localization of functions\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Oriol Vinyals, Mahyar Bordbar, and Nando de Freitas. A generalist agent\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Star: Bootstrapping reasoning with reasoning, 2022\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"A generalist agent, 2022\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"ALFWORLD TRAJECTORIES We provide an example trajectory of ReAct, Act, and ReAct-IM on the same ALFWorld game, pick_clean_then_place_in_recep-Knife-None-CounterTop-10/ trial_T20190909_110445_675754\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"b05a1fcb66c81a5e11f742bfc871df2fbf09798e\\\",\\n      \\\"title\\\": \\\"Thinking and Speech\\\"\\n    },\\n    {\\n      \\\"paperId\\\": \\\"5d798bcee3aa66e591d627a09e27f6da56eea782\\\",\\n      \\\"title\\\": \\\"Vygotsky, Luria, and the social brain.\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Coster-Waldau appeared in the 2009 Fox television film Virtuality, so he has worked with the Fox Broadcasting Company\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"put knife 1 in/on countertop 1 Nothing\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Action 2: Search[Linda Hart\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Observation 1 Could not find [Beautiful]\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Result 1\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Milhouse Mussolini Van Houten\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Thought 2: I need to search Frigg instead\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Musician and satirist Allie\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Question Which magazine was started first Arthurâs Magazine or First for Women? Thought 1 I need to search Arthurâs Magazine and First for Women, and find which was started first\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Observation 2 (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Vanderbilt University was founded in 1873. Emory University was founded in 1836. 1873 (Vanderbilt University) > 1836 (Emory University), so Vanderbilt University was founded first\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Action 2: Search[William J. Crowe] Observation 2: William J. Crowe is\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Harvey Fierstein is an actor, playwright, and screenwriter. I need to search Linda Hart next\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Action: click B0061IVFZE Observation: Back to Search Prev flavor name\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Brothers-ALL-Natural Fruit Crisps, Strawberry Banana, 0\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"take lettuce 1 from diningtable 1\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Nature's Turn Freeze-Dried Fruit Snacks -Banana Crisps -Perfect For School Lunches or an On-The-Go Snack -No Sugar Added\\\"\\n    },\\n    {\\n      \\\"paperId\\\": null,\\n      \\\"title\\\": \\\"Action: think[For sixteen pack of apple cinnamon freeze dried banana chips, the item has options 'apple cinnamon' and '0.53 ounce (pack of\\\"\\n    }\\n  ]\\n}\"}],\"isError\":false}}\r\n\r\n"
+}
