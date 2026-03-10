@@ -4,6 +4,9 @@ context/
 # examples directory
 examples/
 
+# .env file containing environment variables, which may include sensitive information
+.env
+
 # Data files
 *.db
 
