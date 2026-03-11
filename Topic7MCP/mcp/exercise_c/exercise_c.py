@@ -1,6 +1,7 @@
-
+import argparse
 import json
 import os
+from pathlib import Path
 from typing import TypedDict, List, Dict, Any
 
 import requests
@@ -225,7 +226,25 @@ def build_graph():
     return graph_builder.compile()
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run the Exercise C Asta MCP research chatbot."
+    )
+    parser.add_argument(
+        "--save-history",
+        type=Path,
+        help="Write the full message history as JSON when the chat exits.",
+    )
+    return parser.parse_args()
+
+
+def save_history(path: Path, messages: List[Dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(messages, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
 def main():
+    args = parse_args()
     tools = get_asta_tools()
     graph = build_graph()
 
@@ -239,6 +258,9 @@ def main():
     while True:
         user_input = input("You: ").strip()
         if user_input.lower() in {"quit", "exit"}:
+            if args.save_history:
+                save_history(args.save_history, messages)
+                print(f"\nSaved message history to {args.save_history}\n")
             break
 
         state: State = {
