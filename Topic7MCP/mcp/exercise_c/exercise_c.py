@@ -193,6 +193,8 @@ def chat(user_message: str, messages: List[Dict[str, Any]], tools: List[Dict[str
             else:
                 tool_result = call_asta_tool(tool_name, tool_args)
 
+            print(f"\nTool result from {tool_name}:\n{tool_result}\n")
+
             messages.append(
                 {
                     "role": "tool",

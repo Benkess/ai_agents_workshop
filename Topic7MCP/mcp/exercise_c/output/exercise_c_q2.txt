@@ -1,0 +1,423 @@
+user@pop-os:~/projects/school/ai_agents_workshop$ .venv/bin/python Topic7MCP/mcp/exercise_c/exercise_c.py
+Asta MCP Research Chatbot
+Type 'quit' to exit.
+
+You: Who wrote Attention is All You Need and what else have they published? 
+
+Calling tool: search_paper_by_title
+Arguments: {
+  "title": "Attention is All You Need",
+  "fields": "url,year,authors"
+}
+
+Tool result from search_paper_by_title:
+{
+  "paperId": "204e3073870fae3d05bcbc2f6a8e263d9b72e776",
+  "url": "https://www.semanticscholar.org/paper/204e3073870fae3d05bcbc2f6a8e263d9b72e776",
+  "year": 2017,
+  "authors": [
+    {
+      "authorId": "40348417",
+      "name": "Ashish Vaswani"
+    },
+    {
+      "authorId": "1846258",
+      "name": "Noam Shazeer"
+    },
+    {
+      "authorId": "3877127",
+      "name": "Niki Parmar"
+    },
+    {
+      "authorId": "39328010",
+      "name": "Jakob Uszkoreit"
+    },
+    {
+      "authorId": "145024664",
+      "name": "Llion Jones"
+    },
+    {
+      "authorId": "19177000",
+      "name": "Aidan N. Gomez"
+    },
+    {
+      "authorId": "40527594",
+      "name": "Lukasz Kaiser"
+    },
+    {
+      "authorId": "3443442",
+      "name": "I. Polosukhin"
+    }
+  ],
+  "matchScore": 132.90259
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "40348417",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "8f456149eb9285130aed5486389b0da9d06bc377",
+  "url": "https://www.semanticscholar.org/paper/8f456149eb9285130aed5486389b0da9d06bc377",
+  "title": "A Dataset for Metaphor Detection in Early Medieval Hebrew Poetry",
+  "year": 2024
+}
+{
+  "paperId": "fb6ecf67c275fe775a12ad4ddf2c8dc7cfad1348",
+  "url": "https://www.semanticscholar.org/paper/fb6ecf67c275fe775a12ad4ddf2c8dc7cfad1348",
+  "title": "Unifying Grokking and Double Descent",
+  "year": 2023
+}
+{
+  "paperId": "4cc32f4f571b226ca1fd7adef1c480e94d60d98f",
+  "url": "https://www.semanticscholar.org/paper/4cc32f4f571b226ca1fd7adef1c480e94d60d98f",
+  "title": "Leave Graphs Alone: Addressing Over-Squashing without Rewiring",
+  "year": 2022
+}
+{
+  "paperId": "fcf48e3be4357eaa6b1cde19b257b828243db038",
+  "url": "https://www.semanticscholar.org/paper/fcf48e3be4357eaa6b1cde19b257b828243db038",
+  "title": "Leave Graphs Alone: Addressing Over-Squashing without Rewiring",
+  "year": 2022
+}
+{
+  "paperId": "e3de7c1e8031915e50464dfbc133eea1c009ece5",
+  "url": "https://www.semanticscholar.org/paper/e3de7c1e8031915e50464dfbc133eea1c009ece5",
+  "title": "Credit Score Prediction Using Machine Learning",
+  "year": 2021
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "1846258",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "024ea6fde78e2adb6cd5f8f40ecd4c597d527864",
+  "url": "https://www.semanticscholar.org/paper/024ea6fde78e2adb6cd5f8f40ecd4c597d527864",
+  "title": "CMI-AIGCX at GenAI Detection Task 2: Leveraging Multilingual Proxy LLMs for Machine-Generated Text Detection in Academic Essays",
+  "year": 2025
+}
+{
+  "paperId": "39d9c3f1cd4bd5069713e50dc7301570575fc055",
+  "url": "https://www.semanticscholar.org/paper/39d9c3f1cd4bd5069713e50dc7301570575fc055",
+  "title": "Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities",
+  "year": 2025
+}
+{
+  "paperId": "9d263f1e4ecb1e9651994f33ec248fb75b7200be",
+  "url": "https://www.semanticscholar.org/paper/9d263f1e4ecb1e9651994f33ec248fb75b7200be",
+  "title": "Reliability of Distribution Predictions by LLMs: Insights from Counterintuitive Pseudo-Distributions",
+  "year": 2025
+}
+{
+  "paperId": "adac25c0aebd013f1225ec02636edfcc0bf4cf7c",
+  "url": "https://www.semanticscholar.org/paper/adac25c0aebd013f1225ec02636edfcc0bf4cf7c",
+  "title": "Gemma 3 Technical Report",
+  "year": 2025
+}
+{
+  "paperId": "d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "url": "https://www.semanticscholar.org/paper/d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "title": "Team Conversational AI: Introducing Effervesce",
+  "year": 2025
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "3877127",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "24b316a715c6197eeb204e0936d63c8fff14c6b8",
+  "url": "https://www.semanticscholar.org/paper/24b316a715c6197eeb204e0936d63c8fff14c6b8",
+  "title": "A Study on Regularization-Based Continual Learning Methods for Indic ASR",
+  "year": 2025
+}
+{
+  "paperId": "d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "url": "https://www.semanticscholar.org/paper/d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "title": "Team Conversational AI: Introducing Effervesce",
+  "year": 2025
+}
+{
+  "paperId": "53f47501bcf5cfeb270b030dea1b1edb9f93f394",
+  "url": "https://www.semanticscholar.org/paper/53f47501bcf5cfeb270b030dea1b1edb9f93f394",
+  "title": "Synthetic Data Generation and Joint Learning for Robust Code-Mixed Translation",
+  "year": 2024
+}
+{
+  "paperId": "7dc6a9530f46f28f6a7909f56304380c66f9bddd",
+  "url": "https://www.semanticscholar.org/paper/7dc6a9530f46f28f6a7909f56304380c66f9bddd",
+  "title": "Achilles-Bench: A Challenging Benchmark for Low-Resource Evaluation",
+  "year": 2024
+}
+{
+  "paperId": "8f456149eb9285130aed5486389b0da9d06bc377",
+  "url": "https://www.semanticscholar.org/paper/8f456149eb9285130aed5486389b0da9d06bc377",
+  "title": "A Dataset for Metaphor Detection in Early Medieval Hebrew Poetry",
+  "year": 2024
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "39328010",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "url": "https://www.semanticscholar.org/paper/d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "title": "Team Conversational AI: Introducing Effervesce",
+  "year": 2025
+}
+{
+  "paperId": "7dc6a9530f46f28f6a7909f56304380c66f9bddd",
+  "url": "https://www.semanticscholar.org/paper/7dc6a9530f46f28f6a7909f56304380c66f9bddd",
+  "title": "Achilles-Bench: A Challenging Benchmark for Low-Resource Evaluation",
+  "year": 2024
+}
+{
+  "paperId": "98629ad5f76adbbdd5ca2971e0023ef33ad34fbe",
+  "url": "https://www.semanticscholar.org/paper/98629ad5f76adbbdd5ca2971e0023ef33ad34fbe",
+  "title": "LoPE: Learnable Sinusoidal Positional Encoding for Improving Document Transformer Model",
+  "year": 2022
+}
+{
+  "paperId": "e0effcab5730827bfd330b29f69822c9d82006b8",
+  "url": "https://www.semanticscholar.org/paper/e0effcab5730827bfd330b29f69822c9d82006b8",
+  "title": "Funnel Vision Transformer for image classification",
+  "year": 2022
+}
+{
+  "paperId": "0e51b148e93dcedbab716af0db0f506eb29de937",
+  "url": "https://www.semanticscholar.org/paper/0e51b148e93dcedbab716af0db0f506eb29de937",
+  "title": "Supplement: Differentiable Patch Selection for Image Recognition",
+  "year": 2021
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "145024664",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "a2b77b69a69743b3d63b51c43c1dce585cf3c1a2",
+  "url": "https://www.semanticscholar.org/paper/a2b77b69a69743b3d63b51c43c1dce585cf3c1a2",
+  "title": "Helpful Neighbors: Leveraging Neighbors in Geographic Feature Pronunciation",
+  "year": 2022
+}
+{
+  "paperId": "1c53d27c742fb4658fa03085c7c2ca014a122385",
+  "url": "https://www.semanticscholar.org/paper/1c53d27c742fb4658fa03085c7c2ca014a122385",
+  "title": "ProtTrans: Towards Cracking the Language of Lifeâs Code Through Self-Supervised Learning",
+  "year": 2021
+}
+{
+  "paperId": "5bfb0cc16b871c75e32a6a9d54dd7db225260e04",
+  "url": "https://www.semanticscholar.org/paper/5bfb0cc16b871c75e32a6a9d54dd7db225260e04",
+  "title": "CodeTrans: Towards Cracking the Language of Silicone's Code Through Self-Supervised Deep Learning and High Performance Computing",
+  "year": 2021
+}
+{
+  "paperId": "ce5978e39eaae3bb802479dee2a4ae7a02f6475a",
+  "url": "https://www.semanticscholar.org/paper/ce5978e39eaae3bb802479dee2a4ae7a02f6475a",
+  "title": "DF-Conformer: Integrated Architecture of Conv-Tasnet and Conformer Using Linear Complexity Self-Attention for Speech Enhancement",
+  "year": 2021
+}
+{
+  "paperId": "f4c40a8224156851b2858ab679315dd5853311a2",
+  "url": "https://www.semanticscholar.org/paper/f4c40a8224156851b2858ab679315dd5853311a2",
+  "title": "A Comparative Study on Neural Architectures and Training Methods for Japanese Speech Recognition",
+  "year": 2021
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "19177000",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "6a8db14262ca2017cb253e12b8daeb57989a38df",
+  "url": "https://www.semanticscholar.org/paper/6a8db14262ca2017cb253e12b8daeb57989a38df",
+  "title": "Prioritized Training on Points that are Learnable, Worth Learning, and Not Yet Learnt",
+  "year": 2022
+}
+{
+  "paperId": "832aa77be74d7d3a8b33b9abc0f48b8b7babac12",
+  "url": "https://www.semanticscholar.org/paper/832aa77be74d7d3a8b33b9abc0f48b8b7babac12",
+  "title": "Tranception: protein fitness prediction with autoregressive transformers and inference-time retrieval",
+  "year": 2022
+}
+{
+  "paperId": "a2e3e9632c3ad3e69c1a616c24f93fdeee14703e",
+  "url": "https://www.semanticscholar.org/paper/a2e3e9632c3ad3e69c1a616c24f93fdeee14703e",
+  "title": "Exploring Low Rank Training of Deep Neural Networks",
+  "year": 2022
+}
+{
+  "paperId": "bcecd334533ff57cfe62bb25e77eb85200510df7",
+  "url": "https://www.semanticscholar.org/paper/bcecd334533ff57cfe62bb25e77eb85200510df7",
+  "title": "Abstract 3277: SWI/SNF inactivation vulnerability",
+  "year": 2022
+}
+{
+  "paperId": "0537c62e32299b8e9b4e3cac44d82ffa123cbbe1",
+  "url": "https://www.semanticscholar.org/paper/0537c62e32299b8e9b4e3cac44d82ffa123cbbe1",
+  "title": "Disease variant prediction with deep generative models of evolutionary data",
+  "year": 2021
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "40527594",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "231e768f0cd280faa0f725bb353262cb4fed08d1",
+  "url": "https://www.semanticscholar.org/paper/231e768f0cd280faa0f725bb353262cb4fed08d1",
+  "title": "Hierarchical Transformers Are More Efficient Language Models",
+  "year": 2021
+}
+{
+  "paperId": "a10fbcdf35c79b35003a8e2e1febcedae91d93ab",
+  "url": "https://www.semanticscholar.org/paper/a10fbcdf35c79b35003a8e2e1febcedae91d93ab",
+  "title": "Q-Value Weighted Regression: Reinforcement Learning with Limited Data",
+  "year": 2021
+}
+{
+  "paperId": "acbdbf49f9bc3f151b93d9ca9a06009f4f6eb269",
+  "url": "https://www.semanticscholar.org/paper/acbdbf49f9bc3f151b93d9ca9a06009f4f6eb269",
+  "title": "Evaluating Large Language Models Trained on Code",
+  "year": 2021
+}
+{
+  "paperId": "d6045d2ccc9c09ca1671348de86d07da6bc28eea",
+  "url": "https://www.semanticscholar.org/paper/d6045d2ccc9c09ca1671348de86d07da6bc28eea",
+  "title": "Training Verifiers to Solve Math Word Problems",
+  "year": 2021
+}
+{
+  "paperId": "da0d38cf2ac7e2a6908e0d9e1fff07058daab2ed",
+  "url": "https://www.semanticscholar.org/paper/da0d38cf2ac7e2a6908e0d9e1fff07058daab2ed",
+  "title": "Sparse is Enough in Scaling Transformers",
+  "year": 2021
+}
+
+
+Calling tool: get_author_papers
+Arguments: {
+  "author_id": "3443442",
+  "paper_fields": "url,year,title",
+  "limit": 5
+}
+
+Tool result from get_author_papers:
+{
+  "paperId": "3dd03a7ef9fcaf98a52ecd8a9f4e93f14bffbd31",
+  "url": "https://www.semanticscholar.org/paper/3dd03a7ef9fcaf98a52ecd8a9f4e93f14bffbd31",
+  "title": "Proof of Response",
+  "year": 2025
+}
+{
+  "paperId": "d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "url": "https://www.semanticscholar.org/paper/d385d309a2b73c96790b24e04b43a03c6832cc08",
+  "title": "Team Conversational AI: Introducing Effervesce",
+  "year": 2025
+}
+{
+  "paperId": "0dded5f572de68aa8d393175c5bcd586569d86f5",
+  "url": "https://www.semanticscholar.org/paper/0dded5f572de68aa8d393175c5bcd586569d86f5",
+  "title": "Addressing Idiom Identification from Generative Perspective",
+  "year": 2022
+}
+{
+  "paperId": "395c771687b7c3e19a252c5f42dc20f17f3c5ddb",
+  "url": "https://www.semanticscholar.org/paper/395c771687b7c3e19a252c5f42dc20f17f3c5ddb",
+  "title": "TABi: Type-Aware Bi-encoders for End-to-End Entity Retrieval",
+  "year": 2021
+}
+{
+  "paperId": "75d0c11d96dbfa60c131af66b5d97b03c0824dc2",
+  "url": "https://www.semanticscholar.org/paper/75d0c11d96dbfa60c131af66b5d97b03c0824dc2",
+  "title": "Hyperlink-induced Pre-training for Passage Retrieval of Open-domain Question Answering",
+  "year": 2021
+}
+
+
+Assistant: The paper "Attention is All You Need" was authored by:
+
+1. **Ashish Vaswani**
+2. **Noam Shazeer**
+3. **Niki Parmar**
+4. **Jakob Uszkoreit**
+5. **Llion Jones**
+6. **Aidan N. Gomez**
+7. **Lukasz Kaiser**
+8. **I. Polosukhin**
+
+Here are some selected additional publications by these authors:
+
+### Ashish Vaswani
+- **[A Dataset for Metaphor Detection in Early Medieval Hebrew Poetry](https://www.semanticscholar.org/paper/8f456149eb9285130aed5486389b0da9d06bc377)** (2024)
+- **[Unifying Grokking and Double Descent](https://www.semanticscholar.org/paper/fb6ecf67c275fe775a12ad4ddf2c8dc7cfad1348)** (2023)
+
+### Noam Shazeer
+- **[CMI-AIGCX at GenAI Detection Task 2: Leveraging Multilingual Proxy LLMs for Machine-Generated Text Detection in Academic Essays](https://www.semanticscholar.org/paper/024ea6fde78e2adb6cd5f8f40ecd4c597d527864)** (2025)
+- **[Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities](https://www.semanticscholar.org/paper/39d9c3f1cd4bd5069713e50dc7301570575fc055)** (2025)
+
+### Niki Parmar
+- **[A Study on Regularization-Based Continual Learning Methods for Indic ASR](https://www.semanticscholar.org/paper/24b316a715c6197eeb204e0936d63c8fff14c6b8)** (2025)
+- **[Synthetic Data Generation and Joint Learning for Robust Code-Mixed Translation](https://www.semanticscholar.org/paper/53f47501bcf5cfeb270b030dea1b1edb9f93f394)** (2024)
+
+### Jakob Uszkoreit
+- **[Prioritized Training on Points that are Learnable, Worth Learning, and Not Yet Learnt](https://www.semanticscholar.org/paper/6a8db14262ca2017cb253e12b8daeb57989a38df)** (2022)
+- **[DF-Conformer: Integrated Architecture of Conv-Tasnet and Conformer Using Linear Complexity Self-Attention for Speech Enhancement](https://www.semanticscholar.org/paper/ce5978e39eaae3bb802479dee2a4ae7a02f6475a)** (2021)
+
+### Llion Jones
+- **[LoPE: Learnable Sinusoidal Positional Encoding for Improving Document Transformer Model](https://www.semanticscholar.org/paper/98629ad5f76adbbdd5ca2971e0023ef33ad34fbe)** (2022)
+- **[Tranception: protein fitness prediction with autoregressive transformers and inference-time retrieval](https://www.semanticscholar.org/paper/832aa77be74d7d3a8b33b9abc0f48b8b7babac12)** (2022)
+
+### Aidan N. Gomez
+- **[Hierarchical Transformers Are More Efficient Language Models](https://www.semanticscholar.org/paper/231e768f0cd280faa0f725bb353262cb4fed08d1)** (2021)
+- **[Evaluating Large Language Models Trained on Code](https://www.semanticscholar.org/paper/acbdbf49f9bc3f151b93d9ca9a06009f4f6eb269)** (2021)
+
+### Lukasz Kaiser
+- **[Sparse is Enough in Scaling Transformers](https://www.semanticscholar.org/paper/da0d38cf2ac7e2a6908e0d9e1fff07058daab2ed)** (2021)
+- **[Hyperlink-induced Pre-training for Passage Retrieval of Open-domain Question Answering](https://www.semanticscholar.org/paper/75d0c11d96dbfa60c131af66b5d97b03c0824dc2)** (2021)
+
+### I. Polosukhin
+- **[Addressing Idiom Identification from Generative Perspective](https://www.semanticscholar.org/paper/0dded5f572de68aa8d393175c5bcd586569d86f5)** (2022)
+- **[TABi: Type-Aware Bi-encoders for End-to-End Entity Retrieval](https://www.semanticscholar.org/paper/395c771687b7c3e19a252c5f42dc20f17f3c5ddb)** (2021)
+
+For a comprehensive list of publications, you can explore their Semantic Scholar profiles.
+
+You: quit

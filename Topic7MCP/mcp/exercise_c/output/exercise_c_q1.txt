@@ -1,0 +1,212 @@
+user@pop-os:~/projects/school/ai_agents_workshop$ .venv/bin/python Topic7MCP/mcp/exercise_c/exercise_c.py
+Asta MCP Research Chatbot
+Type 'quit' to exit.
+
+You: Find recent papers about large language model agents
+
+Calling tool: search_papers_by_relevance
+Arguments: {
+  "keyword": "large language model agents",
+  "limit": 5,
+  "fields": "url,year,authors,title"
+}
+
+Tool result from search_papers_by_relevance:
+Error executing tool search_papers_by_relevance: Internal Server Error
+
+
+Calling tool: search_papers_by_relevance
+Arguments: {
+  "keyword": "large language model agents",
+  "limit": 5,
+  "fields": "url,year,authors,title"
+}
+
+Tool result from search_papers_by_relevance:
+{
+  "paperId": "c8eee9766f0968e8f1b1be0731bc70b85be0ac97",
+  "url": "https://www.semanticscholar.org/paper/c8eee9766f0968e8f1b1be0731bc70b85be0ac97",
+  "title": "InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents",
+  "year": 2024,
+  "authors": [
+    {
+      "authorId": "2167027235",
+      "name": "Qiusi Zhan"
+    },
+    {
+      "authorId": "2406359930",
+      "name": "Zhixiang Liang"
+    },
+    {
+      "authorId": "2290021230",
+      "name": "Zifan Ying"
+    },
+    {
+      "authorId": "2266051282",
+      "name": "Daniel Kang"
+    }
+  ]
+}
+{
+  "paperId": "9df0947ec8a14c43e69f3b72ece5e9af2b8e8215",
+  "url": "https://www.semanticscholar.org/paper/9df0947ec8a14c43e69f3b72ece5e9af2b8e8215",
+  "title": "Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning",
+  "year": 2025,
+  "authors": [
+    {
+      "authorId": "2365440320",
+      "name": "Sikuan Yan"
+    },
+    {
+      "authorId": "2304711524",
+      "name": "Xiufeng Yang"
+    },
+    {
+      "authorId": "2203968754",
+      "name": "Zuchao Huang"
+    },
+    {
+      "authorId": "2197254657",
+      "name": "Ercong Nie"
+    },
+    {
+      "authorId": "2046761003",
+      "name": "Zifeng Ding"
+    },
+    {
+      "authorId": "2377740835",
+      "name": "Zonggen Li"
+    },
+    {
+      "authorId": "2301241265",
+      "name": "Xiaowen Ma"
+    },
+    {
+      "authorId": "2130001188",
+      "name": "Hinrich Schutze"
+    },
+    {
+      "authorId": "2271282409",
+      "name": "Volker Tresp"
+    },
+    {
+      "authorId": "2362602394",
+      "name": "Yunpu Ma"
+    }
+  ]
+}
+{
+  "paperId": "79f2dcea1f249c62230f5483d0b08ebb775d6ca5",
+  "url": "https://www.semanticscholar.org/paper/79f2dcea1f249c62230f5483d0b08ebb775d6ca5",
+  "title": "A Survey of Large Language Model Agents for Question Answering",
+  "year": 2025,
+  "authors": [
+    {
+      "authorId": "2228468973",
+      "name": "Murong Yue"
+    }
+  ]
+}
+{
+  "paperId": "61d18f878dcd6ee9af171e45e763af114e6eced4",
+  "url": "https://www.semanticscholar.org/paper/61d18f878dcd6ee9af171e45e763af114e6eced4",
+  "title": "Emergence of human-like polarization among large language model agents",
+  "year": 2025,
+  "authors": [
+    {
+      "authorId": "10241302",
+      "name": "J. Piao"
+    },
+    {
+      "authorId": "2339424749",
+      "name": "Zhihong Lu"
+    },
+    {
+      "authorId": "2276188578",
+      "name": "Chen Gao"
+    },
+    {
+      "authorId": "3065590",
+      "name": "Fengli Xu"
+    },
+    {
+      "authorId": "2373646050",
+      "name": "F. P. Santos"
+    },
+    {
+      "authorId": "2334588999",
+      "name": "Yong Li"
+    },
+    {
+      "authorId": "2278792672",
+      "name": "James Evans"
+    }
+  ]
+}
+{
+  "paperId": "87f9011e28d3c196cd04c441cd8df2741245aae8",
+  "url": "https://www.semanticscholar.org/paper/87f9011e28d3c196cd04c441cd8df2741245aae8",
+  "title": "Large Language Model Agents for Radio Map Generation and Wireless Network Planning",
+  "year": 2025,
+  "authors": [
+    {
+      "authorId": "2058865946",
+      "name": "Hong Quan"
+    },
+    {
+      "authorId": "2269551031",
+      "name": "Wanli Ni"
+    },
+    {
+      "authorId": "2273288082",
+      "name": "Tong Zhang"
+    },
+    {
+      "authorId": "2320196",
+      "name": "Xiangyu Ye"
+    },
+    {
+      "authorId": "29930184",
+      "name": "Ziyi Xie"
+    },
+    {
+      "authorId": "2279668838",
+      "name": "Shuai Wang"
+    },
+    {
+      "authorId": "2319077338",
+      "name": "Yuanwei Liu"
+    },
+    {
+      "authorId": "2288040979",
+      "name": "Hui Song"
+    }
+  ]
+}
+
+
+Assistant: Here are some recent papers about large language model agents:
+
+1. **[InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents](https://www.semanticscholar.org/paper/c8eee9766f0968e8f1b1be0731bc70b85be0ac97)**  
+   - **Year:** 2024  
+   - **Authors:** Qiusi Zhan, Zhixiang Liang, Zifan Ying, Daniel Kang  
+
+2. **[Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning](https://www.semanticscholar.org/paper/9df0947ec8a14c43e69f3b72ece5e9af2b8e8215)**  
+   - **Year:** 2025  
+   - **Authors:** Sikuan Yan, Xiufeng Yang, Zuchao Huang, Ercong Nie, Zifeng Ding, Zonggen Li, Xiaowen Ma, Hinrich Schutze, Volker Tresp, Yunpu Ma  
+
+3. **[A Survey of Large Language Model Agents for Question Answering](https://www.semanticscholar.org/paper/79f2dcea1f249c62230f5483d0b08ebb775d6ca5)**  
+   - **Year:** 2025  
+   - **Author:** Murong Yue  
+
+4. **[Emergence of human-like polarization among large language model agents](https://www.semanticscholar.org/paper/61d18f878dcd6ee9af171e45e763af114e6eced4)**  
+   - **Year:** 2025  
+   - **Authors:** J. Piao, Zhihong Lu, Chen Gao, Fengli Xu, F. P. Santos, Yong Li, James Evans  
+
+5. **[Large Language Model Agents for Radio Map Generation and Wireless Network Planning](https://www.semanticscholar.org/paper/87f9011e28d3c196cd04c441cd8df2741245aae8)**  
+   - **Year:** 2025  
+   - **Authors:** Hong Quan, Wanli Ni, Tong Zhang, Xiangyu Ye, Ziyi Xie, Shuai Wang, Yuanwei Liu, Hui Song  
+
+Feel free to click on the titles to access the papers for more details!
+
+You: quit
