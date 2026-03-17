@@ -1,0 +1,880 @@
+{
+  "tool": "get_citations",
+  "arguments": {
+    "paper_id": "ARXIV:1810.04805",
+    "fields": "title,year,authors",
+    "limit": 10,
+    "publication_date_range": "2023-01-01:"
+  },
+  "request_id": 2,
+  "mcp_payload": {
+    "jsonrpc": "2.0",
+    "id": 2,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"a06d2796211ff8f39ac052dc06e502264b64b621\",\n    \"title\": \"Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2296785101\",\n        \"name\": \"Chuanyang Gong\"\n      },\n      {\n        \"authorId\": \"2278636894\",\n        \"name\": \"Zhihua Wei\"\n      },\n      {\n        \"authorId\": \"121695247\",\n        \"name\": \"Wenhao Tao\"\n      },\n      {\n        \"authorId\": \"2082063772\",\n        \"name\": \"Duoqian Miao\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"01b19118e185bbe3e628d126cf8d73bebee112df\",\n    \"title\": \"Multi-view dynamic perception framework for Chinese harmful meme detection\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2306405730\",\n        \"name\": \"Jiapei Hu\"\n      },\n      {\n        \"authorId\": \"2306282412\",\n        \"name\": \"Yifan Lyu\"\n      },\n      {\n        \"authorId\": \"2313802738\",\n        \"name\": \"Yifan Chen\"\n      },\n      {\n        \"authorId\": \"2256701487\",\n        \"name\": \"Kuntao Li\"\n      },\n      {\n        \"authorId\": \"2281681481\",\n        \"name\": \"Yun Xue\"\n      },\n      {\n        \"authorId\": \"2405867882\",\n        \"name\": \"Jinghua Liang\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"59665f75898faf5af11ff4445e25145a09b3701b\",\n    \"title\": \"SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2349030464\",\n        \"name\": \"Paerhati Tulajiang\"\n      },\n      {\n        \"authorId\": \"2149932357\",\n        \"name\": \"Jinzhong Ning\"\n      },\n      {\n        \"authorId\": \"2143552718\",\n        \"name\": \"Yuanyuan Sun\"\n      },\n      {\n        \"authorId\": \"2143920912\",\n        \"name\": \"Liang Yang\"\n      },\n      {\n        \"authorId\": \"2350243842\",\n        \"name\": \"Yuanyu Zhang\"\n      },\n      {\n        \"authorId\": \"2344749390\",\n        \"name\": \"Kelaiti Xiao\"\n      },\n      {\n        \"authorId\": \"2110326584\",\n        \"name\": \"Zhixing Lu\"\n      },\n      {\n        \"authorId\": \"2238116411\",\n        \"name\": \"Yijia Zhang\"\n      },\n      {\n        \"authorId\": \"2249853070\",\n        \"name\": \"Hongfei Lin\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"076aaf029ca2c1cca776cdd58b9c673965845bca\",\n    \"title\": \"Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2332093539\",\n        \"name\": \"Gian Marco Orlando\"\n      },\n      {\n        \"authorId\": \"2193906729\",\n        \"name\": \"Valerio La Gatta\"\n      },\n      {\n        \"authorId\": \"2332099593\",\n        \"name\": \"Diego Russo\"\n      },\n      {\n        \"authorId\": \"2279840625\",\n        \"name\": \"Vincenzo Moscato\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"abe495dbebaccfdeca1760d1724d0491aa1b5aaa\",\n    \"title\": \"SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2283566060\",\n        \"name\": \"Jianjun Lei\"\n      },\n      {\n        \"authorId\": \"2116197364\",\n        \"name\": \"Zhichao Li\"\n      },\n      {\n        \"authorId\": \"2262019928\",\n        \"name\": \"Ying Wang\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"820feeea04b3be7e7f65ace5b16b6668d841c6ea\",\n    \"title\": \"A model for early propagation of derivative adversarial topics based on emotional transfer and evolutionary game theory\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2218902293\",\n        \"name\": \"Rong Wang\"\n      },\n      {\n        \"authorId\": \"2278530106\",\n        \"name\": \"Jun Yue\"\n      },\n      {\n        \"authorId\": \"2248179266\",\n        \"name\": \"Lei Du\"\n      },\n      {\n        \"authorId\": \"2109898217\",\n        \"name\": \"Tun Li\"\n      },\n      {\n        \"authorId\": \"2237598688\",\n        \"name\": \"Yunpeng Xiao\"\n      },\n      {\n        \"authorId\": \"2581990\",\n        \"name\": \"Sirui Duan\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"beaf9c7090f623ac6620a69668c6cb152e8a168c\",\n    \"title\": \"Risk-informed design of Software as a Medical Device through Natural Language Processing techniques\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2543494\",\n        \"name\": \"A. Luschi\"\n      },\n      {\n        \"authorId\": \"2419863444\",\n        \"name\": \"Alessandro Zazzeri\"\n      },\n      {\n        \"authorId\": \"2252019386\",\n        \"name\": \"G. Cevenini\"\n      },\n      {\n        \"authorId\": \"2271119248\",\n        \"name\": \"Ernesto Iadanza\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"29b6dbc62ccba0e3fa8ba08e2cd7c97772593b80\",\n    \"title\": \"Vuln2Action: An LLM-based framework for generating vulnerability reproduction steps and mapping exploits\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2046904159\",\n        \"name\": \"Shalini Kumari\"\n      },\n      {\n        \"authorId\": \"2054186804\",\n        \"name\": \"Geeta Yadav\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"e794ad885b28c7f4bf50093f153fb653b92dbfe1\",\n    \"title\": \"From patents to predictive analytics: Leveraging R-GCNs for technological opportunity discovery in converging industries\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2084255286\",\n        \"name\": \"Guillermo Honores-MarÃ­n\"\n      },\n      {\n        \"authorId\": \"1783498117\",\n        \"name\": \"Sarfaraz Hashemkhani Zolfani\"\n      },\n      {\n        \"authorId\": \"14086322\",\n        \"name\": \"M. Chipulu\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"citingPaper\": {\n    \"paperId\": \"9f7860e124f6c0731ec14de37341ef2e10ba567d\",\n    \"title\": \"Privacy-preserving transfer learning framework for building energy forecasting with fully anonymized data\",\n    \"year\": 2026,\n    \"authors\": [\n      {\n        \"authorId\": \"2374374191\",\n        \"name\": \"Wonjun Choi\"\n      },\n      {\n        \"authorId\": \"2108243082\",\n        \"name\": \"Sangwon Lee\"\n      },\n      {\n        \"authorId\": \"2218426637\",\n        \"name\": \"Max Langtry\"\n      },\n      {\n        \"authorId\": \"2237887497\",\n        \"name\": \"Ruchi Choudhary\"\n      }\n    ]\n  }\n}"
+        }
+      ],
+      "structuredContent": {
+        "result": [
+          {
+            "citingPaper": {
+              "paperId": "a06d2796211ff8f39ac052dc06e502264b64b621",
+              "title": "Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2296785101",
+                  "name": "Chuanyang Gong"
+                },
+                {
+                  "authorId": "2278636894",
+                  "name": "Zhihua Wei"
+                },
+                {
+                  "authorId": "121695247",
+                  "name": "Wenhao Tao"
+                },
+                {
+                  "authorId": "2082063772",
+                  "name": "Duoqian Miao"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "01b19118e185bbe3e628d126cf8d73bebee112df",
+              "title": "Multi-view dynamic perception framework for Chinese harmful meme detection",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2306405730",
+                  "name": "Jiapei Hu"
+                },
+                {
+                  "authorId": "2306282412",
+                  "name": "Yifan Lyu"
+                },
+                {
+                  "authorId": "2313802738",
+                  "name": "Yifan Chen"
+                },
+                {
+                  "authorId": "2256701487",
+                  "name": "Kuntao Li"
+                },
+                {
+                  "authorId": "2281681481",
+                  "name": "Yun Xue"
+                },
+                {
+                  "authorId": "2405867882",
+                  "name": "Jinghua Liang"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "59665f75898faf5af11ff4445e25145a09b3701b",
+              "title": "SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2349030464",
+                  "name": "Paerhati Tulajiang"
+                },
+                {
+                  "authorId": "2149932357",
+                  "name": "Jinzhong Ning"
+                },
+                {
+                  "authorId": "2143552718",
+                  "name": "Yuanyuan Sun"
+                },
+                {
+                  "authorId": "2143920912",
+                  "name": "Liang Yang"
+                },
+                {
+                  "authorId": "2350243842",
+                  "name": "Yuanyu Zhang"
+                },
+                {
+                  "authorId": "2344749390",
+                  "name": "Kelaiti Xiao"
+                },
+                {
+                  "authorId": "2110326584",
+                  "name": "Zhixing Lu"
+                },
+                {
+                  "authorId": "2238116411",
+                  "name": "Yijia Zhang"
+                },
+                {
+                  "authorId": "2249853070",
+                  "name": "Hongfei Lin"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "076aaf029ca2c1cca776cdd58b9c673965845bca",
+              "title": "Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2332093539",
+                  "name": "Gian Marco Orlando"
+                },
+                {
+                  "authorId": "2193906729",
+                  "name": "Valerio La Gatta"
+                },
+                {
+                  "authorId": "2332099593",
+                  "name": "Diego Russo"
+                },
+                {
+                  "authorId": "2279840625",
+                  "name": "Vincenzo Moscato"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "abe495dbebaccfdeca1760d1724d0491aa1b5aaa",
+              "title": "SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2283566060",
+                  "name": "Jianjun Lei"
+                },
+                {
+                  "authorId": "2116197364",
+                  "name": "Zhichao Li"
+                },
+                {
+                  "authorId": "2262019928",
+                  "name": "Ying Wang"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "820feeea04b3be7e7f65ace5b16b6668d841c6ea",
+              "title": "A model for early propagation of derivative adversarial topics based on emotional transfer and evolutionary game theory",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2218902293",
+                  "name": "Rong Wang"
+                },
+                {
+                  "authorId": "2278530106",
+                  "name": "Jun Yue"
+                },
+                {
+                  "authorId": "2248179266",
+                  "name": "Lei Du"
+                },
+                {
+                  "authorId": "2109898217",
+                  "name": "Tun Li"
+                },
+                {
+                  "authorId": "2237598688",
+                  "name": "Yunpeng Xiao"
+                },
+                {
+                  "authorId": "2581990",
+                  "name": "Sirui Duan"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "beaf9c7090f623ac6620a69668c6cb152e8a168c",
+              "title": "Risk-informed design of Software as a Medical Device through Natural Language Processing techniques",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2543494",
+                  "name": "A. Luschi"
+                },
+                {
+                  "authorId": "2419863444",
+                  "name": "Alessandro Zazzeri"
+                },
+                {
+                  "authorId": "2252019386",
+                  "name": "G. Cevenini"
+                },
+                {
+                  "authorId": "2271119248",
+                  "name": "Ernesto Iadanza"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "29b6dbc62ccba0e3fa8ba08e2cd7c97772593b80",
+              "title": "Vuln2Action: An LLM-based framework for generating vulnerability reproduction steps and mapping exploits",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2046904159",
+                  "name": "Shalini Kumari"
+                },
+                {
+                  "authorId": "2054186804",
+                  "name": "Geeta Yadav"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "e794ad885b28c7f4bf50093f153fb653b92dbfe1",
+              "title": "From patents to predictive analytics: Leveraging R-GCNs for technological opportunity discovery in converging industries",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2084255286",
+                  "name": "Guillermo Honores-MarÃ­n"
+                },
+                {
+                  "authorId": "1783498117",
+                  "name": "Sarfaraz Hashemkhani Zolfani"
+                },
+                {
+                  "authorId": "14086322",
+                  "name": "M. Chipulu"
+                }
+              ]
+            }
+          },
+          {
+            "citingPaper": {
+              "paperId": "9f7860e124f6c0731ec14de37341ef2e10ba567d",
+              "title": "Privacy-preserving transfer learning framework for building energy forecasting with fully anonymized data",
+              "year": 2026,
+              "authors": [
+                {
+                  "authorId": "2374374191",
+                  "name": "Wonjun Choi"
+                },
+                {
+                  "authorId": "2108243082",
+                  "name": "Sangwon Lee"
+                },
+                {
+                  "authorId": "2218426637",
+                  "name": "Max Langtry"
+                },
+                {
+                  "authorId": "2237887497",
+                  "name": "Ruchi Choudhary"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "isError": false
+    }
+  },
+  "structured_result": {
+    "result": [
+      {
+        "citingPaper": {
+          "paperId": "a06d2796211ff8f39ac052dc06e502264b64b621",
+          "title": "Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2296785101",
+              "name": "Chuanyang Gong"
+            },
+            {
+              "authorId": "2278636894",
+              "name": "Zhihua Wei"
+            },
+            {
+              "authorId": "121695247",
+              "name": "Wenhao Tao"
+            },
+            {
+              "authorId": "2082063772",
+              "name": "Duoqian Miao"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "01b19118e185bbe3e628d126cf8d73bebee112df",
+          "title": "Multi-view dynamic perception framework for Chinese harmful meme detection",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2306405730",
+              "name": "Jiapei Hu"
+            },
+            {
+              "authorId": "2306282412",
+              "name": "Yifan Lyu"
+            },
+            {
+              "authorId": "2313802738",
+              "name": "Yifan Chen"
+            },
+            {
+              "authorId": "2256701487",
+              "name": "Kuntao Li"
+            },
+            {
+              "authorId": "2281681481",
+              "name": "Yun Xue"
+            },
+            {
+              "authorId": "2405867882",
+              "name": "Jinghua Liang"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "59665f75898faf5af11ff4445e25145a09b3701b",
+          "title": "SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2349030464",
+              "name": "Paerhati Tulajiang"
+            },
+            {
+              "authorId": "2149932357",
+              "name": "Jinzhong Ning"
+            },
+            {
+              "authorId": "2143552718",
+              "name": "Yuanyuan Sun"
+            },
+            {
+              "authorId": "2143920912",
+              "name": "Liang Yang"
+            },
+            {
+              "authorId": "2350243842",
+              "name": "Yuanyu Zhang"
+            },
+            {
+              "authorId": "2344749390",
+              "name": "Kelaiti Xiao"
+            },
+            {
+              "authorId": "2110326584",
+              "name": "Zhixing Lu"
+            },
+            {
+              "authorId": "2238116411",
+              "name": "Yijia Zhang"
+            },
+            {
+              "authorId": "2249853070",
+              "name": "Hongfei Lin"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "076aaf029ca2c1cca776cdd58b9c673965845bca",
+          "title": "Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2332093539",
+              "name": "Gian Marco Orlando"
+            },
+            {
+              "authorId": "2193906729",
+              "name": "Valerio La Gatta"
+            },
+            {
+              "authorId": "2332099593",
+              "name": "Diego Russo"
+            },
+            {
+              "authorId": "2279840625",
+              "name": "Vincenzo Moscato"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "abe495dbebaccfdeca1760d1724d0491aa1b5aaa",
+          "title": "SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2283566060",
+              "name": "Jianjun Lei"
+            },
+            {
+              "authorId": "2116197364",
+              "name": "Zhichao Li"
+            },
+            {
+              "authorId": "2262019928",
+              "name": "Ying Wang"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "820feeea04b3be7e7f65ace5b16b6668d841c6ea",
+          "title": "A model for early propagation of derivative adversarial topics based on emotional transfer and evolutionary game theory",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2218902293",
+              "name": "Rong Wang"
+            },
+            {
+              "authorId": "2278530106",
+              "name": "Jun Yue"
+            },
+            {
+              "authorId": "2248179266",
+              "name": "Lei Du"
+            },
+            {
+              "authorId": "2109898217",
+              "name": "Tun Li"
+            },
+            {
+              "authorId": "2237598688",
+              "name": "Yunpeng Xiao"
+            },
+            {
+              "authorId": "2581990",
+              "name": "Sirui Duan"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "beaf9c7090f623ac6620a69668c6cb152e8a168c",
+          "title": "Risk-informed design of Software as a Medical Device through Natural Language Processing techniques",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2543494",
+              "name": "A. Luschi"
+            },
+            {
+              "authorId": "2419863444",
+              "name": "Alessandro Zazzeri"
+            },
+            {
+              "authorId": "2252019386",
+              "name": "G. Cevenini"
+            },
+            {
+              "authorId": "2271119248",
+              "name": "Ernesto Iadanza"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "29b6dbc62ccba0e3fa8ba08e2cd7c97772593b80",
+          "title": "Vuln2Action: An LLM-based framework for generating vulnerability reproduction steps and mapping exploits",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2046904159",
+              "name": "Shalini Kumari"
+            },
+            {
+              "authorId": "2054186804",
+              "name": "Geeta Yadav"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "e794ad885b28c7f4bf50093f153fb653b92dbfe1",
+          "title": "From patents to predictive analytics: Leveraging R-GCNs for technological opportunity discovery in converging industries",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2084255286",
+              "name": "Guillermo Honores-MarÃ­n"
+            },
+            {
+              "authorId": "1783498117",
+              "name": "Sarfaraz Hashemkhani Zolfani"
+            },
+            {
+              "authorId": "14086322",
+              "name": "M. Chipulu"
+            }
+          ]
+        }
+      },
+      {
+        "citingPaper": {
+          "paperId": "9f7860e124f6c0731ec14de37341ef2e10ba567d",
+          "title": "Privacy-preserving transfer learning framework for building energy forecasting with fully anonymized data",
+          "year": 2026,
+          "authors": [
+            {
+              "authorId": "2374374191",
+              "name": "Wonjun Choi"
+            },
+            {
+              "authorId": "2108243082",
+              "name": "Sangwon Lee"
+            },
+            {
+              "authorId": "2218426637",
+              "name": "Max Langtry"
+            },
+            {
+              "authorId": "2237887497",
+              "name": "Ruchi Choudhary"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "parsed_content": [
+    {
+      "citingPaper": {
+        "paperId": "a06d2796211ff8f39ac052dc06e502264b64b621",
+        "title": "Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2296785101",
+            "name": "Chuanyang Gong"
+          },
+          {
+            "authorId": "2278636894",
+            "name": "Zhihua Wei"
+          },
+          {
+            "authorId": "121695247",
+            "name": "Wenhao Tao"
+          },
+          {
+            "authorId": "2082063772",
+            "name": "Duoqian Miao"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "01b19118e185bbe3e628d126cf8d73bebee112df",
+        "title": "Multi-view dynamic perception framework for Chinese harmful meme detection",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2306405730",
+            "name": "Jiapei Hu"
+          },
+          {
+            "authorId": "2306282412",
+            "name": "Yifan Lyu"
+          },
+          {
+            "authorId": "2313802738",
+            "name": "Yifan Chen"
+          },
+          {
+            "authorId": "2256701487",
+            "name": "Kuntao Li"
+          },
+          {
+            "authorId": "2281681481",
+            "name": "Yun Xue"
+          },
+          {
+            "authorId": "2405867882",
+            "name": "Jinghua Liang"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "59665f75898faf5af11ff4445e25145a09b3701b",
+        "title": "SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2349030464",
+            "name": "Paerhati Tulajiang"
+          },
+          {
+            "authorId": "2149932357",
+            "name": "Jinzhong Ning"
+          },
+          {
+            "authorId": "2143552718",
+            "name": "Yuanyuan Sun"
+          },
+          {
+            "authorId": "2143920912",
+            "name": "Liang Yang"
+          },
+          {
+            "authorId": "2350243842",
+            "name": "Yuanyu Zhang"
+          },
+          {
+            "authorId": "2344749390",
+            "name": "Kelaiti Xiao"
+          },
+          {
+            "authorId": "2110326584",
+            "name": "Zhixing Lu"
+          },
+          {
+            "authorId": "2238116411",
+            "name": "Yijia Zhang"
+          },
+          {
+            "authorId": "2249853070",
+            "name": "Hongfei Lin"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "076aaf029ca2c1cca776cdd58b9c673965845bca",
+        "title": "Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2332093539",
+            "name": "Gian Marco Orlando"
+          },
+          {
+            "authorId": "2193906729",
+            "name": "Valerio La Gatta"
+          },
+          {
+            "authorId": "2332099593",
+            "name": "Diego Russo"
+          },
+          {
+            "authorId": "2279840625",
+            "name": "Vincenzo Moscato"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "abe495dbebaccfdeca1760d1724d0491aa1b5aaa",
+        "title": "SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2283566060",
+            "name": "Jianjun Lei"
+          },
+          {
+            "authorId": "2116197364",
+            "name": "Zhichao Li"
+          },
+          {
+            "authorId": "2262019928",
+            "name": "Ying Wang"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "820feeea04b3be7e7f65ace5b16b6668d841c6ea",
+        "title": "A model for early propagation of derivative adversarial topics based on emotional transfer and evolutionary game theory",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2218902293",
+            "name": "Rong Wang"
+          },
+          {
+            "authorId": "2278530106",
+            "name": "Jun Yue"
+          },
+          {
+            "authorId": "2248179266",
+            "name": "Lei Du"
+          },
+          {
+            "authorId": "2109898217",
+            "name": "Tun Li"
+          },
+          {
+            "authorId": "2237598688",
+            "name": "Yunpeng Xiao"
+          },
+          {
+            "authorId": "2581990",
+            "name": "Sirui Duan"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "beaf9c7090f623ac6620a69668c6cb152e8a168c",
+        "title": "Risk-informed design of Software as a Medical Device through Natural Language Processing techniques",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2543494",
+            "name": "A. Luschi"
+          },
+          {
+            "authorId": "2419863444",
+            "name": "Alessandro Zazzeri"
+          },
+          {
+            "authorId": "2252019386",
+            "name": "G. Cevenini"
+          },
+          {
+            "authorId": "2271119248",
+            "name": "Ernesto Iadanza"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "29b6dbc62ccba0e3fa8ba08e2cd7c97772593b80",
+        "title": "Vuln2Action: An LLM-based framework for generating vulnerability reproduction steps and mapping exploits",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2046904159",
+            "name": "Shalini Kumari"
+          },
+          {
+            "authorId": "2054186804",
+            "name": "Geeta Yadav"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "e794ad885b28c7f4bf50093f153fb653b92dbfe1",
+        "title": "From patents to predictive analytics: Leveraging R-GCNs for technological opportunity discovery in converging industries",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2084255286",
+            "name": "Guillermo Honores-MarÃ­n"
+          },
+          {
+            "authorId": "1783498117",
+            "name": "Sarfaraz Hashemkhani Zolfani"
+          },
+          {
+            "authorId": "14086322",
+            "name": "M. Chipulu"
+          }
+        ]
+      }
+    },
+    {
+      "citingPaper": {
+        "paperId": "9f7860e124f6c0731ec14de37341ef2e10ba567d",
+        "title": "Privacy-preserving transfer learning framework for building energy forecasting with fully anonymized data",
+        "year": 2026,
+        "authors": [
+          {
+            "authorId": "2374374191",
+            "name": "Wonjun Choi"
+          },
+          {
+            "authorId": "2108243082",
+            "name": "Sangwon Lee"
+          },
+          {
+            "authorId": "2218426637",
+            "name": "Max Langtry"
+          },
+          {
+            "authorId": "2237887497",
+            "name": "Ruchi Choudhary"
+          }
+        ]
+      }
+    }
+  ],
+  "raw_response_text": "event: message\r\ndata: {\"jsonrpc\":\"2.0\",\"id\":2,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"a06d2796211ff8f39ac052dc06e502264b64b621\\\",\\n    \\\"title\\\": \\\"Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2296785101\\\",\\n        \\\"name\\\": \\\"Chuanyang Gong\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2278636894\\\",\\n        \\\"name\\\": \\\"Zhihua Wei\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"121695247\\\",\\n        \\\"name\\\": \\\"Wenhao Tao\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2082063772\\\",\\n        \\\"name\\\": \\\"Duoqian Miao\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"01b19118e185bbe3e628d126cf8d73bebee112df\\\",\\n    \\\"title\\\": \\\"Multi-view dynamic perception framework for Chinese harmful meme detection\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2306405730\\\",\\n        \\\"name\\\": \\\"Jiapei Hu\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2306282412\\\",\\n        \\\"name\\\": \\\"Yifan Lyu\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2313802738\\\",\\n        \\\"name\\\": \\\"Yifan Chen\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2256701487\\\",\\n        \\\"name\\\": \\\"Kuntao Li\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2281681481\\\",\\n        \\\"name\\\": \\\"Yun Xue\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2405867882\\\",\\n        \\\"name\\\": \\\"Jinghua Liang\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"59665f75898faf5af11ff4445e25145a09b3701b\\\",\\n    \\\"title\\\": \\\"SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2349030464\\\",\\n        \\\"name\\\": \\\"Paerhati Tulajiang\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2149932357\\\",\\n        \\\"name\\\": \\\"Jinzhong Ning\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2143552718\\\",\\n        \\\"name\\\": \\\"Yuanyuan Sun\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2143920912\\\",\\n        \\\"name\\\": \\\"Liang Yang\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2350243842\\\",\\n        \\\"name\\\": \\\"Yuanyu Zhang\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2344749390\\\",\\n        \\\"name\\\": \\\"Kelaiti Xiao\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2110326584\\\",\\n        \\\"name\\\": \\\"Zhixing Lu\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2238116411\\\",\\n        \\\"name\\\": \\\"Yijia Zhang\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2249853070\\\",\\n        \\\"name\\\": \\\"Hongfei Lin\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"076aaf029ca2c1cca776cdd58b9c673965845bca\\\",\\n    \\\"title\\\": \\\"Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2332093539\\\",\\n        \\\"name\\\": \\\"Gian Marco Orlando\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2193906729\\\",\\n        \\\"name\\\": \\\"Valerio La Gatta\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2332099593\\\",\\n        \\\"name\\\": \\\"Diego Russo\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2279840625\\\",\\n        \\\"name\\\": \\\"Vincenzo Moscato\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"abe495dbebaccfdeca1760d1724d0491aa1b5aaa\\\",\\n    \\\"title\\\": \\\"SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2283566060\\\",\\n        \\\"name\\\": \\\"Jianjun Lei\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2116197364\\\",\\n        \\\"name\\\": \\\"Zhichao Li\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2262019928\\\",\\n        \\\"name\\\": \\\"Ying Wang\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"820feeea04b3be7e7f65ace5b16b6668d841c6ea\\\",\\n    \\\"title\\\": \\\"A model for early propagation of derivative adversarial topics based on emotional transfer and evolutionary game theory\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2218902293\\\",\\n        \\\"name\\\": \\\"Rong Wang\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2278530106\\\",\\n        \\\"name\\\": \\\"Jun Yue\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2248179266\\\",\\n        \\\"name\\\": \\\"Lei Du\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2109898217\\\",\\n        \\\"name\\\": \\\"Tun Li\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2237598688\\\",\\n        \\\"name\\\": \\\"Yunpeng Xiao\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2581990\\\",\\n        \\\"name\\\": \\\"Sirui Duan\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"beaf9c7090f623ac6620a69668c6cb152e8a168c\\\",\\n    \\\"title\\\": \\\"Risk-informed design of Software as a Medical Device through Natural Language Processing techniques\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2543494\\\",\\n        \\\"name\\\": \\\"A. Luschi\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2419863444\\\",\\n        \\\"name\\\": \\\"Alessandro Zazzeri\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2252019386\\\",\\n        \\\"name\\\": \\\"G. Cevenini\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2271119248\\\",\\n        \\\"name\\\": \\\"Ernesto Iadanza\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"29b6dbc62ccba0e3fa8ba08e2cd7c97772593b80\\\",\\n    \\\"title\\\": \\\"Vuln2Action: An LLM-based framework for generating vulnerability reproduction steps and mapping exploits\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2046904159\\\",\\n        \\\"name\\\": \\\"Shalini Kumari\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2054186804\\\",\\n        \\\"name\\\": \\\"Geeta Yadav\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"e794ad885b28c7f4bf50093f153fb653b92dbfe1\\\",\\n    \\\"title\\\": \\\"From patents to predictive analytics: Leveraging R-GCNs for technological opportunity discovery in converging industries\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2084255286\\\",\\n        \\\"name\\\": \\\"Guillermo Honores-MarÃ­n\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"1783498117\\\",\\n        \\\"name\\\": \\\"Sarfaraz Hashemkhani Zolfani\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"14086322\\\",\\n        \\\"name\\\": \\\"M. Chipulu\\\"\\n      }\\n    ]\\n  }\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"citingPaper\\\": {\\n    \\\"paperId\\\": \\\"9f7860e124f6c0731ec14de37341ef2e10ba567d\\\",\\n    \\\"title\\\": \\\"Privacy-preserving transfer learning framework for building energy forecasting with fully anonymized data\\\",\\n    \\\"year\\\": 2026,\\n    \\\"authors\\\": [\\n      {\\n        \\\"authorId\\\": \\\"2374374191\\\",\\n        \\\"name\\\": \\\"Wonjun Choi\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2108243082\\\",\\n        \\\"name\\\": \\\"Sangwon Lee\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2218426637\\\",\\n        \\\"name\\\": \\\"Max Langtry\\\"\\n      },\\n      {\\n        \\\"authorId\\\": \\\"2237887497\\\",\\n        \\\"name\\\": \\\"Ruchi Choudhary\\\"\\n      }\\n    ]\\n  }\\n}\"}],\"structuredContent\":{\"result\":[{\"citingPaper\":{\"paperId\":\"a06d2796211ff8f39ac052dc06e502264b64b621\",\"title\":\"Enhancing large language models for knowledge graph question answering via multi-granularity knowledge injection and structured reasoning path-augmented prompting\",\"year\":2026,\"authors\":[{\"authorId\":\"2296785101\",\"name\":\"Chuanyang Gong\"},{\"authorId\":\"2278636894\",\"name\":\"Zhihua Wei\"},{\"authorId\":\"121695247\",\"name\":\"Wenhao Tao\"},{\"authorId\":\"2082063772\",\"name\":\"Duoqian Miao\"}]}},{\"citingPaper\":{\"paperId\":\"01b19118e185bbe3e628d126cf8d73bebee112df\",\"title\":\"Multi-view dynamic perception framework for Chinese harmful meme detection\",\"year\":2026,\"authors\":[{\"authorId\":\"2306405730\",\"name\":\"Jiapei Hu\"},{\"authorId\":\"2306282412\",\"name\":\"Yifan Lyu\"},{\"authorId\":\"2313802738\",\"name\":\"Yifan Chen\"},{\"authorId\":\"2256701487\",\"name\":\"Kuntao Li\"},{\"authorId\":\"2281681481\",\"name\":\"Yun Xue\"},{\"authorId\":\"2405867882\",\"name\":\"Jinghua Liang\"}]}},{\"citingPaper\":{\"paperId\":\"59665f75898faf5af11ff4445e25145a09b3701b\",\"title\":\"SEGA: Selective cross-lingual representation via sparse guided attention for low-resource multilingual named entity recognition\",\"year\":2026,\"authors\":[{\"authorId\":\"2349030464\",\"name\":\"Paerhati Tulajiang\"},{\"authorId\":\"2149932357\",\"name\":\"Jinzhong Ning\"},{\"authorId\":\"2143552718\",\"name\":\"Yuanyuan Sun\"},{\"authorId\":\"2143920912\",\"name\":\"Liang Yang\"},{\"authorId\":\"2350243842\",\"name\":\"Yuanyu Zhang\"},{\"authorId\":\"2344749390\",\"name\":\"Kelaiti Xiao\"},{\"authorId\":\"2110326584\",\"name\":\"Zhixing Lu\"},{\"authorId\":\"2238116411\",\"name\":\"Yijia Zhang\"},{\"authorId\":\"2249853070\",\"name\":\"Hongfei Lin\"}]}},{\"citingPaper\":{\"paperId\":\"076aaf029ca2c1cca776cdd58b9c673965845bca\",\"title\":\"Validating generative agent-Based modeling in social media simulations through the lens of the friendship paradox\",\"year\":2026,\"authors\":[{\"authorId\":\"2332093539\",\"name\":\"Gian Marco Orlando\"},{\"authorId\":\"2193906729\",\"name\":\"Valerio La Gatta\"},{\"authorId\":\"2332099593\",\"name\":\"Diego Russo\"},{\"authorId\":\"2279840625\",\"name\":\"Vincenzo Moscato\"}]}},{\"citingPaper\":{\"paperId\":\"abe495dbebaccfdeca1760d1724d0491aa1b5aaa\",\"title\":\"SRSPSQL: A dual-stage Text-to-SQL framework with semantic rewriting and schema pruning\",\"year\":2026,\"authors\":[{\"authorId\":\"2283566060\",\"name\":\"Jianjun Lei\"},{\"authorId\":\"2116197364\",\"name\":\"Zhichao Li\"},{\"authorId\":\"2262019928\",\"name\":\"Ying Wang\"}]}},{\"citingPaper\":{\"paperId\":\"820feeea04b3be7e7f65ace5b16b6668d841c6ea\",\"title\":\"A model for early propagation of derivative adversarial topics based on emotional transfer and evolutionary game theory\",\"year\":2026,\"authors\":[{\"authorId\":\"2218902293\",\"name\":\"Rong Wang\"},{\"authorId\":\"2278530106\",\"name\":\"Jun Yue\"},{\"authorId\":\"2248179266\",\"name\":\"Lei Du\"},{\"authorId\":\"2109898217\",\"name\":\"Tun Li\"},{\"authorId\":\"2237598688\",\"name\":\"Yunpeng Xiao\"},{\"authorId\":\"2581990\",\"name\":\"Sirui Duan\"}]}},{\"citingPaper\":{\"paperId\":\"beaf9c7090f623ac6620a69668c6cb152e8a168c\",\"title\":\"Risk-informed design of Software as a Medical Device through Natural Language Processing techniques\",\"year\":2026,\"authors\":[{\"authorId\":\"2543494\",\"name\":\"A. Luschi\"},{\"authorId\":\"2419863444\",\"name\":\"Alessandro Zazzeri\"},{\"authorId\":\"2252019386\",\"name\":\"G. Cevenini\"},{\"authorId\":\"2271119248\",\"name\":\"Ernesto Iadanza\"}]}},{\"citingPaper\":{\"paperId\":\"29b6dbc62ccba0e3fa8ba08e2cd7c97772593b80\",\"title\":\"Vuln2Action: An LLM-based framework for generating vulnerability reproduction steps and mapping exploits\",\"year\":2026,\"authors\":[{\"authorId\":\"2046904159\",\"name\":\"Shalini Kumari\"},{\"authorId\":\"2054186804\",\"name\":\"Geeta Yadav\"}]}},{\"citingPaper\":{\"paperId\":\"e794ad885b28c7f4bf50093f153fb653b92dbfe1\",\"title\":\"From patents to predictive analytics: Leveraging R-GCNs for technological opportunity discovery in converging industries\",\"year\":2026,\"authors\":[{\"authorId\":\"2084255286\",\"name\":\"Guillermo Honores-MarÃ­n\"},{\"authorId\":\"1783498117\",\"name\":\"Sarfaraz Hashemkhani Zolfani\"},{\"authorId\":\"14086322\",\"name\":\"M. Chipulu\"}]}},{\"citingPaper\":{\"paperId\":\"9f7860e124f6c0731ec14de37341ef2e10ba567d\",\"title\":\"Privacy-preserving transfer learning framework for building energy forecasting with fully anonymized data\",\"year\":2026,\"authors\":[{\"authorId\":\"2374374191\",\"name\":\"Wonjun Choi\"},{\"authorId\":\"2108243082\",\"name\":\"Sangwon Lee\"},{\"authorId\":\"2218426637\",\"name\":\"Max Langtry\"},{\"authorId\":\"2237887497\",\"name\":\"Ruchi Choudhary\"}]}}]},\"isError\":false}}\r\n\r\n"
+}
