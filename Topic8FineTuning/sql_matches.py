@@ -1,3 +1,9 @@
+import random
+import re
+import sqlite3
+from collections import Counter
+
+
 def extract_sql(raw: str) -> str:
     """
     Extract SQL from model output. The base model often appends Answer:, Explanation:,
