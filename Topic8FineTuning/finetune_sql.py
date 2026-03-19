@@ -132,7 +132,21 @@ def eval_one(sampling_client, tokenizer, example: dict) -> bool:
 
 
 def evaluate_test_set(sampling_client, tokenizer, test_data: list[dict]) -> float:
-    correct = sum(1 for ex in test_data if eval_one(sampling_client, tokenizer, ex))
+    correct = 0
+    total = len(test_data)
+    progress_interval = 1 if total <= 10 else 5 if total <= 50 else 10
+
+    for idx, ex in enumerate(test_data, start=1):
+        is_correct = eval_one(sampling_client, tokenizer, ex)
+        if is_correct:
+            correct += 1
+
+        if idx == 1 or idx % progress_interval == 0 or idx == total:
+            print(
+                f"Evaluation progress: {idx}/{total} "
+                f"(running accuracy: {correct / idx:.2%})"
+            )
+
     return correct / len(test_data)
 
 
@@ -234,15 +248,20 @@ def main() -> None:
     print(f"Training examples: {len(train_data)}")
     print(f"Test examples: {len(test_data)}")
     print(f"Evaluating on: {len(eval_data)} examples")
+    print("Creating Tinker service client...")
 
     service_client = tinker.ServiceClient()
+    print(f"Creating LoRA training client for {BASE_MODEL}...")
     training_client = service_client.create_lora_training_client(base_model=BASE_MODEL)
+    print("Loading tokenizer...")
     tokenizer = training_client.get_tokenizer()
 
     print("\n--- Step 3: Evaluating Base Model ---")
+    print("Saving current base weights and creating sampling client...")
     base_sampling_client = training_client.save_weights_and_get_sampling_client(
         name="base-model"
     )
+    print("Starting base-model evaluation...")
     base_accuracy = evaluate_test_set(base_sampling_client, tokenizer, eval_data)
     print(
         f"Base model accuracy: {base_accuracy:.2%} "
@@ -269,9 +288,11 @@ def main() -> None:
         return
 
     print("\n--- Step 6: Evaluating Fine-Tuned Model ---")
+    print("Saving fine-tuned weights and creating sampling client...")
     fine_tuned_sampling_client = training_client.save_weights_and_get_sampling_client(
         name="fine-tuned-model"
     )
+    print("Starting fine-tuned-model evaluation...")
     fine_tuned_accuracy = evaluate_test_set(
         fine_tuned_sampling_client,
         tokenizer,
