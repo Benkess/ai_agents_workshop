@@ -79,7 +79,22 @@ Evaluate a specific fine-tuned checkpoint path:
 python finetune_sql.py --step 6 --checkpoint-path tinker://your/checkpoint/path
 ```
 
+## Step 7: Novel Schema Questions
+
+Compare the base model and fine-tuned model on the five novel-schema questions:
+
+```bash
+python step7_novel_schema.py
+```
+
+Run step 7 with a specific fine-tuned checkpoint path:
+
+```bash
+python step7_novel_schema.py --checkpoint-path tinker://your/checkpoint/path
+```
+
 ## Notes
 
 The dataset file should be present at `Topic8FineTuning/sql_create_context_v4.json`.
 Step 5 saves the latest sampler checkpoint path to `latest_sampler_checkpoint.json` so step 6 can run later without retraining.
+Step 7 saves a text report to `Topic8FineTuning/output/step7.txt` by default.

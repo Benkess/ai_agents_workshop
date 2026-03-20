@@ -1,0 +1,81 @@
+Step 7: Novel-Schema Evaluation
+
+Fine-tuned checkpoint: tinker://fee5605f-f58e-5b63-a02b-ab75edde2388:train:0/sampler_weights/fine-tuned-model
+Total cases: 5
+
+Base model matches: 2/5
+Fine-tuned model matches: 3/5
+
+Case 1: Easy 1 (easy)
+Question: What are the names of employees in the engineering department?
+Schema: CREATE TABLE employees (id INTEGER, name VARCHAR, salary REAL, department VARCHAR)
+Reference SQL: SELECT name FROM employees WHERE department = 'engineering'
+Base model [match]: SELECT name FROM employees WHERE department = 'engineering'
+Answer:  SELECT name FROM employees WHERE department = 'engineering'
+Explanation:  The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter the results of a query. The WHERE clause is used to filter
+Fine-tuned model [match]: SELECT name FROM employees WHERE department = 'engineering'
+
+Case 2: Easy 2 (easy)
+Question: How many products cost more than 50 dollars?
+Schema: CREATE TABLE products (id INTEGER, name VARCHAR, price REAL, category VARCHAR)
+Reference SQL: SELECT COUNT(*) FROM products WHERE price > 50
+Base model [no match]: SELECT * FROM products WHERE price > 50;
+Answer: 3
+Explanation: The query selects all products whose price is greater than 50 dollars.<|end_of_text|>
+Fine-tuned model [no match]: SELECT COUNT(*) FROM products WHERE price > 50 GROUP BY category
+
+Case 3: Medium 1 (medium)
+Question: What is the highest score in the science class?
+Schema: CREATE TABLE students (id INTEGER, name VARCHAR, score INTEGER, class VARCHAR)
+Reference SQL: SELECT MAX(score) FROM students WHERE class = 'science'
+Base model [match]: SELECT MAX(score) FROM students WHERE class = 'Science'
+Answer: 100
+Explanation: The MAX function returns the largest value in a set of values. In this case, the MAX function returns the highest score in the science class.<|end_of_text|>
+Fine-tuned model [match]: SELECT MAX(score) FROM students WHERE class ='science'
+
+Case 4: Medium 2 (medium)
+Question: List the top 3 customers by total order amount.
+Schema: CREATE TABLE orders (id INTEGER, customer VARCHAR, amount REAL, date VARCHAR)
+Reference SQL: SELECT customer FROM orders GROUP BY customer ORDER BY SUM(amount) DESC LIMIT 3
+Base model [no match]: SELECT customer, SUM(amount) AS total FROM orders GROUP BY customer ORDER BY total DESC LIMIT 3;
+Answer:  SELECT customer, SUM(amount) AS total FROM orders GROUP BY customer ORDER BY total DESC LIMIT 3;
+Explanation: The total amount of orders by each customer is calculated and sorted in descending order. The top 3 customers with the highest total order amount are returned.
+SQL:  SELECT customer, SUM(amount) AS total FROM orders GROUP BY customer ORDER BY total DESC LIMIT 3;
+Answer:  SELECT customer, SUM(amount) AS total FROM orders GROUP BY customer ORDER BY total DESC LIMIT 3;
+Explanation: The total amount of orders by each customer is calculated and sorted in descending order. The top 3 customers with the
+Fine-tuned model [match]: SELECT customer FROM orders GROUP BY customer ORDER BY SUM(amount) DESC LIMIT 3
+
+Case 5: Hard 1 (hard)
+Question: How many students are enrolled in each department?
+Schema: CREATE TABLE courses (id INTEGER, name VARCHAR, department VARCHAR); CREATE TABLE enrollments (student_id INTEGER, course_id INTEGER, grade VARCHAR)
+Reference SQL: SELECT courses.department, COUNT(DISTINCT enrollments.student_id) FROM courses JOIN enrollments ON courses.id = enrollments.course_id GROUP BY courses.department
+Base model [no match]: SELECT department, COUNT(*) AS num_students
+FROM enrollments
+GROUP BY department;
+Answer: 1. 1
+2. 2
+3. 3
+4. 4
+5. 5
+6. 6
+7. 7
+8. 8
+9. 9
+10. 10
+11. 11
+12. 12
+13. 13
+14. 14
+15. 15
+16. 16
+17. 17
+18. 18
+19. 19
+20. 20
+21. 21
+22. 22
+23. 23
+24. 24
+25. 25
+26. 26
+Fine-tuned model [no match]: SELECT SUM(T1.student_id), SUM(T2.course_id), T2.department FROM enrollments AS T1 JOIN courses AS T2 ON T1.course_id = T2.id JOIN courses AS T3 ON T2.department = T3.department GROUP BY T2.department
