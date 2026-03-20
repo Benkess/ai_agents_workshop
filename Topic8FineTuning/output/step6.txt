@@ -1,0 +1,34 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\Topic8FineTuning> python finetune_sql.py --step 6
+Training examples: 78377
+Test examples: 200
+Evaluating on: 200 examples
+
+=== Running step 6: evaluate fine-tuned model ===
+Using latest saved checkpoint path from metadata: tinker://fee5605f-f58e-5b63-a02b-ab75edde2388:train:0/sampler_weights/fine-tuned-model
+Creating Tinker service client...
+Creating LoRA training client for meta-llama/Llama-3.2-1B...
+Loading tokenizer...
+Creating sampling client from saved checkpoint...
+Starting fine-tuned-model evaluation...
+Evaluation progress: 1/200 (running accuracy: 100.00%)
+Evaluation progress: 10/200 (running accuracy: 100.00%)
+Evaluation progress: 20/200 (running accuracy: 95.00%)
+Evaluation progress: 30/200 (running accuracy: 96.67%)
+Evaluation progress: 40/200 (running accuracy: 97.50%)
+Evaluation progress: 50/200 (running accuracy: 96.00%)
+Evaluation progress: 60/200 (running accuracy: 96.67%)
+Evaluation progress: 70/200 (running accuracy: 97.14%)
+Evaluation progress: 80/200 (running accuracy: 95.00%)
+Evaluation progress: 90/200 (running accuracy: 95.56%)
+Evaluation progress: 100/200 (running accuracy: 95.00%)
+Evaluation progress: 110/200 (running accuracy: 95.45%)
+Evaluation progress: 120/200 (running accuracy: 93.33%)
+Evaluation progress: 130/200 (running accuracy: 92.31%)
+Evaluation progress: 140/200 (running accuracy: 91.43%)
+Evaluation progress: 150/200 (running accuracy: 91.33%)
+Evaluation progress: 160/200 (running accuracy: 91.88%)
+Evaluation progress: 170/200 (running accuracy: 91.76%)
+Evaluation progress: 180/200 (running accuracy: 91.67%)
+Evaluation progress: 190/200 (running accuracy: 90.53%)
+Evaluation progress: 200/200 (running accuracy: 90.00%)
+Fine-tuned model accuracy: 90.00% (180/200)

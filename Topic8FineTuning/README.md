@@ -36,31 +36,50 @@ python step1.py
 Small smoke test:
 
 ```bash
-python finetune_sql.py --max-eval-examples 20
+python finetune_sql.py --step 3 --max-eval-examples 20
 ```
 
 Full base-model evaluation on the held-out 200 examples:
 
 ```bash
-python finetune_sql.py
+python finetune_sql.py --step 3
+```
+Result:
+```text
+Base model accuracy: 45.50% (91/200)
 ```
 
 ## Step 5: Train
 
-Run one full training pass after the base evaluation:
+Run one full training pass only:
 
 ```bash
-python finetune_sql.py --train
+python finetune_sql.py --step 5
+```
+
+```text
+--- Step 5: Training Fine-Tuned Model ---
+Epoch 1/1, update 100, loss: 0.0440
+Epoch 1/1, update 200, loss: 0.0378
+Epoch 1/1, update 300, loss: 0.0406
+Epoch 1/1, update 307, loss: 0.0155
 ```
 
 ## Step 6: Evaluate After Fine-Tuning
 
-Train and then evaluate the fine-tuned model on the same held-out test set:
+Evaluate the most recently saved fine-tuned checkpoint:
 
 ```bash
-python finetune_sql.py --train --evaluate-after
+python finetune_sql.py --step 6
+```
+
+Evaluate a specific fine-tuned checkpoint path:
+
+```bash
+python finetune_sql.py --step 6 --checkpoint-path tinker://your/checkpoint/path
 ```
 
 ## Notes
 
 The dataset file should be present at `Topic8FineTuning/sql_create_context_v4.json`.
+Step 5 saves the latest sampler checkpoint path to `latest_sampler_checkpoint.json` so step 6 can run later without retraining.

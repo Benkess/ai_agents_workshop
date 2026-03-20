@@ -17,11 +17,25 @@ DEFAULT_SEED = 42
 DEFAULT_BATCH_SIZE = 256
 DEFAULT_NUM_EPOCHS = 1
 DEFAULT_LEARNING_RATE = 5e-4
+CHECKPOINT_METADATA_PATH = Path(__file__).with_name("latest_sampler_checkpoint.json")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Evaluate and fine-tune Llama 3.2 1B for text-to-SQL with Tinker."
+    )
+    parser.add_argument(
+        "--step",
+        choices=[3, 5, 6],
+        default=3,
+        type=int,
+        help="Which lesson-plan step to run: 3 (base eval), 5 (train), or 6 (after eval).",
+    )
+    parser.add_argument(
+        "--checkpoint-path",
+        type=str,
+        default=None,
+        help="Tinker checkpoint path to use for step 6.",
     )
     parser.add_argument(
         "--data-path",
@@ -46,16 +60,6 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=None,
         help="Optional cap for faster debugging. Uses all held-out examples by default.",
-    )
-    parser.add_argument(
-        "--train",
-        action="store_true",
-        help="Run step 5 training after base-model evaluation.",
-    )
-    parser.add_argument(
-        "--evaluate-after",
-        action="store_true",
-        help="Evaluate the fine-tuned model after training. Requires --train.",
     )
     parser.add_argument(
         "--batch-size",
@@ -201,6 +205,11 @@ def run_training(
     rng = random.Random(seed)
     step = 0
 
+    print(
+        f"Preparing {len(processed_train)} training examples "
+        f"for {num_epochs} epoch(s) with batch size {batch_size}..."
+    )
+
     for epoch in range(num_epochs):
         rng.shuffle(processed_train)
 
@@ -226,12 +235,111 @@ def run_training(
                 )
 
 
+def save_latest_checkpoint(path: str) -> None:
+    metadata = {"checkpoint_path": path}
+    CHECKPOINT_METADATA_PATH.write_text(
+        json.dumps(metadata, indent=2),
+        encoding="utf-8",
+    )
+    print(f"Saved latest sampler checkpoint metadata to {CHECKPOINT_METADATA_PATH.name}")
+
+
+def load_latest_checkpoint() -> str | None:
+    if not CHECKPOINT_METADATA_PATH.exists():
+        return None
+
+    try:
+        metadata = json.loads(CHECKPOINT_METADATA_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+
+    checkpoint_path = metadata.get("checkpoint_path")
+    return checkpoint_path if checkpoint_path else None
+
+
+def create_service_and_tokenizer():
+    print("Creating Tinker service client...")
+    service_client = tinker.ServiceClient()
+    print(f"Creating LoRA training client for {BASE_MODEL}...")
+    training_client = service_client.create_lora_training_client(base_model=BASE_MODEL)
+    print("Loading tokenizer...")
+    tokenizer = training_client.get_tokenizer()
+    return service_client, training_client, tokenizer
+
+
+def run_step_3(eval_data: list[dict]) -> None:
+    print("\n=== Running step 3: evaluate base model ===")
+    _, training_client, tokenizer = create_service_and_tokenizer()
+    print("Saving current base weights and creating sampling client...")
+    base_sampling_client = training_client.save_weights_and_get_sampling_client(
+        name="base-model"
+    )
+    print("Starting base-model evaluation...")
+    base_accuracy = evaluate_test_set(base_sampling_client, tokenizer, eval_data)
+    print(
+        f"Base model accuracy: {base_accuracy:.2%} "
+        f"({int(round(base_accuracy * len(eval_data)))}/{len(eval_data)})"
+    )
+
+
+def run_step_5(args: argparse.Namespace, train_data: list[dict]) -> str:
+    print("\n=== Running step 5: train fine-tuned model ===")
+    _, training_client, tokenizer = create_service_and_tokenizer()
+    run_training(
+        training_client,
+        tokenizer,
+        train_data,
+        num_epochs=args.num_epochs,
+        batch_size=args.batch_size,
+        learning_rate=args.learning_rate,
+        seed=args.seed,
+    )
+
+    print("Saving fine-tuned sampler weights...")
+    save_result = training_client.save_weights_for_sampler("fine-tuned-model").result()
+    checkpoint_path = save_result.path
+    print(f"Saved fine-tuned sampler checkpoint: {checkpoint_path}")
+    save_latest_checkpoint(checkpoint_path)
+    return checkpoint_path
+
+
+def resolve_checkpoint_path(explicit_path: str | None) -> str:
+    if explicit_path:
+        print(f"Using checkpoint path from --checkpoint-path: {explicit_path}")
+        return explicit_path
+
+    stored_path = load_latest_checkpoint()
+    if stored_path:
+        print(f"Using latest saved checkpoint path from metadata: {stored_path}")
+        return stored_path
+
+    raise ValueError(
+        "Step 6 requires a saved sampler checkpoint. Run step 5 first or pass "
+        "--checkpoint-path <tinker-path>."
+    )
+
+
+def run_step_6(args: argparse.Namespace, eval_data: list[dict]) -> None:
+    print("\n=== Running step 6: evaluate fine-tuned model ===")
+    checkpoint_path = resolve_checkpoint_path(args.checkpoint_path)
+
+    service_client, training_client, tokenizer = create_service_and_tokenizer()
+    print("Creating sampling client from saved checkpoint...")
+    fine_tuned_sampling_client = training_client.create_sampling_client(checkpoint_path)
+    print("Starting fine-tuned-model evaluation...")
+    fine_tuned_accuracy = evaluate_test_set(
+        fine_tuned_sampling_client,
+        tokenizer,
+        eval_data,
+    )
+    print(
+        f"Fine-tuned model accuracy: {fine_tuned_accuracy:.2%} "
+        f"({int(round(fine_tuned_accuracy * len(eval_data)))}/{len(eval_data)})"
+    )
+
+
 def main() -> None:
     args = parse_args()
-
-    if args.evaluate_after and not args.train:
-        raise ValueError("--evaluate-after requires --train.")
-
     load_dotenv()
 
     train_data, test_data = load_and_split_data(
@@ -248,61 +356,20 @@ def main() -> None:
     print(f"Training examples: {len(train_data)}")
     print(f"Test examples: {len(test_data)}")
     print(f"Evaluating on: {len(eval_data)} examples")
-    print("Creating Tinker service client...")
 
-    service_client = tinker.ServiceClient()
-    print(f"Creating LoRA training client for {BASE_MODEL}...")
-    training_client = service_client.create_lora_training_client(base_model=BASE_MODEL)
-    print("Loading tokenizer...")
-    tokenizer = training_client.get_tokenizer()
-
-    print("\n--- Step 3: Evaluating Base Model ---")
-    print("Saving current base weights and creating sampling client...")
-    base_sampling_client = training_client.save_weights_and_get_sampling_client(
-        name="base-model"
-    )
-    print("Starting base-model evaluation...")
-    base_accuracy = evaluate_test_set(base_sampling_client, tokenizer, eval_data)
-    print(
-        f"Base model accuracy: {base_accuracy:.2%} "
-        f"({int(round(base_accuracy * len(eval_data)))}/{len(eval_data)})"
-    )
-
-    if not args.train:
-        print("\nNext step: rerun with --train to start fine-tuning.")
+    if args.step == 3:
+        run_step_3(eval_data)
         return
 
-    print("\n--- Step 5: Training Fine-Tuned Model ---")
-    run_training(
-        training_client,
-        tokenizer,
-        train_data,
-        num_epochs=args.num_epochs,
-        batch_size=args.batch_size,
-        learning_rate=args.learning_rate,
-        seed=args.seed,
-    )
-
-    if not args.evaluate_after:
-        print("\nTraining finished. Next step: rerun with --train --evaluate-after.")
+    if args.step == 5:
+        run_step_5(args, train_data)
         return
 
-    print("\n--- Step 6: Evaluating Fine-Tuned Model ---")
-    print("Saving fine-tuned weights and creating sampling client...")
-    fine_tuned_sampling_client = training_client.save_weights_and_get_sampling_client(
-        name="fine-tuned-model"
-    )
-    print("Starting fine-tuned-model evaluation...")
-    fine_tuned_accuracy = evaluate_test_set(
-        fine_tuned_sampling_client,
-        tokenizer,
-        eval_data,
-    )
-    print(
-        f"Fine-tuned model accuracy: {fine_tuned_accuracy:.2%} "
-        f"({int(round(fine_tuned_accuracy * len(eval_data)))}/{len(eval_data)})"
-    )
-    print(f"Absolute improvement: {fine_tuned_accuracy - base_accuracy:+.2%}")
+    if args.step == 6:
+        run_step_6(args, eval_data)
+        return
+
+    raise ValueError(f"Unsupported step: {args.step}")
 
 
 if __name__ == "__main__":
