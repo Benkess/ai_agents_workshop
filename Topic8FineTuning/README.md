@@ -143,7 +143,7 @@ Fine-tuned model matches: 3/5
 
 The most obvious improvement was on the held-out in-distribution evaluation set. The base model reached `44.50% (89/200)`, while the fine-tuned model reached `90.00% (180/200)`, which is an absolute improvement of `+45.50 percentage points`. Based on that jump, I think the model learned both SQL syntax and schema grounding. The fine-tuned model was much better at producing the right SQL shape for the training-style prompts, not just copying fragments.
 
-On the additional novel-schema questions from step 7, the improvement was smaller: the base model matched `2/5`, while the fine-tuned model matched `3/5`. That supports the lesson plan’s point that the model improved most on in-distribution text-to-SQL tasks. It generalizes somewhat to new schemas, but the gains are weaker once the prompt moves away from the schemas and patterns seen in the training data.
+On the additional novel-schema questions from step 7, the improvement was smaller: the base model matched `2/5`, while the fine-tuned model matched `3/5`. That supports the lesson plan's point that the model improved most on in-distribution text-to-SQL tasks. It generalizes somewhat to new schemas, but the gains are weaker once the prompt moves away from the schemas and patterns seen in the training data.
 
 ### RAG comparison
 
