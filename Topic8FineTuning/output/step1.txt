@@ -1,0 +1,9 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\Topic8FineTuning> python step1.py
+Total examples: 78577
+
+Sample example:
+  Question: How many heads of the departments are older than 56 ?
+  Context:  CREATE TABLE head (age INTEGER)...
+  Answer:   SELECT COUNT(*) FROM head WHERE age > 56
+Training examples: 78377 (all except evaluation)
+Test examples: 200
