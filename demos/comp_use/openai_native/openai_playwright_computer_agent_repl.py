@@ -137,11 +137,9 @@ def capture_screenshot(page: Page) -> bytes:
 
 
 def _get(obj: Any, name: str, default: Any = None) -> Any:
-    if hasattr(obj, name):
-        return getattr(obj, name)
     if isinstance(obj, dict):
         return obj.get(name, default)
-    return default
+    return getattr(obj, name, default)
 
 
 def describe_action(action: Any) -> str:
