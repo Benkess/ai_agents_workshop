@@ -1,0 +1,10 @@
+{
+  "type": "playwright",
+  "params": {
+    "model_variant": "qwen",
+    "headless": false,
+    "viewport_width": 1280,
+    "viewport_height": 720,
+    "start_url": null
+  }
+}

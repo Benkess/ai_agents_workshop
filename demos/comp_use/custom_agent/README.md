@@ -1,0 +1,135 @@
+# Custom Computer Use Agent
+
+## Overview
+
+This system is a modular computer use agent that pairs any OpenAI-compatible language model with a pluggable execution environment. The agent runs a LangGraph loop: it captures a screenshot, sends it to the model, receives a tool call, executes the action, and repeats until the model signals task completion. All configuration — model endpoints, task instructions, and environment parameters — is defined in JSON files, so different model/environment combinations can be launched without changing any code.
+
+## Architecture
+
+The system has three layers:
+
+**Agent** — `custom_comp_use_agent.py` implements the LangGraph state machine. It takes a screenshot, sends it (along with message history) to the LLM, executes the returned tool call against the environment, and loops until the tool returns `"terminal": true` or the model makes no tool call.
+
+**Environment** — `ComputerUseEnv` (defined in `comp_use_env.py`) is the abstract base class for all environments. It owns the lifecycle (`start_env` / `stop_env`), wires the tool to the agent via `get_computer_use_tool()`, and provides `capture_screenshot()`. Two concrete implementations are provided:
+- `PlaywrightComputerUseEnv` (`playwright_env.py`) — launches and manages a Chromium browser.
+- `PyAutoGUIComputerUseEnv` (`pyautogui_env.py`) — wraps the host desktop via PyAutoGUI.
+
+**Tools** — Tools implement the actual browser/desktop actions. Playwright tools use a `build_tool(page)` factory pattern so each tool instance is freshly bound to the live page object with no module-level state. The PyAutoGUI tool is a module-level singleton created by the `@tool` decorator in `qwen_tool_computer_use.py`.
+
+## Supported Configurations
+
+| Model | Environment | Tool File | Coordinate System | Agent Config | Env Config |
+|---|---|---|---|---|---|
+| GPT-5.4 | Playwright | `tools/tool_playwright_gpt.py` | Raw viewport pixels | `config/agent/gpt_agent.json` | `config/environment/playwright_gpt.json` |
+| Qwen3-VL | Playwright | `tools/tool_playwright_qwen.py` | Normalized 0–1000 | `config/agent/qwen_agent.json` | `config/environment/playwright_qwen.json` |
+| Qwen3-VL | PyAutoGUI | `tools/qwen_tool_computer_use.py` | Normalized 0–1000 | `config/agent/qwen_agent.json` | `config/environment/pyautogui.json` |
+
+## Prerequisites
+
+Install Python packages:
+
+```
+pip install langchain langchain-openai langgraph playwright pyautogui pillow pydantic
+```
+
+Install the Playwright Chromium browser:
+
+```
+playwright install chromium
+```
+
+Set the `OPENAI_API_KEY` environment variable when using GPT:
+
+```
+export OPENAI_API_KEY=sk-...
+```
+
+For Qwen, start Ollama and pull the model:
+
+```
+ollama pull qwen3-vl:4b
+```
+
+## How to Run
+
+### CLI (recommended)
+
+`run.py` is the main entry point. Run it from the `custom_agent/` directory:
+
+```
+python run.py --env <env-config> --agent <agent-config> [options]
+```
+
+**Basic launch:**
+```
+python run.py --env config/environment/playwright_gpt.json --agent config/agent/gpt_agent.json
+```
+
+**Qwen3-VL + Playwright:**
+```
+python run.py --env config/environment/playwright_qwen.json --agent config/agent/qwen_agent.json
+```
+
+**Qwen3-VL + PyAutoGUI (desktop control):**
+```
+python run.py --env config/environment/pyautogui.json --agent config/agent/qwen_agent.json
+```
+
+**CLI options** (all override the corresponding config file values without modifying the files):
+
+| Flag | Description |
+|---|---|
+| `--task "TEXT"` | Override the task instruction (`user_prompt` in the agent config) |
+| `--start-url URL` | Override `start_url` in the environment config (Playwright only) |
+| `--headless` | Run the browser without a visible window (Playwright only) |
+| `--verbose` | Enable verbose agent output |
+
+**Example with overrides:**
+```
+python run.py \
+    --env config/environment/playwright_gpt.json \
+    --agent config/agent/gpt_agent.json \
+    --task "Fill in the contact form and submit it" \
+    --start-url "file:///C:/projects/form.html" \
+    --headless \
+    --verbose
+```
+
+### Python API
+
+You can also launch the agent directly from Python:
+
+```python
+from comp_agent_launch import launch_computer_use_agent
+
+launch_computer_use_agent(
+    env_config_path="config/environment/playwright_gpt.json",
+    agent_config_path="config/agent/gpt_agent.json",
+)
+```
+
+To open a specific page on launch, set `start_url` in the environment config. It accepts `http://`, `https://`, and `file://` paths:
+
+```json
+{
+  "type": "playwright",
+  "params": {
+    "model_variant": "gpt",
+    "headless": false,
+    "viewport_width": 1280,
+    "viewport_height": 720,
+    "start_url": "file:///path/to/local/page.html"
+  }
+}
+```
+
+## Configuring the Agent
+
+The task the agent should complete is set via `user_prompt` in the agent config (e.g., `config/agent/gpt_agent.json`). Edit this field to change the task instruction given to the model.
+
+Other tunable parameters are also in `config/agent/`:
+- `model` — model identifier (e.g., `"gpt-5.4"` or `"qwen3-vl:4b"`)
+- `max_tokens` — maximum tokens per LLM call
+- `trim_strategy` — how to trim message history when the context fills (`"last"` or `"first"`)
+
+Browser and viewport parameters are in `config/environment/`.

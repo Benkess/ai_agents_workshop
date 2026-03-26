@@ -24,7 +24,7 @@ class ComputerUseEnvLoader:
 
         # Based on the type, initialize the appropriate ComputerUseEnv subclass
         if env_type == "playwright":
-            from playwrite_env import PlaywrightComputerUseEnv
+            from playwright_env import PlaywrightComputerUseEnv
             return PlaywrightComputerUseEnv(**env_params)
         elif env_type == "pyautogui":
             from pyautogui_env import PyAutoGUIComputerUseEnv
