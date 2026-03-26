@@ -3,8 +3,8 @@
   "params": {
     "model_variant": "qwen",
     "headless": false,
-    "viewport_width": 1280,
-    "viewport_height": 720,
+    "viewport_width": null,
+    "viewport_height": null,
     "start_url": null
   }
 }

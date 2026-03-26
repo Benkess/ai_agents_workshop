@@ -36,8 +36,8 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
         self,
         model_variant: str = "gpt",
         headless: bool = False,
-        viewport_width: int = 1280,
-        viewport_height: int = 720,
+        viewport_width: Optional[int] = None,
+        viewport_height: Optional[int] = None,
         start_url: Optional[str] = None,
     ) -> None:
         """
@@ -69,14 +69,49 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
         from playwright.sync_api import sync_playwright
 
         self._playwright = sync_playwright().start()
+        launch_args = ["--disable-extensions", "--disable-file-system"]
+        if self._viewport_width and self._viewport_height:
+            launch_args.append(f"--window-size={self._viewport_width},{self._viewport_height}")
+        else:
+            launch_args.append("--start-maximized")
+
         self._browser = self._playwright.chromium.launch(
             headless=self._headless,
             chromium_sandbox=True,
             env={},
+            args=launch_args,
         )
-        self._page = self._browser.new_page(
-            viewport={"width": self._viewport_width, "height": self._viewport_height}
-        )
+
+        if self._viewport_width and self._viewport_height:
+            self._page = self._browser.new_page(
+                viewport={"width": self._viewport_width, "height": self._viewport_height}
+            )
+        else:
+            self._page = self._browser.new_page(no_viewport=True)
+            dims = self._page.evaluate("({w: window.innerWidth, h: window.innerHeight})")
+            self._page.set_viewport_size({"width": dims["w"], "height": dims["h"]})
+        
+        # Add a custom cursor and click effect for better visibility during demos
+        self._page.add_init_script("""
+            document.addEventListener('DOMContentLoaded', () => {
+                const cursor = document.createElement('div');
+                cursor.style.cssText = `
+                    position: fixed; pointer-events: none; z-index: 999999;
+                    width: 20px; height: 20px; border-radius: 50%;
+                    background: rgba(255, 0, 0, 0.5); border: 2px solid red;
+                    transform: translate(-50%, -50%); transition: all 0.05s;
+                `;
+                document.body.appendChild(cursor);
+                document.addEventListener('mousemove', e => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+                document.addEventListener('click', e => {
+                    cursor.style.background = 'rgba(0, 255, 0, 0.8)';
+                    setTimeout(() => cursor.style.background = 'rgba(255, 0, 0, 0.5)', 300);
+                });
+            });
+        """)
         if self._start_url:
             self._page.goto(self._start_url)
 

@@ -55,7 +55,7 @@ def build_env(env_config: dict):
 def build_agent(agent_config: dict, env):
     """Instantiate a ComputerUseAgent from a config dict and a live env."""
     from custom_comp_use_agent import ComputerUseAgent
-    return ComputerUseAgent(env=env, **agent_config)
+    return ComputerUseAgent(computer_use_env=env, **agent_config)
 
 
 def main():
@@ -138,9 +138,17 @@ examples:
         parser.error(f"Environment config not found: {args.env}")
 
     try:
-        agent_config = load_json(args.agent)
+        raw_agent_config = load_json(args.agent)
     except FileNotFoundError:
         parser.error(f"Agent config not found: {args.agent}")
+
+    # The config file has the shape {"name": "...", "agent": {...}}.
+    # ComputerUseAgent only accepts the inner "agent" dict.
+    agent_config = raw_agent_config.get("agent", raw_agent_config)
+
+    # "implementation" is a config-file convention (e.g. "openai"), not a
+    # ComputerUseAgent parameter — drop it before unpacking.
+    agent_config.pop("implementation", None)
 
     # ------------------------------------------------------------------
     # Apply CLI overrides (mutate in-memory, never touch the files)
