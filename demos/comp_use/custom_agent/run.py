@@ -8,6 +8,8 @@
 # Optional overrides (take precedence over values in the config files):
 #   --task        Override user_prompt without editing the agent config
 #   --start-url   Override start_url without editing the environment config
+#   --allow-local-files  Allow Chromium local file access
+#   --allow-extensions   Allow Chromium extensions
 #   --headless    Run the browser in headless mode
 #   --verbose     Enable verbose agent output
 #
@@ -19,6 +21,7 @@
 #       --agent config/agent/gpt_agent.json \
 #       --task "Fill in the contact form and submit it" \
 #       --start-url "file:///C:/Users/benpk/projects/form.html" \
+#       --allow-local-files \
 #       --headless \
 #       --verbose
 
@@ -121,6 +124,22 @@ examples:
         help="Run the browser in headless mode. Only applies to Playwright environments.",
     )
     parser.add_argument(
+        "--allow-local-files",
+        action="store_true",
+        default=False,
+        help=(
+            "Allow Chromium to access local files. Applied automatically when "
+            "--start-url begins with file://, but can also be forced explicitly. "
+            "Only applies to Playwright environments."
+        ),
+    )
+    parser.add_argument(
+        "--allow-extensions",
+        action="store_true",
+        default=False,
+        help="Allow browser extensions to run in Chromium. Only applies to Playwright environments.",
+    )
+    parser.add_argument(
         "--verbose",
         action="store_true",
         default=False,
@@ -168,6 +187,18 @@ examples:
         else:
             env_config.setdefault("params", {})["headless"] = True
 
+    if args.allow_local_files:
+        if env_config.get("type") != "playwright":
+            print("[Warning] --allow-local-files has no effect on non-Playwright environments.")
+        else:
+            env_config.setdefault("params", {})["allow_local_files"] = True
+
+    if args.allow_extensions:
+        if env_config.get("type") != "playwright":
+            print("[Warning] --allow-extensions has no effect on non-Playwright environments.")
+        else:
+            env_config.setdefault("params", {})["allow_extensions"] = True
+
     if args.verbose:
         agent_config["verbose"] = True
 
@@ -184,6 +215,8 @@ examples:
         params = env_config.get("params", {})
         print(f"  Start URL   : {params.get('start_url') or '(none)'}")
         print(f"  Headless    : {params.get('headless', False)}")
+        print(f"  Local Files : {params.get('allow_local_files', False)}")
+        print(f"  Extensions  : {params.get('allow_extensions', False)}")
     print(f"  Verbose     : {agent_config.get('verbose', False)}")
     print("=" * 60 + "\n")
 

@@ -1,0 +1,292 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\demos\comp_use\custom_agent> python run.py `  --env config/environment/playwright_gpt.json `  --agent config/agent/gpt_agent.json `  --start-url "C:\Users\benpk\Projects\computer-use-agent-tests\guis\04_minecraft_crafting\index.html" `  --task "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level." --verbose
+
+============================================================
+  COMPUTER USE AGENT
+============================================================
+  Env config  : config/environment/playwright_gpt.json
+  Agent config: config/agent/gpt_agent.json
+  Task        : You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level.
+  Start URL   : C:\Users\benpk\Projects\computer-use-agent-tests\guis\04_minecraft_crafting\index.html
+  Headless    : False
+  Local Files : False
+  Extensions  : False
+  Verbose     : True
+============================================================
+
+Creating LangGraph...
+Graph created successfully!
+
+============================================================
+STEP 1
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Need craft Stick. We have two identical starting items likely logs/planks. Need identify by hover. Move over first inventory item to see tooltip.', 'action': 'move', 'x': 459, 'y': 379}
+  [tool_playwright_gpt] action=move params={'x': 459.0, 'y': 379.0}
+  Result: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}
+
+============================================================
+STEP 2
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': "Tooltip shows Oak Planks. Need craft sticks by placing 2 planks vertically. We'll click first stack then place in top-middle and middle-middle. ", 'action': 'click', 'x': 459, 'y': 379}
+  [tool_playwright_gpt] action=click params={'x': 459.0, 'y': 379.0}
+  Result: {"success": true, "result": "Clicked at (459.0, 379.0)"}
+
+============================================================
+STEP 3
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Picked up oak planks. Place one plank in top-middle crafting slot.', 'action': 'click', 'x': 500, 'y': 239}
+  [tool_playwright_gpt] action=click params={'x': 500.0, 'y': 239.0}
+  Result: {"success": true, "result": "Clicked at (500.0, 239.0)"}
+
+============================================================
+STEP 4
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (500.0, 239.0)"}, tool_call_id=call_LLzjd2fTsU98YV9PXR2SrKAG
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Need second plank directly below first to make sticks. Click remaining plank stack then place in middle-middle slot.', 'action': 'click', 'x': 497, 'y': 381}
+  [tool_playwright_gpt] action=click params={'x': 497.0, 'y': 381.0}
+  Result: {"success": true, "result": "Clicked at (497.0, 381.0)"}
+
+============================================================
+STEP 5
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (500.0, 239.0)"}, tool_call_id=call_LLzjd2fTsU98YV9PXR2SrKAG
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (497.0, 381.0)"}, tool_call_id=call_ViwucuizJbmMlSlbZg0Prt6I
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Now place second plank in middle-middle slot under the first.', 'action': 'click', 'x': 504, 'y': 271}
+  [tool_playwright_gpt] action=click params={'x': 504.0, 'y': 271.0}
+  Result: {"success": true, "result": "Clicked at (504.0, 271.0)"}
+
+============================================================
+STEP 6
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (500.0, 239.0)"}, tool_call_id=call_LLzjd2fTsU98YV9PXR2SrKAG
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (497.0, 381.0)"}, tool_call_id=call_ViwucuizJbmMlSlbZg0Prt6I
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (504.0, 271.0)"}, tool_call_id=call_btIvNCvInVEWv1jdmMg8XZIH
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Output shows sticks. Need collect them into inventory, then submit should light up. Click output slot.', 'action': 'click', 'x': 629, 'y': 276}
+  [tool_playwright_gpt] action=click params={'x': 629.0, 'y': 276.0}
+  Result: {"success": true, "result": "Clicked at (629.0, 276.0)"}
+
+============================================================
+STEP 7
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (500.0, 239.0)"}, tool_call_id=call_LLzjd2fTsU98YV9PXR2SrKAG
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (497.0, 381.0)"}, tool_call_id=call_ViwucuizJbmMlSlbZg0Prt6I
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (504.0, 271.0)"}, tool_call_id=call_btIvNCvInVEWv1jdmMg8XZIH
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (629.0, 276.0)"}, tool_call_id=call_MqIBazKixdcGMb30PXYyCDoV
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Stick stack appears to be on cursor after clicking output; place it into inventory/hotbar, then submit if green. Click first hotbar slot.', 'action': 'click', 'x': 457, 'y': 503}
+  [tool_playwright_gpt] action=click params={'x': 457.0, 'y': 503.0}
+  Result: {"success": true, "result": "Clicked at (457.0, 503.0)"}
+
+============================================================
+STEP 8
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (500.0, 239.0)"}, tool_call_id=call_LLzjd2fTsU98YV9PXR2SrKAG
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (497.0, 381.0)"}, tool_call_id=call_ViwucuizJbmMlSlbZg0Prt6I
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (504.0, 271.0)"}, tool_call_id=call_btIvNCvInVEWv1jdmMg8XZIH
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (629.0, 276.0)"}, tool_call_id=call_MqIBazKixdcGMb30PXYyCDoV
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (457.0, 503.0)"}, tool_call_id=call_01kyNaBop1pgiAPg361mvzHz
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Submit button is green; click it to complete the level.', 'action': 'click', 'x': 899, 'y': 278}
+  [tool_playwright_gpt] action=click params={'x': 899.0, 'y': 278.0}
+  Result: {"success": true, "result": "Clicked at (899.0, 278.0)"}
+
+============================================================
+STEP 9
+============================================================
+
+[1/3] Capturing screenshot...
+Captured screenshot and created image message.
+[2/3] Generating action...
+Calling LLM with messages...
+Resolved messages = Static messages + Trimmed messages (max_tokens=16384):
+  SystemMessage: You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.
+  HumanMessage: Text: "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nWhen the goal item appears in your inventory, the Submit button will light up green. Click it to complete the level and advance. If the Sunmit buttom does not light up green, check that you have placed the goal item in your inventory or hotbar.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Moved mouse to (459.0, 379.0)"}, tool_call_id=call_g70L3RhhfbgpjSbkmmJfNDu3
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (459.0, 379.0)"}, tool_call_id=call_reOUwsvs3YsQHfDMXpBuVmPy
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (500.0, 239.0)"}, tool_call_id=call_LLzjd2fTsU98YV9PXR2SrKAG
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (497.0, 381.0)"}, tool_call_id=call_ViwucuizJbmMlSlbZg0Prt6I
+  ToolMessage: {"success": true, "result": "Clicked at (629.0, 276.0)"}, tool_call_id=call_MqIBazKixdcGMb30PXYyCDoV
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (457.0, 503.0)"}, tool_call_id=call_01kyNaBop1pgiAPg361mvzHz
+  HumanMessage: Image: mime_type=image/png
+  AIMessage:
+  ToolMessage: {"success": true, "result": "Clicked at (899.0, 278.0)"}, tool_call_id=call_cLuUgyvalVewRdK69HuylGbH
+  HumanMessage: Image: mime_type=image/png
+[3/3] Executing actions...
+LLM wants to call 1 tool(s)
+  Tool: computer_use
+  Args: {'thought': 'Level complete and no further action needed. Terminate successfully.', 'action': 'terminate', 'status': 'Crafted Stick and submitted the level.'}
+  [tool_playwright_gpt] action=terminate params={'status': 'Crafted Stick and submitted the level.'}
+  Result: {"success": true, "result": "Task complete: Crafted Stick and submitted the level.", "terminal": true}
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\demos\comp_use\custom_agent>

@@ -1,0 +1,109 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\demos\comp_use\custom_agent> python run.py `  --env config/environment/playwright_gpt.json `  --agent config/agent/gpt_agent.json `  --start-url "http://127.0.0.1:8000/index.html" --task "You are using a Minecraft crafting table simulator. Click Start first. The simulation does not begin until Start is clicked. Your goal for the current level is shown in the task panel on the right under GOAL as a text name only, with no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it to see a tooltip with its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book on the left: search for the item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid.\n2. Place items manually: click an inventory item to pick it up, then click crafting grid slots to place ingredients in the correct pattern.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items before the final item. Plan the crafting order carefully and collect each crafted output before moving to the next step.\n\nThe output slot will glow when a valid recipe is ready. Click the output slot to collect the crafted item. The Submit button only activates after the goal item has been collected from the output slot into your inventory or hotbar. It will not activate if the goal item is still sitting in the output slot or attached to the cursor.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for the current level."
+
+============================================================
+  COMPUTER USE AGENT
+============================================================
+  Env config  : config/environment/playwright_gpt.json
+  Agent config: config/agent/gpt_agent.json
+  Task        : You are using a Minecraft crafting table simulator. Click Start first. The simulation does not begin until Start is clicked. Your goal for the current level is shown in the task panel on the right under GOAL as a text name only, with no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it to see a tooltip with its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book on the left: search for the item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid.\n2. Place items manually: click an inventory item to pick it up, then click crafting grid slots to place ingredients in the correct pattern.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items before the final item. Plan the crafting order carefully and collect each crafted output before moving to the next step.\n\nThe output slot will glow when a valid recipe is ready. Click the output slot to collect the crafted item. The Submit button only activates after the goal item has been collected from the output slot into your inventory or hotbar. It will not activate if the goal item is still sitting in the output slot or attached to the cursor.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for the current level.
+  Start URL   : http://127.0.0.1:8000/index.html
+  Headless    : False
+  Local Files : False
+  Extensions  : False
+  Verbose     : False
+============================================================
+
+Creating LangGraph...
+Graph created successfully!
+
+============================================================
+STEP 1
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 951.0, 'y': 462.0}
+
+============================================================
+STEP 2
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=move params={'x': 458.0, 'y': 380.0}
+  [tool_playwright_gpt] action=screenshot params={}
+
+============================================================
+STEP 3
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=screenshot params={}
+
+============================================================
+STEP 4
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 882.0, 'y': 254.0}
+
+============================================================
+STEP 5
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 290.0, 'y': 306.0}
+
+============================================================
+STEP 6
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 627.0, 'y': 273.0}
+
+============================================================
+STEP 7
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 627.0, 'y': 273.0}
+
+============================================================
+STEP 8
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 456.0, 'y': 380.0}
+
+============================================================
+STEP 9
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=click params={'x': 902.0, 'y': 278.0}
+
+============================================================
+STEP 10
+============================================================
+
+[1/3] Capturing screenshot...
+[2/3] Generating action...
+[3/3] Executing actions...
+  [tool_playwright_gpt] action=terminate params={'status': 'Completed the level by crafting and submitting Stick.'}
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\demos\comp_use\custom_agent> 

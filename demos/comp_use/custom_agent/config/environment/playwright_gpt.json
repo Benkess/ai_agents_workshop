@@ -5,6 +5,7 @@
     "headless": false,
     "viewport_width": null,
     "viewport_height": null,
-    "start_url": null
+    "start_url": null,
+    "show_cursor_overlay": true
   }
 }

@@ -16,79 +16,6 @@ from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
-class PlaywrightGPTArgs(BaseModel):
-    """Arguments for the computer_use tool (GPT / pixel coordinate variant)."""
-
-    thought: str = Field(
-        ...,
-        description="Your reasoning about the current state and what action to take next.",
-    )
-    action: str = Field(
-        ...,
-        description=(
-            "Action to perform. One of: navigate, click, double_click, scroll, type, "
-            "keypress, move, drag, screenshot, wait, terminate, fail."
-        ),
-    )
-    x: Optional[float] = Field(
-        None,
-        description=(
-            "Pixel x-coordinate in the browser viewport. "
-            "Required for: click, double_click, move, drag, scroll."
-        ),
-    )
-    y: Optional[float] = Field(
-        None,
-        description=(
-            "Pixel y-coordinate in the browser viewport. "
-            "Required for: click, double_click, move, drag, scroll."
-        ),
-    )
-    target_x: Optional[float] = Field(
-        None,
-        description="Pixel x-coordinate of the drag destination. Required for: drag.",
-    )
-    target_y: Optional[float] = Field(
-        None,
-        description="Pixel y-coordinate of the drag destination. Required for: drag.",
-    )
-    url: Optional[str] = Field(
-        None,
-        description="URL to navigate to. Required for: navigate.",
-    )
-    text: Optional[str] = Field(
-        None,
-        description="Text to type into the focused element. Required for: type.",
-    )
-    keys: Optional[List[str]] = Field(
-        None,
-        description=(
-            "List of keys to press sequentially (not as a chord). "
-            "Required for: keypress. Example: [\"ArrowDown\", \"Enter\"]."
-        ),
-    )
-    direction: Optional[str] = Field(
-        None,
-        description="Scroll direction: 'up' or 'down'. Required for: scroll.",
-    )
-    pixels: Optional[float] = Field(
-        None,
-        description="Number of pixels to scroll. Required for: scroll.",
-    )
-    ms: Optional[float] = Field(
-        None,
-        description="Duration in milliseconds. Required for: wait.",
-    )
-    status: Optional[str] = Field(
-        None,
-        description="Completion status message. Optional for: terminate.",
-    )
-    message: Optional[str] = Field(
-        None,
-        description="Failure reason. Optional for: fail.",
-    )
-
-
 def build_tool(page) -> StructuredTool:
     """
     Build a computer_use LangChain tool bound to the given Playwright page.
@@ -100,6 +27,89 @@ def build_tool(page) -> StructuredTool:
     Returns:
         A StructuredTool with name "computer_use" that the agent can invoke.
     """
+    vp = page.viewport_size or {"width": 1280, "height": 720}
+    width = vp["width"]
+    height = vp["height"]
+
+    class PlaywrightGPTArgs(BaseModel):
+        """Arguments for the computer_use tool (GPT / pixel coordinate variant)."""
+
+        thought: str = Field(
+            ...,
+            description="Your reasoning about the current state and what action to take next.",
+        )
+        action: str = Field(
+            ...,
+            description=(
+                "Action to perform. One of: navigate, click, double_click, scroll, type, "
+                "keypress, move, drag, screenshot, wait, terminate, fail."
+            ),
+        )
+        x: Optional[float] = Field(
+            None,
+            description=(
+                f"Pixel x-coordinate in the browser viewport. "
+                f"Range: 0–{width}, where 0 is the left edge and {width} is the right edge. "
+                "Required for: click, double_click, move, drag, scroll."
+            ),
+        )
+        y: Optional[float] = Field(
+            None,
+            description=(
+                f"Pixel y-coordinate in the browser viewport. "
+                f"Range: 0–{height}, where 0 is the top edge and {height} is the bottom edge. "
+                "Required for: click, double_click, move, drag, scroll."
+            ),
+        )
+        target_x: Optional[float] = Field(
+            None,
+            description=(
+                f"Pixel x-coordinate of the drag destination. "
+                f"Range: 0–{width}. Required for: drag."
+            ),
+        )
+        target_y: Optional[float] = Field(
+            None,
+            description=(
+                f"Pixel y-coordinate of the drag destination. "
+                f"Range: 0–{height}. Required for: drag."
+            ),
+        )
+        url: Optional[str] = Field(
+            None,
+            description="URL to navigate to. Required for: navigate.",
+        )
+        text: Optional[str] = Field(
+            None,
+            description="Text to type into the focused element. Required for: type.",
+        )
+        keys: Optional[List[str]] = Field(
+            None,
+            description=(
+                "List of keys to press sequentially (not as a chord). "
+                "Required for: keypress. Example: [\"ArrowDown\", \"Enter\"]."
+            ),
+        )
+        direction: Optional[str] = Field(
+            None,
+            description="Scroll direction: 'up' or 'down'. Required for: scroll.",
+        )
+        pixels: Optional[float] = Field(
+            None,
+            description="Number of pixels to scroll. Required for: scroll.",
+        )
+        ms: Optional[float] = Field(
+            None,
+            description="Duration in milliseconds. Required for: wait.",
+        )
+        status: Optional[str] = Field(
+            None,
+            description="Completion status message. Optional for: terminate.",
+        )
+        message: Optional[str] = Field(
+            None,
+            description="Failure reason. Optional for: fail.",
+        )
 
     def computer_use(
         thought: str,
@@ -118,6 +128,14 @@ def build_tool(page) -> StructuredTool:
         message: Optional[str] = None,
     ) -> str:
         """Execute a computer use action in the browser."""
+        # Log all non-None parameters for debugging
+        params = {k: v for k, v in {
+            "x": x, "y": y, "target_x": target_x, "target_y": target_y,
+            "url": url, "text": text, "keys": keys, "direction": direction,
+            "pixels": pixels, "ms": ms, "status": status, "message": message,
+        }.items() if v is not None}
+        print(f"  [tool_playwright_gpt] action={action} params={params}")
+
         try:
             if action == "navigate":
                 if not url:
@@ -129,12 +147,16 @@ def build_tool(page) -> StructuredTool:
                 if x is None or y is None:
                     raise ValueError("x and y are required for click")
                 page.mouse.click(float(x), float(y))
+                page.evaluate(f"window.__setCursor && window.__setCursor({float(x)}, {float(y)})")
+                page.evaluate("window.__flashCursor && window.__flashCursor()")
                 return json.dumps({"success": True, "result": f"Clicked at ({x}, {y})"})
 
             elif action == "double_click":
                 if x is None or y is None:
                     raise ValueError("x and y are required for double_click")
                 page.mouse.dblclick(float(x), float(y))
+                page.evaluate(f"window.__setCursor && window.__setCursor({float(x)}, {float(y)})")
+                page.evaluate("window.__flashCursor && window.__flashCursor()")
                 return json.dumps({"success": True, "result": f"Double-clicked at ({x}, {y})"})
 
             elif action == "scroll":
@@ -146,6 +168,7 @@ def build_tool(page) -> StructuredTool:
                 wheel_y = delta if direction == "down" else -delta
                 page.mouse.move(float(x), float(y))
                 page.mouse.wheel(0, wheel_y)
+                page.evaluate(f"window.__setCursor && window.__setCursor({float(x)}, {float(y)})")
                 return json.dumps({"success": True, "result": f"Scrolled {direction} {delta}px at ({x}, {y})"})
 
             elif action == "type":
@@ -165,15 +188,18 @@ def build_tool(page) -> StructuredTool:
                 if x is None or y is None:
                     raise ValueError("x and y are required for move")
                 page.mouse.move(float(x), float(y))
+                page.evaluate(f"window.__setCursor && window.__setCursor({float(x)}, {float(y)})")
                 return json.dumps({"success": True, "result": f"Moved mouse to ({x}, {y})"})
 
             elif action == "drag":
                 if x is None or y is None or target_x is None or target_y is None:
                     raise ValueError("x, y, target_x, and target_y are required for drag")
                 page.mouse.move(float(x), float(y))
+                page.evaluate(f"window.__setCursor && window.__setCursor({float(x)}, {float(y)})")
                 page.mouse.down()
                 page.mouse.move(float(target_x), float(target_y))
                 page.mouse.up()
+                page.evaluate(f"window.__setCursor && window.__setCursor({float(target_x)}, {float(target_y)})")
                 return json.dumps({"success": True, "result": f"Dragged from ({x}, {y}) to ({target_x}, {target_y})"})
 
             elif action == "screenshot":

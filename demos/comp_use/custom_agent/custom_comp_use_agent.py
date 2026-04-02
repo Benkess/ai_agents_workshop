@@ -10,6 +10,7 @@ from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
 from langchain_core.messages.utils import trim_messages
 import base64
+import json
 
 # Library Imports
 import os
@@ -31,6 +32,24 @@ DEFAULT_ALLOW_PARTIAL = False
 # =============================================================================
 # STATE DEFINITION
 # =============================================================================
+
+
+def format_tool_output_for_log(content: Any) -> Any:
+    """Return a log-safe representation of tool output without changing stored state."""
+    if not isinstance(content, str):
+        return content
+
+    try:
+        parsed = json.loads(content)
+    except json.JSONDecodeError:
+        return content
+
+    result = parsed.get("result")
+    if isinstance(result, str) and result.startswith("data:image/png;base64,"):
+        parsed["result"] = "<screenshot image omitted>"
+        return json.dumps(parsed)
+
+    return content
 
 class AgentState(TypedDict):
     """
@@ -303,7 +322,8 @@ class ComputerUseAgent():
                     elif isinstance(msg, SystemMessage):
                         print(f"  SystemMessage: {msg.content}")
                     elif isinstance(msg, ToolMessage):
-                        print(f"  ToolMessage: {msg.content}, tool_call_id={msg.tool_call_id}")
+                        tool_content = format_tool_output_for_log(msg.content)
+                        print(f"  ToolMessage: {tool_content}, tool_call_id={msg.tool_call_id}")
 
             # Agent loop for tool calling
             response = llm_with_tools.invoke(resolved_messages) # Pass the resolved messages = static + trimmed messages to the LLM with tools
@@ -331,12 +351,14 @@ class ComputerUseAgent():
                         result = f"Error: Unknown function {function_name}"
                     
                     if self.verbose:
-                        print(f"  Result: {result}")
+                        result_summary = format_tool_output_for_log(result)
+                        print(f"  Result: {result_summary}")
 
                     terminal = False
                     # tool_message_content = result
-                    if isinstance(result, dict):
-                        terminal = bool(result.get("terminal", False))
+                    result_parsed = json.loads(result) if isinstance(result, str) else result
+                    if isinstance(result_parsed, dict):
+                        terminal = bool(result_parsed.get("terminal", False))
                     if terminal:
                         should_exit = True
                         # Note: This does not break the loop so other tools may run after this. Later we may want to access tool_message_content for a final message or something like that.
@@ -413,6 +435,7 @@ def build_image_message(image_bytes: bytes, mime_type: str, text: str | None = N
                     "type": "image",
                     "base64": encoded_image,
                     "mime_type": mime_type,
+                    "detail": "original",
                 },
             ]
         )
@@ -424,6 +447,7 @@ def build_image_message(image_bytes: bytes, mime_type: str, text: str | None = N
                     "type": "image",
                     "base64": encoded_image,
                     "mime_type": mime_type,
+                    "detail": "original",
                 },
             ]
         )

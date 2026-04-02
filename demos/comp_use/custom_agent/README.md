@@ -82,6 +82,8 @@ python run.py --env config/environment/pyautogui.json --agent config/agent/qwen_
 | `--task "TEXT"` | Override the task instruction (`user_prompt` in the agent config) |
 | `--start-url URL` | Override `start_url` in the environment config (Playwright only) |
 | `--headless` | Run the browser without a visible window (Playwright only) |
+| `--allow-local-files` | Allow Chromium to access local files (Playwright only) |
+| `--allow-extensions` | Allow browser extensions to run in Chromium (Playwright only) |
 | `--verbose` | Enable verbose agent output |
 
 **Example with overrides:**
@@ -91,6 +93,7 @@ python run.py \
     --agent config/agent/gpt_agent.json \
     --task "Fill in the contact form and submit it" \
     --start-url "file:///C:/projects/form.html" \
+    --allow-local-files \
     --headless \
     --verbose
 ```
@@ -118,10 +121,19 @@ To open a specific page on launch, set `start_url` in the environment config. It
     "headless": false,
     "viewport_width": 1280,
     "viewport_height": 720,
-    "start_url": "file:///path/to/local/page.html"
+    "start_url": "file:///path/to/local/page.html",
+    "show_cursor_overlay": true
   }
 }
 ```
+
+`file://` URLs work natively, but serving the page over localhost is more reliable for pages that load external scripts, stylesheets, or images. From the directory containing your HTML file:
+
+```bash
+python -m http.server 8000
+```
+
+Then use `http://127.0.0.1:8000/index.html` as the `start_url`.
 
 ## Configuring the Agent
 
@@ -132,4 +144,4 @@ Other tunable parameters are also in `config/agent/`:
 - `max_tokens` — maximum tokens per LLM call
 - `trim_strategy` — how to trim message history when the context fills (`"last"` or `"first"`)
 
-Browser and viewport parameters are in `config/environment/`.
+Browser and viewport parameters are in `config/environment/`. For Playwright configs, `show_cursor_overlay` controls the small debug cursor dot shown in screenshots; set it to `false` to remove the overlay entirely.
