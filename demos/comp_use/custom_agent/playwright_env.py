@@ -7,6 +7,7 @@ wiring it to the appropriate computer use tool for the chosen model variant.
 
 import os
 import sys
+from pathlib import Path
 from typing import Optional, Tuple
 
 # Resolve tools/ imports regardless of working directory
@@ -42,6 +43,8 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
         allow_local_files: bool = False,
         allow_extensions: bool = False,
         show_cursor_overlay: bool = True,
+        record_video: bool = False,
+        record_video_dir: Optional[str] = None,
     ) -> None:
         """
         Args:
@@ -58,6 +61,10 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
             show_cursor_overlay: Show a cursor dot overlay in the browser for
                                  debugging. Disable to avoid obstructing the
                                  model's view.
+            record_video: Enable Playwright video recording for the browser
+                          context. Recording is intended for headed runs.
+            record_video_dir: Directory where Playwright should store recorded
+                              video files when recording is enabled.
         """
         self._model_variant = model_variant
         self._headless = headless
@@ -67,10 +74,15 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
         self._allow_local_files = allow_local_files
         self._allow_extensions = allow_extensions
         self._show_cursor_overlay = show_cursor_overlay
+        self._record_video = record_video
+        self._record_video_dir = record_video_dir
 
         self._playwright = None
         self._browser = None
+        self._context = None
         self._page = None
+        self._video_page = None
+        self._recorded_video_path = None
 
     def start_env(self) -> None:
         """
@@ -80,6 +92,7 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
         """
         from playwright.sync_api import sync_playwright
 
+        self._recorded_video_path = None
         self._playwright = sync_playwright().start()
         launch_args = []
         if not self._allow_extensions:
@@ -97,9 +110,20 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
             args=launch_args,
         )
 
-        self._page = self._browser.new_page(
-            viewport={"width": self._viewport_width, "height": self._viewport_height}
-        )
+        context_kwargs = {
+            "viewport": {"width": self._viewport_width, "height": self._viewport_height},
+        }
+        if self._record_video and self._record_video_dir:
+            Path(self._record_video_dir).mkdir(parents=True, exist_ok=True)
+            context_kwargs["record_video_dir"] = self._record_video_dir
+            context_kwargs["record_video_size"] = {
+                "width": self._viewport_width,
+                "height": self._viewport_height,
+            }
+
+        self._context = self._browser.new_context(**context_kwargs)
+        self._page = self._context.new_page()
+        self._video_page = self._page if self._record_video else None
         
         if self._show_cursor_overlay:
             # Add a custom cursor for better visibility during demos.
@@ -144,12 +168,21 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
         try:
             if self._page:
                 self._page.close()
+            if self._context:
+                self._context.close()
             if self._browser:
                 self._browser.close()
             if self._playwright:
                 self._playwright.stop()
         finally:
+            if self._video_page and self._video_page.video:
+                try:
+                    self._recorded_video_path = self._video_page.video.path()
+                except Exception:
+                    self._recorded_video_path = None
             self._page = None
+            self._video_page = None
+            self._context = None
             self._browser = None
             self._playwright = None
 
@@ -194,3 +227,7 @@ class PlaywrightComputerUseEnv(ComputerUseEnv):
                 "Environment is not started. Call start_env() before capture_screenshot()."
             )
         return (self._page.screenshot(type="png"), "image/png")
+
+    def get_recorded_video_path(self) -> Optional[str]:
+        """Return the finalized Playwright video path if one was recorded."""
+        return self._recorded_video_path

@@ -85,7 +85,8 @@ python run.py --env config/environment/pyautogui.json --agent config/agent/qwen_
 | `--allow-local-files` | Allow Chromium to access local files (Playwright only) |
 | `--allow-extensions` | Allow browser extensions to run in Chromium (Playwright only) |
 | `--verbose` | Enable verbose agent output |
-| `--log-file PATH` | Write the run log to this path instead of the default `output/run_<timestamp>.txt` |
+| `--record` | Record a Playwright browser video for the run (headed Playwright only) |
+| `--log-file PATH` | Write the run log to this path instead of the default `output/run_<timestamp>/run.log` |
 | `--no-log` | Disable automatic file logging |
 
 **Example with overrides:**
@@ -100,9 +101,22 @@ python run.py \
     --verbose
 ```
 
+**Example with recording:**
+```
+python run.py \
+    --env config/environment/playwright_gpt.json \
+    --agent config/agent/gpt_agent.json \
+    --record
+```
+
 ## Logging
 
-Every run automatically writes a structured plain-text log to `output/run_<timestamp>.txt` in the same directory as `run.py`. The `output/` folder is created if it doesn't exist.
+Every run now creates a run directory at `output/run_<timestamp>/` in the same directory as `run.py`. The `output/` folder is created if it doesn't exist.
+
+**Artifacts in the run directory:**
+- `run.log` â€” structured plain-text agent log (unless `--no-log` is used)
+- `run_manifest.json` â€” run metadata including task, config paths, logging path, and recording status
+- `video/` â€” Playwright-recorded browser video files when `--record` succeeds
 
 **What the log contains:**
 - Run metadata: timestamp, task, model, environment, start URL
@@ -115,7 +129,7 @@ Every run automatically writes a structured plain-text log to `output/run_<times
 
 **Log file options:**
 ```
-# Default: auto-named file in output/
+# Default: auto-created run directory with run.log
 python run.py --env ... --agent ...
 
 # Custom path
@@ -123,7 +137,15 @@ python run.py --env ... --agent ... --log-file /tmp/myrun.txt
 
 # Disable logging
 python run.py --env ... --agent ... --no-log
+
+# Record a headed Playwright run
+python run.py --env ... --agent ... --record
 ```
+
+**Recording notes:**
+- Recording is currently supported only for Playwright environments.
+- Recording is currently disabled for headless Playwright runs in v1.
+- When recording succeeds, the finalized video path is printed after the run ends and saved in `run_manifest.json`.
 
 ### Python API
 

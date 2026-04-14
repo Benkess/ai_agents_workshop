@@ -11,6 +11,7 @@
 #   --allow-local-files  Allow Chromium local file access
 #   --allow-extensions   Allow Chromium extensions
 #   --headless    Run the browser in headless mode
+#   --record      Record a Playwright video for this run (headed only)
 #   --verbose     Enable verbose agent output
 #
 # Examples:
@@ -27,8 +28,8 @@
 
 import argparse
 import json
-import sys
 import os
+import sys
 from datetime import datetime
 
 # Ensure custom_agent/ is importable when run.py is invoked from other directories
@@ -37,8 +38,14 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 def load_json(path: str) -> dict:
     """Load a JSON config file and return it as a dict."""
-    with open(path, "r") as f:
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def write_json(path: str, data: dict) -> None:
+    """Write a JSON file with stable formatting."""
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
 
 
 def build_env(env_config: dict):
@@ -49,11 +56,10 @@ def build_env(env_config: dict):
     if env_type == "playwright":
         from playwright_env import PlaywrightComputerUseEnv
         return PlaywrightComputerUseEnv(**env_params)
-    elif env_type == "pyautogui":
+    if env_type == "pyautogui":
         from pyautogui_env import PyAutoGUIComputerUseEnv
         return PyAutoGUIComputerUseEnv(**env_params)
-    else:
-        raise ValueError(f"Unsupported environment type: '{env_type}'")
+    raise ValueError(f"Unsupported environment type: '{env_type}'")
 
 
 def build_agent(agent_config: dict, env):
@@ -84,6 +90,12 @@ examples:
       --env config/environment/playwright_qwen.json \\
       --agent config/agent/qwen_agent.json \\
       --headless --verbose
+
+  # Record a headed Playwright browser run
+  python run.py \\
+      --env config/environment/playwright_gpt.json \\
+      --agent config/agent/gpt_agent.json \\
+      --record
         """,
     )
 
@@ -147,12 +159,18 @@ examples:
         help="Enable verbose output from the agent.",
     )
     parser.add_argument(
+        "--record",
+        action="store_true",
+        default=False,
+        help="Record a Playwright video for this run. Only supported for visible Playwright runs.",
+    )
+    parser.add_argument(
         "--log-file",
         default=None,
         metavar="PATH",
         help=(
             "Path for the run log file. "
-            "Defaults to output/run_<timestamp>.txt next to run.py. "
+            "Defaults to output/run_<timestamp>/run.log next to run.py. "
             "Use --no-log to disable logging entirely."
         ),
     )
@@ -183,7 +201,7 @@ examples:
     agent_config = raw_agent_config.get("agent", raw_agent_config)
 
     # "implementation" is a config-file convention (e.g. "openai"), not a
-    # ComputerUseAgent parameter — drop it before unpacking.
+    # ComputerUseAgent parameter - drop it before unpacking.
     agent_config.pop("implementation", None)
 
     # ------------------------------------------------------------------
@@ -220,6 +238,39 @@ examples:
         agent_config["verbose"] = True
 
     # ------------------------------------------------------------------
+    # Resolve per-run artifact directory and recording policy
+    # ------------------------------------------------------------------
+    output_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
+    os.makedirs(output_root, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_dir = os.path.join(output_root, f"run_{timestamp}")
+    os.makedirs(run_dir, exist_ok=True)
+
+    manifest_path = os.path.join(run_dir, "run_manifest.json")
+    video_dir = os.path.join(run_dir, "video")
+
+    record_requested = args.record
+    recording_enabled = False
+    recording_disabled_reason = None
+
+    env_type = env_config.get("type", "unknown")
+    env_params = env_config.setdefault("params", {})
+    headless = env_params.get("headless", False)
+
+    if record_requested:
+        if env_type != "playwright":
+            recording_disabled_reason = "Recording is currently only supported for Playwright environments."
+            print(f"[Warning] {recording_disabled_reason}")
+        elif headless:
+            recording_disabled_reason = "Recording is disabled for headless Playwright runs in v1."
+            print(f"[Warning] {recording_disabled_reason}")
+        else:
+            recording_enabled = True
+            os.makedirs(video_dir, exist_ok=True)
+            env_params["record_video"] = True
+            env_params["record_video_dir"] = video_dir
+
+    # ------------------------------------------------------------------
     # Resolve log file path
     # ------------------------------------------------------------------
     if args.no_log:
@@ -227,12 +278,29 @@ examples:
     elif args.log_file:
         log_file = args.log_file
     else:
-        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
-        os.makedirs(output_dir, exist_ok=True)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = os.path.join(output_dir, f"run_{timestamp}.txt")
+        log_file = os.path.join(run_dir, "run.log")
 
     agent_config["log_file"] = log_file
+
+    # ------------------------------------------------------------------
+    # Write initial run manifest
+    # ------------------------------------------------------------------
+    manifest = {
+        "timestamp": timestamp,
+        "env_config_path": args.env,
+        "agent_config_path": args.agent,
+        "task": agent_config.get("user_prompt"),
+        "env_type": env_type,
+        "headless": headless,
+        "run_dir": run_dir,
+        "log_path": log_file,
+        "recording_requested": record_requested,
+        "recording_enabled": recording_enabled,
+        "recording_disabled_reason": recording_disabled_reason,
+        "video_dir": video_dir if recording_enabled else None,
+        "video_path": None,
+    }
+    write_json(manifest_path, manifest)
 
     # ------------------------------------------------------------------
     # Print effective config so you always know what's running
@@ -243,34 +311,48 @@ examples:
     print(f"  Env config  : {args.env}")
     print(f"  Agent config: {args.agent}")
     print(f"  Task        : {agent_config.get('user_prompt', '(not set)')}")
-    if env_config.get("type") == "playwright":
-        params = env_config.get("params", {})
-        print(f"  Start URL   : {params.get('start_url') or '(none)'}")
-        print(f"  Headless    : {params.get('headless', False)}")
-        print(f"  Local Files : {params.get('allow_local_files', False)}")
-        print(f"  Extensions  : {params.get('allow_extensions', False)}")
+    if env_type == "playwright":
+        print(f"  Start URL   : {env_params.get('start_url') or '(none)'}")
+        print(f"  Headless    : {headless}")
+        print(f"  Local Files : {env_params.get('allow_local_files', False)}")
+        print(f"  Extensions  : {env_params.get('allow_extensions', False)}")
+    print(f"  Recording   : {'enabled' if recording_enabled else 'disabled'}")
+    if record_requested and not recording_enabled and recording_disabled_reason:
+        print(f"  Record Note : {recording_disabled_reason}")
     print(f"  Verbose     : {agent_config.get('verbose', False)}")
+    print(f"  Run dir     : {run_dir}")
     print(f"  Log file    : {log_file if log_file else '(disabled)'}")
+    print(f"  Manifest    : {manifest_path}")
     print("=" * 60 + "\n")
 
     # ------------------------------------------------------------------
     # Build and run
     # ------------------------------------------------------------------
     env = build_env(env_config)
-    env.start_env()
-
-    agent = build_agent(agent_config, env)
-
-    env_params = env_config.get("params", {})
+    video_path = None
+    run_error = None
     try:
+        env.start_env()
+        agent = build_agent(agent_config, env)
         agent.run(
-            env_type=env_config.get("type", "unknown"),
+            env_type=env_type,
             start_url=env_params.get("start_url"),
-            headless=env_params.get("headless", False),
+            headless=headless,
             log_path=log_file,
         )
+    except Exception as exc:
+        run_error = str(exc)
+        raise
     finally:
         env.stop_env()
+        if hasattr(env, "get_recorded_video_path"):
+            video_path = env.get_recorded_video_path()
+        if video_path:
+            manifest["video_path"] = video_path
+            print(f"Recorded video saved to: {video_path}")
+        if run_error:
+            manifest["run_error"] = run_error
+        write_json(manifest_path, manifest)
 
 
 if __name__ == "__main__":
