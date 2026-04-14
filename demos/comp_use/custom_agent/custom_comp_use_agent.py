@@ -160,6 +160,21 @@ class ComputerUseAgent():
         resolved_api_key = api_key
         if not resolved_api_key and api_key_env:
             resolved_api_key = os.getenv(api_key_env)
+        if not resolved_api_key and api_key_env:
+            try:
+                from dotenv import load_dotenv
+                load_dotenv()
+                resolved_api_key = os.getenv(api_key_env)
+            except ImportError as e:
+                print(
+                    "Warning: python-dotenv is not installed.\n"
+                    "Install it with: pip install python-dotenv"
+                )
+                print(e)
+        if not resolved_api_key:
+            print("Warning: No API key provided. " \
+            "Please provide an API key via the constructor, environment variable, or .env file.")
+            raise ValueError("API key is required for the agent to function.")
 
         self.include_user_prompt_in_image_message = include_user_prompt_in_image_message
         self.verbose = verbose
