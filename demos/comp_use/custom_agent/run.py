@@ -29,6 +29,7 @@ import argparse
 import json
 import sys
 import os
+from datetime import datetime
 
 # Ensure custom_agent/ is importable when run.py is invoked from other directories
 sys.path.insert(0, os.path.dirname(__file__))
@@ -145,6 +146,22 @@ examples:
         default=False,
         help="Enable verbose output from the agent.",
     )
+    parser.add_argument(
+        "--log-file",
+        default=None,
+        metavar="PATH",
+        help=(
+            "Path for the run log file. "
+            "Defaults to output/run_<timestamp>.txt next to run.py. "
+            "Use --no-log to disable logging entirely."
+        ),
+    )
+    parser.add_argument(
+        "--no-log",
+        action="store_true",
+        default=False,
+        help="Disable automatic file logging.",
+    )
 
     args = parser.parse_args()
 
@@ -203,6 +220,21 @@ examples:
         agent_config["verbose"] = True
 
     # ------------------------------------------------------------------
+    # Resolve log file path
+    # ------------------------------------------------------------------
+    if args.no_log:
+        log_file = None
+    elif args.log_file:
+        log_file = args.log_file
+    else:
+        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
+        os.makedirs(output_dir, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_file = os.path.join(output_dir, f"run_{timestamp}.txt")
+
+    agent_config["log_file"] = log_file
+
+    # ------------------------------------------------------------------
     # Print effective config so you always know what's running
     # ------------------------------------------------------------------
     print("\n" + "=" * 60)
@@ -218,6 +250,7 @@ examples:
         print(f"  Local Files : {params.get('allow_local_files', False)}")
         print(f"  Extensions  : {params.get('allow_extensions', False)}")
     print(f"  Verbose     : {agent_config.get('verbose', False)}")
+    print(f"  Log file    : {log_file if log_file else '(disabled)'}")
     print("=" * 60 + "\n")
 
     # ------------------------------------------------------------------
@@ -228,8 +261,14 @@ examples:
 
     agent = build_agent(agent_config, env)
 
+    env_params = env_config.get("params", {})
     try:
-        agent.run()
+        agent.run(
+            env_type=env_config.get("type", "unknown"),
+            start_url=env_params.get("start_url"),
+            headless=env_params.get("headless", False),
+            log_path=log_file,
+        )
     finally:
         env.stop_env()
 

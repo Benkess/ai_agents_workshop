@@ -15,6 +15,7 @@ import json
 # Library Imports
 import os
 import sys
+from agent_logger import AgentLogger
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))) # Adjust path for imports
 # Import core Assistant base class
 from comp_use_env import ComputerUseEnv
@@ -97,7 +98,8 @@ class ComputerUseAgent():
         include_system: bool = DEFAULT_INCLUDE_SYSTEM,
         allow_partial: bool = DEFAULT_ALLOW_PARTIAL,
         include_user_prompt_in_image_message: bool = False,
-        verbose: bool = False
+        verbose: bool = False,
+        log_file: str | None = None
     ) -> None:
         """
         Initialize the ComputerUseAgent.
@@ -132,6 +134,7 @@ class ComputerUseAgent():
             api_key_env (str, optional): Environment variable name to look for the API key if `api_key` is not provided. Defaults to None.
             include_user_prompt_in_image_message (bool, optional): Whether to include the user prompt as text in the image message when sending the screenshot to the LLM. Defaults to False.
             verbose (bool, optional): Whether to print verbose debug information during the agent's operation. Defaults to False.
+            log_file (str, optional): Path to write the run log. If None, logging is disabled. Defaults to None.
         """
         if not model:
             raise ValueError("Model must be specified")
@@ -160,6 +163,7 @@ class ComputerUseAgent():
 
         self.include_user_prompt_in_image_message = include_user_prompt_in_image_message
         self.verbose = verbose
+        self.logger = AgentLogger(log_file)
 
         # ============================================
         # Static Message History Setup
@@ -261,6 +265,8 @@ class ComputerUseAgent():
             print(f"{'='*60}\n")
             print("[1/3] Capturing screenshot...")
 
+            self.logger.log_step_start(step)
+
             image_bytes, mime_type = self.computer_use_env.capture_screenshot()
             if self.include_user_prompt_in_image_message:
                 text = self.user_prompt
@@ -268,10 +274,11 @@ class ComputerUseAgent():
                 text = None
             image_message = build_image_message(image_bytes, mime_type, text)
 
+            self.logger.log_screenshot(mime_type)
 
             if self.verbose:
                 print("Captured screenshot and created image message.")
-                
+
             return {
                     "step_count": step,
                     "messages": [image_message]
@@ -336,23 +343,32 @@ class ComputerUseAgent():
 
                 if self.verbose:
                     print(f"LLM wants to call {len(response.tool_calls)} tool(s)")
-                
+
                 for tool_call in response.tool_calls:
                     function_name = tool_call["name"]
                     function_args = tool_call["args"]
-                    
+
+                    # Always show thought + action in console (not just verbose)
+                    thought = function_args.get("thought")
+                    if thought:
+                        print(f"  Thought: {thought}")
+                    action_parts = [f"{k}={v}" for k, v in function_args.items() if k != "thought" and v is not None]
+                    print(f"  Action : {function_name}  {' '.join(action_parts)}")
+
                     if self.verbose:
                         print(f"  Tool: {function_name}")
                         print(f"  Args: {function_args}")
-                    
+
                     if function_name in self.tool_map:
                         result = self.tool_map[function_name].invoke(function_args)
                     else:
                         result = f"Error: Unknown function {function_name}"
-                    
+
                     if self.verbose:
                         result_summary = format_tool_output_for_log(result)
                         print(f"  Result: {result_summary}")
+
+                    # self.logger.log_tool_call(function_name, function_args, result)
 
                     terminal = False
                     # tool_message_content = result
@@ -362,17 +378,20 @@ class ComputerUseAgent():
                     if terminal:
                         should_exit = True
                         # Note: This does not break the loop so other tools may run after this. Later we may want to access tool_message_content for a final message or something like that.
-                    
+
                     new_messages.append(ToolMessage(
                         content=result,
                         tool_call_id=tool_call["id"]
                     ))
+
+                self.logger.log_new_messages(new_messages)
 
             else:
                 # No more tool calls, final answer
                 print("[3/3] Final response received (no tool calls).")
                 print(f"\nAgent Final Response: {response.content}\n")
                 should_exit = True
+                self.logger.log_new_messages(new_messages)
                 print(f"\n{'='*60}")
                 print(f"AGENT FINISHED:")
                 print(f"{'='*60}\n")
@@ -417,14 +436,28 @@ class ComputerUseAgent():
         graph = graph_builder.compile(checkpointer=checkpointer)
         return graph
     
-    def run(self):
+    def run(self, env_type: str = "unknown", start_url: str | None = None, headless: bool = False, log_path: str | None = None):
         thread_id = f"computer_use_agent_thread"
         config = {"configurable": {"thread_id": thread_id}}
+
+        self.logger.log_run_start(
+            task=self.user_prompt,
+            model=self.model,
+            env_type=env_type,
+            log_path=log_path,
+            start_url=start_url,
+            headless=headless,
+        )
+
         print("Creating LangGraph...")
         graph = self.create_graph()
         print("Graph created successfully!")
         state = self.get_initial_state()
-        graph.invoke(state, config=config)
+        try:
+            final_state = graph.invoke(state, config=config)
+            self.logger.log_run_end(final_state.get("messages", []))
+        finally:
+            self.logger.close()
 
 def build_image_message(image_bytes: bytes, mime_type: str, text: str | None = None) -> HumanMessage:
     encoded_image = base64.b64encode(image_bytes).decode("utf-8")

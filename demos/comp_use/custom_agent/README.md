@@ -85,6 +85,8 @@ python run.py --env config/environment/pyautogui.json --agent config/agent/qwen_
 | `--allow-local-files` | Allow Chromium to access local files (Playwright only) |
 | `--allow-extensions` | Allow browser extensions to run in Chromium (Playwright only) |
 | `--verbose` | Enable verbose agent output |
+| `--log-file PATH` | Write the run log to this path instead of the default `output/run_<timestamp>.txt` |
+| `--no-log` | Disable automatic file logging |
 
 **Example with overrides:**
 ```
@@ -96,6 +98,31 @@ python run.py \
     --allow-local-files \
     --headless \
     --verbose
+```
+
+## Logging
+
+Every run automatically writes a structured plain-text log to `output/run_<timestamp>.txt` in the same directory as `run.py`. The `output/` folder is created if it doesn't exist.
+
+**What the log contains:**
+- Run metadata: timestamp, task, model, environment, start URL
+- Per step: a screenshot placeholder (`<image_data_removed>`), each tool call with its full `thought` and action parameters, and the sanitized tool result
+- Complete message history at the end of the run — all fields included, but image base64 data replaced with `<image_data_removed (image/png)>` to keep the file readable
+
+**Console output** (non-verbose mode) now always shows the model's `thought` alongside each action, so you no longer need `--verbose` just to follow the agent's reasoning.
+
+**Verbose mode** (`--verbose`) is unchanged: it prints the exact resolved messages sent to the model at each step, which is useful for debugging context management and the sliding-window trimming behaviour.
+
+**Log file options:**
+```
+# Default: auto-named file in output/
+python run.py --env ... --agent ...
+
+# Custom path
+python run.py --env ... --agent ... --log-file /tmp/myrun.txt
+
+# Disable logging
+python run.py --env ... --agent ... --no-log
 ```
 
 ### Python API
