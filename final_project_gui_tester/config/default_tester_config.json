@@ -31,7 +31,5 @@
   "prompt": {
     "system_prompt_path": "../prompts/gui_tester_system_prompt.txt"
   },
-  "output": {
-    "root": "../reports"
-  }
+  "output": {}
 }

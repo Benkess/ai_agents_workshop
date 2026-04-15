@@ -16,6 +16,16 @@ Follow-up:
 - Keep `report_dir` override support so callers can still force reports into a known location.
 - Preserve the returned `report_path` as the main handoff contract.
 
+Status update:
+- Default output now lives outside the package source tree.
+- The current default root is `%LOCALAPPDATA%\gui_tester_reports` on Windows, with a temp-directory fallback.
+- `report_dir` override support is still available when a caller wants a specific location.
+
+Updated direction:
+- We decided to require `report_dir` explicitly instead of relying on a built-in default output root.
+- The caller now provides a parent output directory, and the tool creates a timestamped run subdirectory inside it automatically.
+- This is a better fit for repo-local ignored artifact workflows and future coding-agent handoff.
+
 ### Decide how to handle ignored output files
 
 Observation:
@@ -25,6 +35,14 @@ Observation:
 Follow-up:
 - Confirm whether target coding-agent environments can reliably access gitignored output files by path.
 - Decide whether default output should live outside the repo instead of relying on `.gitignore`.
+
+Status update:
+- Because the default output no longer lives inside the repo, this is less urgent for current development.
+- It still matters for future integrations if a caller explicitly routes reports into a repo-local ignored folder.
+
+Updated direction:
+- We now expect callers to provide an explicit artifact parent directory.
+- A repo-local ignored folder such as `context/reports` is now the intended default workflow.
 
 ## Prompt and Behavior Tuning
 
@@ -156,3 +174,19 @@ Observation:
 Follow-up:
 - Keep direct testing as the priority until the tester behavior is more stable.
 - Return to parent-agent packaging and integration only after note quality, report quality, and output placement are in a better state.
+
+Status update:
+- Direct testing is now stable enough that the next practical step is MCP-based integration for a coding agent.
+- We should keep the current tester behavior mostly frozen while we expose it cleanly as a tool.
+
+### Add MCP integration around the existing launcher
+
+Observation:
+- The current wrapper already exposes a clean launcher function that returns the main report path.
+- The tester is now stable enough that broader value will come from letting another coding agent call it.
+- Claude Code, Copilot, and Codex all point toward MCP as the clean cross-tool integration path.
+
+Follow-up:
+- Expose `launch_gui_tester_subagent` through a small MCP server.
+- Keep the tool surface minimal: URL, GUI description, testing instructions, and optional report directory.
+- Test the MCP tool locally before wiring it into any editor agent workflow.

@@ -12,13 +12,22 @@ This project adds a minimal GUI testing agent on top of the existing Playwright 
 
 ## Main Entry Point
 
-Run the GUI tester directly with:
+Run the GUI tester directly with either command:
 
 ```powershell
 python final_project_gui_tester/run_gui_tester.py `
   --url "http://localhost:3000" `
   --gui-description "A small browser game with a start button, score display, and status messages." `
-  --test-instructions "Check that the main controls are visible, verify the start button works, and report any obvious UI problems."
+  --test-instructions "Check that the main controls are visible, verify the start button works, and report any obvious UI problems." `
+  --report-dir "C:/path/to/context/reports"
+```
+
+```powershell
+python -m final_project_gui_tester `
+  --url "http://localhost:3000" `
+  --gui-description "A small browser game with a start button, score display, and status messages." `
+  --test-instructions "Check that the main controls are visible, verify the start button works, and report any obvious UI problems." `
+  --report-dir "C:/path/to/context/reports"
 ```
 
 Required arguments:
@@ -26,8 +35,10 @@ Required arguments:
 - `--gui-description`
 - `--test-instructions`
 
-Optional arguments:
+Required arguments:
 - `--report-dir`
+
+Optional arguments:
 - `--config`
 
 ## Output
@@ -40,6 +51,12 @@ Each run creates a run directory containing:
 - `gui_tester_run.log`
 
 The final report links to the note files, and notes link to screenshots when attached.
+
+Report location:
+- `--report-dir` is required
+- the caller chooses the parent directory where artifacts should be written
+- the tool creates a timestamped subdirectory inside that parent directory for each run
+- a repo-local ignored artifacts folder such as `context/reports` is a good default workflow
 
 ## Testing A Broken GUI Directly
 
@@ -54,7 +71,8 @@ Example with a local file URL:
 python final_project_gui_tester/run_gui_tester.py `
   --url "file:///C:/path/to/your/broken_gui/index.html" `
   --gui-description "A single-page web GUI for a small class project." `
-  --test-instructions "Check whether labels are visible, buttons do the right thing, and any error or feedback messages appear when expected."
+  --test-instructions "Check whether labels are visible, buttons do the right thing, and any error or feedback messages appear when expected." `
+  --report-dir "C:/path/to/context/reports"
 ```
 
 ## Requirements
@@ -68,4 +86,4 @@ python final_project_gui_tester/run_gui_tester.py `
 - V1 is focused on direct testing of the GUI tester itself.
 - The parent-facing launcher function already exists in code for later integration, but this README documents direct CLI usage only.
 - The tester always ends by submitting a final report. There is no separate terminate/fail tool path in this project.
-
+- The current tester behavior has been validated across several broken and mostly-working personal-website GUI variants, and the next planned phase is MCP-based integration with a coding agent.

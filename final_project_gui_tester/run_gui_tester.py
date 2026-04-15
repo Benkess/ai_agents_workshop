@@ -35,8 +35,8 @@ def main() -> None:
     )
     parser.add_argument(
         "--report-dir",
-        default=None,
-        help="Optional output directory for this run. If omitted, a timestamped run directory is created.",
+        required=True,
+        help="Parent output directory. A timestamped run subdirectory will be created inside it.",
     )
     parser.add_argument(
         "--config",
@@ -62,4 +62,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

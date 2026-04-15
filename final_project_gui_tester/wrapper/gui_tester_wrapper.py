@@ -68,12 +68,10 @@ def _normalize_start_url(url_or_path: str) -> str:
     return url_or_path
 
 
-def _create_run_dir(report_dir: str | None, output_root: Path) -> Path:
-    if report_dir:
-        run_dir = Path(report_dir).expanduser().resolve()
-    else:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        run_dir = output_root / f"run_{timestamp}"
+def _create_run_dir(report_dir: str) -> Path:
+    report_root = Path(report_dir).expanduser().resolve()
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_dir = report_root / f"run_{timestamp}"
     run_dir.mkdir(parents=True, exist_ok=True)
     return run_dir
 
@@ -107,7 +105,7 @@ def run_gui_tester_session(
     url: str,
     gui_description: str,
     test_instructions: str,
-    report_dir: str | None = None,
+    report_dir: str,
     config_path: str | None = None,
 ) -> dict[str, str]:
     """Run the GUI tester and return paths useful for debugging or follow-up tools."""
@@ -123,10 +121,9 @@ def run_gui_tester_session(
     if config.get("environment", {}).get("type") != "playwright":
         raise ValueError("This v1 GUI tester only supports Playwright environments.")
 
-    output_root_text = config.get("output", {}).get("root", "reports")
-    output_root = _resolve_config_path(config_base_dir, output_root_text)
-    output_root.mkdir(parents=True, exist_ok=True)
-    run_dir = _create_run_dir(report_dir=report_dir, output_root=output_root)
+    if not report_dir:
+        raise ValueError("report_dir is required for GUI tester runs.")
+    run_dir = _create_run_dir(report_dir=report_dir)
     log_path = run_dir / "gui_tester_run.log"
 
     prompt_path_text = config.get("prompt", {}).get("system_prompt_path")
@@ -188,7 +185,7 @@ def launch_gui_tester_subagent(
     url: str,
     gui_description: str,
     test_instructions: str,
-    report_dir: str | None = None,
+    report_dir: str,
 ) -> str:
     """Parent-facing launcher that returns only the main report path."""
     result = run_gui_tester_session(
