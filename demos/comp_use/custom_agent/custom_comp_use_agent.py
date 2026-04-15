@@ -462,6 +462,7 @@ class ComputerUseAgent():
             log_path=log_path,
             start_url=start_url,
             headless=headless,
+            starting_messages=self.static_messages,
         )
 
         print("Creating LangGraph...")
@@ -470,7 +471,8 @@ class ComputerUseAgent():
         state = self.get_initial_state()
         try:
             final_state = graph.invoke(state, config=config)
-            self.logger.log_run_end(final_state.get("messages", []))
+            all_messages = self.static_messages + final_state.get("messages", [])
+            self.logger.log_run_end(all_messages)
         finally:
             self.logger.close()
 

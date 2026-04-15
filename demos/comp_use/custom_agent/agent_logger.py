@@ -119,6 +119,7 @@ class AgentLogger:
         log_path: str | None = None,
         start_url: str | None = None,
         headless: bool = False,
+        starting_messages: list | None = None,
     ):
         if not self._enabled:
             return
@@ -136,6 +137,13 @@ class AgentLogger:
         if log_path:
             self._writeln(f"  Log file    : {log_path}")
         self._divider()
+        if starting_messages:
+            self._writeln("\n  STARTING MESSAGES")
+            self._divider("-")
+            for i, msg in enumerate(starting_messages, 1):
+                self._write(f"\n[{i}] ")
+                self._log_single_message(msg)
+            self._writeln()
         self._writeln()
 
     def log_step_start(self, step: int):
