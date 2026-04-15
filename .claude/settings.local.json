@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "gui_tester": {
+      "type": "stdio",
+      "command": "C:\\Users\\benpk\\School\\CSFiles\\AI_Agent\\ai_agents_workshop\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "final_project_gui_tester.mcp"]
+    }
+  }
+}

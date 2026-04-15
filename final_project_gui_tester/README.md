@@ -34,8 +34,6 @@ Required arguments:
 - `--url`
 - `--gui-description`
 - `--test-instructions`
-
-Required arguments:
 - `--report-dir`
 
 Optional arguments:
@@ -80,10 +78,69 @@ python final_project_gui_tester/run_gui_tester.py `
 - Python environment with the same dependencies used by the demo
 - Playwright Chromium installed
 - `OPENAI_API_KEY` set if using the default config
+- `mcp` installed if you want to run the local MCP server
 
 ## Notes
 
 - V1 is focused on direct testing of the GUI tester itself.
-- The parent-facing launcher function already exists in code for later integration, but this README documents direct CLI usage only.
+- The project now also includes a local stdio MCP server for editor and coding-agent integration.
 - The tester always ends by submitting a final report. There is no separate terminate/fail tool path in this project.
-- The current tester behavior has been validated across several broken and mostly-working personal-website GUI variants, and the next planned phase is MCP-based integration with a coding agent.
+- The current tester behavior has been validated across several broken and mostly-working personal-website GUI variants.
+
+## MCP Server
+
+This package includes a local stdio MCP server with:
+- server name: `gui_tester`
+- tool name: `launch_gui_tester`
+
+Tool inputs:
+- `url`
+- `gui_description`
+- `test_instructions`
+- `report_dir`
+
+Tool output:
+- `report_path`
+
+Run the MCP server locally from the repo root:
+
+```powershell
+python -m final_project_gui_tester.mcp
+```
+
+Or use the repo venv interpreter explicitly:
+
+```powershell
+C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\.venv\Scripts\python.exe -m final_project_gui_tester.mcp
+```
+
+Example stdio MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "gui_tester": {
+      "command": "C:\\Users\\benpk\\School\\CSFiles\\AI_Agent\\ai_agents_workshop\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "final_project_gui_tester.mcp"],
+      "cwd": "C:\\Users\\benpk\\School\\CSFiles\\AI_Agent\\ai_agents_workshop"
+    }
+  }
+}
+```
+
+## MCP Testing
+
+1. Start or register the MCP server using `python -m final_project_gui_tester.mcp`.
+2. Confirm your MCP client sees one tool named `launch_gui_tester`.
+3. Call the tool with:
+   - a working `url`
+   - a short `gui_description`
+   - focused `test_instructions`
+   - `report_dir` set to a parent folder such as `C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\context\reports`
+4. Wait for the tool to finish and return `report_path`.
+5. Confirm a new `run_<timestamp>` directory was created under the supplied `report_dir`.
+6. Open the returned `final_report.md` first, then inspect linked notes, screenshots, and the agent log if needed.
+
+The direct CLI and package entrypoint still work exactly the same:
+- `python final_project_gui_tester/run_gui_tester.py ...`
+- `python -m final_project_gui_tester ...`

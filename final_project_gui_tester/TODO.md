@@ -188,5 +188,16 @@ Observation:
 
 Follow-up:
 - Expose `launch_gui_tester_subagent` through a small MCP server.
-- Keep the tool surface minimal: URL, GUI description, testing instructions, and optional report directory.
+- Keep the tool surface minimal: URL, GUI description, testing instructions, and required report directory.
 - Test the MCP tool locally before wiring it into any editor agent workflow.
+
+Status update:
+- A local stdio MCP server now exists in this package.
+- Public MCP-facing names are `gui_tester` for the server and `launch_gui_tester` for the tool.
+- The MCP server reuses the existing wrapper instead of duplicating tester logic.
+- `report_dir` remains required, and the wrapper still creates a timestamped run directory inside it.
+
+Remaining follow-up:
+- Test the MCP server in one real editor client first.
+- Add editor-specific config notes once one integration path is confirmed end to end.
+- Decide later whether the MCP tool should eventually return a short structured summary in addition to `report_path`.
