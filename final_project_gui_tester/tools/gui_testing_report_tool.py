@@ -251,8 +251,10 @@ def build_tool(env, run_dir: Path) -> tuple[StructuredTool, _GuiTestingReportSta
         func=gui_testing_report_tool,
         name="gui_testing_report_tool",
         description=(
-            "Save testing notes and submit the final GUI testing report. Use action=log_note "
-            "during testing. Finish every run with action=submit_final_report. Even if blocked, "
+            "Save important testing notes and submit the final GUI testing report. Use "
+            "action=log_note to log meaningful findings, blockers, visual evidence, or "
+            "important page-level conclusions. Do not use notes for routine step-by-step "
+            "narration. Finish every run with action=submit_final_report. Even if blocked, "
             "submit a report describing what you tested and what stopped further progress."
         ),
         args_schema=GuiTestingReportArgs,

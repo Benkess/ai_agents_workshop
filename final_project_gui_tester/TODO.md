@@ -39,6 +39,10 @@ Follow-up:
 - Reword the runtime context so the tester understands it starts on the correct page.
 - Consider not exposing the raw starting URL in the prompt unless needed for the task.
 
+Status update:
+- We changed the prompt so the tester starts from the already-open page and removed the model-facing URL reference.
+- On the next rerun, the repeated `navigate` behavior stopped and the tester stayed on task.
+
 ### Remove or rethink the `screenshot` action in the testing `computer_use` tool
 
 Observation:
@@ -61,6 +65,10 @@ Follow-up:
 - Adjust prompt guidance so notes are saved for meaningful findings, blockers, or important state transitions rather than general thoughts.
 - Consider making note-taking more clearly optional at each step.
 - Consider adding an explicit "no note needed" path if the model keeps overusing the note tool.
+
+Status update:
+- We tightened the prompt and tool description so notes are for meaningful findings rather than narration.
+- On the next rerun, note count dropped from 17 notes to 3 and the remaining notes were much higher quality.
 
 ### Clarify the intended use of notes versus final report content
 
@@ -95,6 +103,20 @@ Observation:
 Follow-up:
 - Make the testing `computer_use` tool more navigation-safe around post-click page evaluation.
 - Reduce false-negative tool results that make logs noisier than the actual browser behavior.
+
+Additional observation:
+- This issue still appeared in the improved rerun even though the overall agent behavior was much better.
+- In that rerun, navigation clicks to Blog and Landing worked, but the tool still returned `Execution context was destroyed` errors immediately after the click.
+- This is now one of the clearest remaining harness/tool quality issues.
+
+### Remove or rethink the `screenshot` action after prompt tuning is validated further
+
+Observation:
+- After prompt tuning, the tester behavior improved a lot, but it still used the `computer_use` `screenshot` action at the beginning of the run.
+- The harness already provides a screenshot each step, so this action still appears redundant in the tester workflow.
+
+Follow-up:
+- If this pattern persists across more runs, remove `screenshot` from the testing-specific tool or redesign how explicit screenshot requests should work.
 
 ## Memory and Long-Horizon Robustness
 
@@ -134,4 +156,3 @@ Observation:
 Follow-up:
 - Keep direct testing as the priority until the tester behavior is more stable.
 - Return to parent-agent packaging and integration only after note quality, report quality, and output placement are in a better state.
-

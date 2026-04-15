@@ -1,6 +1,5 @@
 """Testing-specific Playwright computer-use tool for GUI testing."""
 
-import base64
 import json
 import time as _time
 from typing import List, Optional
@@ -24,7 +23,7 @@ def build_tool(page) -> StructuredTool:
             ...,
             description=(
                 "Action to perform. One of: navigate, click, double_click, scroll, type, "
-                "keypress, move, drag, screenshot, wait. Finish the run by using "
+                "keypress, move, drag, noop, wait. Finish the run by using "
                 "gui_testing_report_tool submit_final_report, not this tool."
             ),
         )
@@ -177,10 +176,13 @@ def build_tool(page) -> StructuredTool:
                     {"success": True, "result": f"Dragged from ({x}, {y}) to ({target_x}, {target_y})"}
                 )
 
-            if action == "screenshot":
-                png_bytes = page.screenshot(type="png")
-                encoded = base64.b64encode(png_bytes).decode("utf-8")
-                return json.dumps({"success": True, "result": f"data:image/png;base64,{encoded}"})
+            if action == "noop":
+                return json.dumps(
+                    {
+                        "success": True,
+                        "result": "No action taken. Continue to the next step for a fresh image. Use this sparingly.",
+                    }
+                )
 
             if action == "wait":
                 duration_ms = float(ms or 1000)
@@ -197,10 +199,9 @@ def build_tool(page) -> StructuredTool:
         func=computer_use,
         name="computer_use",
         description=(
-            "Control the browser to test the GUI. Use screenshot to inspect the current state. "
+            "Control the browser to test the GUI. "
             "Do not try to terminate with this tool. Finish by calling gui_testing_report_tool "
             "with action=submit_final_report."
         ),
         args_schema=RestrictedPlaywrightArgs,
     )
-

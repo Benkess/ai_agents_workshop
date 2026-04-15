@@ -41,13 +41,19 @@ def _resolve_config_path(base_dir: Path, path_text: str) -> Path:
 
 def _build_runtime_prompt(url: str, gui_description: str, test_instructions: str) -> str:
     return (
-        "You are testing a GUI in the browser.\n\n"
-        f"Starting URL:\n{url}\n\n"
+        # "You are testing a GUI in the browser.\n\n"
+        # "The browser is already open on the correct starting page.\n"
+        # "Use the current page as your starting point. Do not reopen the starting page unless "
+        # "there is a specific testing reason.\n\n"
+        # Starting URL intentionally omitted from the model-facing prompt.
+        # The wrapper still uses it internally to open the correct page and
+        # logs it for debugging, but the tester does not need to see it.
         "GUI Description:\n"
         f"{gui_description.strip()}\n\n"
         "Testing Instructions:\n"
         f"{test_instructions.strip()}\n\n"
-        "Take useful notes as you test. When you have enough evidence, submit the final report."
+        # "Only save notes for meaningful findings, blockers, useful evidence, or important "
+        # "page-level conclusions. When you have enough evidence, submit the final report."
     )
 
 
