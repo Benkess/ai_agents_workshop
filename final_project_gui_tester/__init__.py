@@ -1,0 +1,2 @@
+"""GUI tester project package."""
+
