@@ -1,10 +1,10 @@
 # GUI Tester TODO
 
-This file tracks follow-up work discovered while building and testing the first working version of the GUI tester. These are not all urgent, but they are important enough that we should not lose them.
+This file tracks follow-up work discovered while building and testing the first working version of the GUI tester. The core GUI tester and first Claude Code MCP integration are working, so this list is now mostly polish and next-phase work.
 
 ## Output and Packaging
 
-### Move report output out of the package source tree by default
+### Report output workflow
 
 Observation:
 - The first successful run wrote reports into `final_project_gui_tester/reports/` inside the repo.
@@ -196,8 +196,21 @@ Status update:
 - Public MCP-facing names are `gui_tester` for the server and `launch_gui_tester` for the tool.
 - The MCP server reuses the existing wrapper instead of duplicating tester logic.
 - `report_dir` remains required, and the wrapper still creates a timestamped run directory inside it.
+- Claude Code has successfully called the MCP tool end to end and produced a report.
 
 Remaining follow-up:
-- Test the MCP server in one real editor client first.
-- Add editor-specific config notes once one integration path is confirmed end to end.
+- Add editor-specific setup notes for additional clients such as Copilot or Codex.
 - Decide later whether the MCP tool should eventually return a short structured summary in addition to `report_path`.
+
+### Package the project for reuse in another repo
+
+Observation:
+- The current project works well inside this repo because Python can import it directly from the repo root.
+- MCP setup also currently assumes repo-local paths into `.venv` and `final_project_gui_tester`.
+- To use this cleanly in another repo, we will want a real installable package and a cleaner public entrypoint.
+
+Follow-up:
+- Add package metadata such as `pyproject.toml`.
+- Decide on the final package name that does not include `final_project`.
+- Add installable console entrypoints for the direct CLI and possibly the MCP server.
+- Re-test the package from outside this repo once it can be installed.
