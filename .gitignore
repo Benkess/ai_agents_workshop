@@ -1,3 +1,6 @@
+# Ignore Coding agent related files
+.claude/
+
 # context directory
 context/
 
