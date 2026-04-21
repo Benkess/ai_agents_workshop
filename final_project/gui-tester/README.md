@@ -197,6 +197,33 @@ test_instructions = Check all three pages for functionality and visual layout co
 report_dir = C:\path\to\your\context\reports
 ```
 
+## Codex Setup
+
+The Codex VS Code extension and CLI share the same `~/.codex/config.toml` file. Configure it once and both tools use it.
+
+### VS Code Extension
+
+In the Codex sidebar, select the gear icon → Codex settings → **MCP Servers** → **+ Add server** → **STDIO**, then fill in:
+
+- **Name:** `gui_tester`
+- **Command to launch:** `<path-to-venv>\Scripts\python.exe`
+- **Arguments:** `-m` and `gui_tester.mcp` (as separate entries)
+- **Environment variables:** add your key name (e.g. `OPENAI_API_KEY`) and value
+
+Save and restart the extension.
+
+### CLI
+
+```powershell
+codex mcp add gui_tester --env YOUR_API_KEY=sk-your-key -- <path-to-venv>\Scripts\python.exe -m gui_tester.mcp
+```
+
+Replace `YOUR_API_KEY` with whatever environment variable name your model config expects, such as `OPENAI_API_KEY`.
+
+### Verify
+
+Ask Codex in chat: *"Do you have access to a `launch_gui_tester` tool?"*
+
 ## Development Docs
 
 Development-focused notes, compatibility details, and planning material live in `docs/`:
