@@ -1,11 +1,11 @@
-# gui_tester
+# Dev Info
 
 `gui_tester` is a self-contained GUI testing agent package. It includes:
 - a direct CLI for human use
 - a local stdio MCP server for coding-agent use
 - a bundled copy of the `comp_use` support code it depends on
 
-> **Note:** Currently only Windows is supported. On Linux the computer-use agent can have issues creating the browser.
+> **Note:** This draft lives inside the workshop repo at `final_project/gui-tester`, but it is structured as if this directory were already its own standalone repo. The later repo split should be path-stable: the future `gui-tester` repo root is intended to be exactly the contents of this directory.
 
 ## Repository Layout
 
@@ -17,9 +17,9 @@ The `comp_use` copy is intentionally kept as a sibling directory to `gui_tester`
 
 ## Package Setup
 
-For MCP use, it is recommended to clone this repo separately from any projects. The coding agents will use an MCP config that points to this packages env and install.
+For MCP use, it is recommended to clone this repo seperatly from any projects. The coding agents will use an MCP config that points to this packages env and install.
 
-### Environment Setup
+### Enviroment Setup
 > **Note:** if `python` does not default to `python3` on your system, then substitute `python3` for `python` in the following commands.
 
 Navigate to the root directory:
@@ -70,21 +70,7 @@ The optional `dev` extra installs `python-dotenv`, which the bundled computer-us
 
 ## Direct CLI
 
-Before CLI use, you must export your API key. 
-
-The default config sets the model to gpt-5.4 which needs `OPENAI_API_KEY`. Note other models use different key names. Here is an example of how to set `OPENAI_API_KEY`:
-
-
-```powershell
-$env:OPENAI_API_KEY="sk-your-key"
-```
-
-Linux:
-```bash
-export OPENAI_API_KEY=sk-your-key
-```
-
-Example CLI Usage:
+After installation:
 
 ```powershell
 gui-tester `
@@ -125,6 +111,25 @@ Run contents:
 - `gui_tester_run.log`
 
 The final report links to notes, and notes link to screenshots when attached.
+
+## Secrets and Config
+
+Official package story:
+- direct CLI usage should rely on normal environment variables
+- MCP hosts should pass environment variables in their MCP config
+
+Important:
+- this package preserves the bundled computer-use agent's existing `api_key` and `api_key_env` behavior
+- not all configs use `OPENAI_API_KEY`
+- for example, some local-model configs use an explicit `api_key` value such as `ollama`
+
+Local-dev convenience:
+- if `python-dotenv` is installed, the bundled computer-use agent may still use its existing lower-level `.env` fallback
+- this is preserved for compatibility, but it is not the primary package contract
+
+Advanced config:
+- the CLI supports `--config`
+- the MCP tool schema stays minimal in this draft
 
 ## MCP Server
 
@@ -169,8 +174,6 @@ claude mcp add gui_tester --transport stdio --env YOUR_API_KEY=sk-your-key -- <p
 claude mcp add gui_tester --scope project --transport stdio --env YOUR_API_KEY=sk-your-key -- <path-to-venv>\Scripts\python.exe -m gui_tester.mcp
 ```
 
-> **Note:** add .mcp.json to .gitignore
-
 Replace `YOUR_API_KEY` with whatever env var name your model config expects (e.g. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, etc.).
 
 Then verify:
@@ -190,28 +193,3 @@ gui_description = A template for a personal website. It includes a landing page,
 test_instructions = Check all three pages for functionality and visual layout correctness. Report any issues found including visual, layout and navigation issues. Pay attention to whether the site fits cleanly in the viewport and whether each page looks complete and usable.
 report_dir = C:\path\to\your\context\reports
 ```
-
-## Codex Setup
-
-**Coming Soon**
-
-## VS Code (Copilot)
-
-**Coming Soon**
-
-## Secrets and Config (for dev)
-
-Official package story:
-- direct CLI usage relies on normal environment variables
-- MCP hosts pass environment variables in their MCP config
-
-Important:
-- computer-use agent searches for the key name in `api_key_env`.
-- not all configs use `OPENAI_API_KEY`, for example, some local-model configs use an explicit `api_key` value such as `ollama`.
-
-Local-dev convenience:
-- if `python-dotenv` is installed, the bundled computer-use agent may still use its existing lower-level `.env` fallback
-- this is preserved for compatibility, but it is not the primary package contract
-
-Advanced config:
-- the CLI supports `--config`
