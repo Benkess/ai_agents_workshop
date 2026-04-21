@@ -2,7 +2,7 @@
 
 `gui_tester` is a self-contained GUI testing agent package. It includes:
 - a direct CLI for human use
-- a local stdio MCP server for coding-agent use
+- a local stdio MCP server for coding-assistant integrations
 - a bundled copy of the `comp_use` support code it depends on
 
 > **Note:** Currently only Windows is supported. On Linux the computer-use agent can have issues creating the browser.
@@ -10,41 +10,47 @@
 ## Repository Layout
 
 - `gui_tester/` contains the package code, prompts, config, wrapper, custom tools, CLI, and MCP server
-- `comp_use/` contains the bundled computer-use support code copied from the workshop demo
+- `comp_use/` contains the bundled computer-use support code
 - `pyproject.toml` defines the installable package and console entrypoints
-
-The `comp_use` copy is intentionally kept as a sibling directory to `gui_tester` so the current conceptual split stays visible.
 
 ## Package Setup
 
-For MCP use, it is recommended to clone this repo separately from any projects. The coding agents will use an MCP config that points to this packages env and install.
+For MCP use, it is recommended to clone this repo separately from the project you want to test. The MCP host should point at this package's virtual environment and install.
 
 ### Environment Setup
-> **Note:** if `python` does not default to `python3` on your system, then substitute `python3` for `python` in the following commands.
+
+> **Note:** If `python` does not default to `python3` on your system, substitute `python3` for `python` in the following commands.
 
 Navigate to the root directory:
+
 ```bash
 cd path/to/gui-tester
 ```
-Use the venv module to create a new virtual environment:
+
+Use the `venv` module to create a new virtual environment:
+
 ```bash
 python -m venv .venv
 ```
 
 Activate the virtual environment:
+
 ```bash
-# On macOS/Linux.
+# On macOS/Linux
 source .venv/bin/activate
 ```
-```bash
-# On Windows.
+
+```powershell
+# On Windows
 .venv\Scripts\activate
 ```
 
 Upgrade pip:
+
 ```bash
 python -m pip install --upgrade pip
 ```
+
 ```bash
 # Also upgrade these for TensorFlow or PyTorch
 python -m pip install --upgrade pip wheel setuptools
@@ -58,7 +64,7 @@ From this directory:
 pip install -e .
 ```
 
-Optional local-dev convenience:
+Optional local development convenience:
 
 ```powershell
 pip install -e .[dev]
@@ -66,25 +72,23 @@ pip install -e .[dev]
 
 The optional `dev` extra installs `python-dotenv`, which the bundled computer-use agent can use as a local `.env` fallback.
 
-> **Note:** Currently normal install still requires python-dotenv, this will be removed in future updates.
+> **Note:** Normal install currently still requires `python-dotenv`. That compatibility gap is planned to be removed in a future update.
 
 ## Direct CLI
 
-Before CLI use, you must export your API key. 
+Before CLI use, export your API key.
 
-The default config sets the model to gpt-5.4 which needs `OPENAI_API_KEY`. Note other models use different key names. Here is an example of how to set `OPENAI_API_KEY`:
-
+The default config uses `gpt-5.4`, which expects `OPENAI_API_KEY`. Other models may use different key names. Example:
 
 ```powershell
 $env:OPENAI_API_KEY="sk-your-key"
 ```
 
-Linux:
 ```bash
 export OPENAI_API_KEY=sk-your-key
 ```
 
-Example CLI Usage:
+Example CLI usage:
 
 ```powershell
 gui-tester `
@@ -155,30 +159,32 @@ python -m gui_tester.mcp
 
 ## Claude Code Setup
 
-There are many ways to setup the MCP depending on your use case. We give examples for local project setups. It is assumed that you have already setup the this package elsewhere.
+This section is included as one example of how to connect the MCP server from a host tool. The same general pattern applies to other MCP-capable editors and agents.
 
-Example using the installed entrypoint inside the repo venv:
+Example using the installed entrypoint inside the repo virtual environment:
 
 **CLI only** (default local scope, goes into `~/.claude.json`):
+
 ```powershell
 claude mcp add gui_tester --transport stdio --env YOUR_API_KEY=sk-your-key -- <path-to-venv>\Scripts\python.exe -m gui_tester.mcp
 ```
 
-**CLI + VS Code extension** (project scope, creates `.mcp.json` in project root):
+**CLI + VS Code extension** (project scope, creates `.mcp.json` in the project root):
+
 ```powershell
 claude mcp add gui_tester --scope project --transport stdio --env YOUR_API_KEY=sk-your-key -- <path-to-venv>\Scripts\python.exe -m gui_tester.mcp
 ```
 
-> **Note:** add .mcp.json to .gitignore
+> **Note:** Add `.mcp.json` to `.gitignore`.
 
-Replace `YOUR_API_KEY` with whatever env var name your model config expects (e.g. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, etc.).
+Replace `YOUR_API_KEY` with whatever environment variable name your model config expects, such as `OPENAI_API_KEY` or `ANTHROPIC_API_KEY`.
 
-Then verify:
+Then verify the connection:
 
-In Claude Code use `/mcp` and ensure `gui_tester` shows `Connected`.
+In Claude Code, use `/mcp` and ensure `gui_tester` shows `Connected`.
 
 Notes:
-- After you setup or change the MCP config, start a fresh Claude session and reconnect to the MCP before retesting tool availability.
+- After you set up or change the MCP config, start a fresh Claude session and reconnect to the MCP before retesting tool availability.
 
 Example prompt for Claude Code:
 
@@ -187,31 +193,12 @@ Call the launch_gui_tester MCP tool with these arguments:
 
 url = file:///C:/path/to/your/gui/index.html
 gui_description = A template for a personal website. It includes a landing page, blog page, and resume page. The sidebar on the landing page contains links to other media accounts.
-test_instructions = Check all three pages for functionality and visual layout correctness. Report any issues found including visual, layout and navigation issues. Pay attention to whether the site fits cleanly in the viewport and whether each page looks complete and usable.
+test_instructions = Check all three pages for functionality and visual layout correctness. Report any issues found including visual, layout, and navigation issues. Pay attention to whether the site fits cleanly in the viewport and whether each page looks complete and usable.
 report_dir = C:\path\to\your\context\reports
 ```
 
-## Codex Setup
+## Development Docs
 
-**Coming Soon**
-
-## VS Code (Copilot)
-
-**Coming Soon**
-
-## Secrets and Config (for dev)
-
-Official package story:
-- direct CLI usage relies on normal environment variables
-- MCP hosts pass environment variables in their MCP config
-
-Important:
-- computer-use agent searches for the key name in `api_key_env`.
-- not all configs use `OPENAI_API_KEY`, for example, some local-model configs use an explicit `api_key` value such as `ollama`.
-
-Local-dev convenience:
-- if `python-dotenv` is installed, the bundled computer-use agent may still use its existing lower-level `.env` fallback
-- this is preserved for compatibility, but it is not the primary package contract
-
-Advanced config:
-- the CLI supports `--config`
+Development-focused notes, compatibility details, and planning material live in `docs/`:
+- `docs/dev.md`
+- `docs/planning.md`

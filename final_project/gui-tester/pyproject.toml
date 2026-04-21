@@ -38,5 +38,4 @@ include = ["gui_tester*", "comp_use*"]
 
 [tool.setuptools.package-data]
 gui_tester = ["config/*.json", "prompts/*.txt"]
-"comp_use" = ["coding_agent_prompt.md"]
 "comp_use.custom_agent" = ["config/agent/*.json", "config/environment/*.json", "*.md"]

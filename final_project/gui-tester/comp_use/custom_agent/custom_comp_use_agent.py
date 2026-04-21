@@ -75,7 +75,7 @@ class ComputerUseAgent():
         This is a LangGraph based computer use agent. It expects to receive a ComputerUseEnv instance 
         which will contain the computer use tool and screenshot functionality. It supports other tool 
         use and expects LangChain compatible tools. It supports any OpenAI API compatible computer 
-        use model. The agent stores a static system prompt and user instruction. The remander of the 
+        use model. The agent stores a static system prompt and user instruction. The remainder of the 
         chat history will use sliding window context management.  
     """
 
