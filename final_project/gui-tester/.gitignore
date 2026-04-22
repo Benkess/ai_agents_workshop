@@ -2,17 +2,8 @@
 .claude/
 .mcp.json
 
-# context directory
-context/
-
-# examples directory
-examples/
-
 # .env file containing environment variables, which may include sensitive information
 .env
-
-# Data files
-*.db
 
 # venv/ virtual environment
 #  If you are using a standard virtual environment created by python -m venv venv,

@@ -1,0 +1,54 @@
+(.venv) PS C:\Users\benpk\School\CSFiles\AI_Agent\ai_agents_workshop\demos\comp_use\openai_native> python openai_playwright_computer_agent.py --start-url "C:\Users\benpk\Projects\computer-use-agent-tests\guis\04_minecraft_crafting\index.html" `  --task "You are using a Minecraft crafting table simulator. Your goal for this level is shown in the task panel on the right under GOAL. The goal is shown as a text name only - no emoji.\n\nYour inventory is shown at the bottom of the crafting panel. To identify an item, hover your cursor over it - a tooltip will appear showing its name and stack size.\n\nTo craft something you have two options:\n1. Use the recipe book (left panel): search for the goal item by name, hover a result to preview the recipe, then click it to auto-fill the crafting grid. Then click the output slot to collect the result.\n2. Place items manually: click an item in your inventory to pick it up, then click a crafting grid slot to place it. Arrange ingredients in the correct pattern. The output slot will glow when a valid recipe is detected. Click it to collect.\n\nIf a stack contains more items than you need, right-click it to pick up half the stack. Then place one item per crafting slot as needed.\n\nSome goals require crafting intermediate items first. For example, an Iron Pickaxe requires sticks, which require planks, which require logs. Plan your crafting order carefully. After each intermediate craft, collect the output before continuing.\n\nOnce the you obtain the goal item place it in your inventory or hotbar. Once the goal item is placed in your inventory or hotbar, the Submit button will light up green. Click the Submit button directly to complete the level and advance.\n\nIf you make a mistake and use up required materials, click Reset Level to restore the starting inventory for this level."
+Opening: C:\Users\benpk\Projects\computer-use-agent-tests\guis\04_minecraft_crafting\index.html
+
+=== Step 1 ===
+  1. screenshot
+
+=== Step 2 ===
+  1. move(x=446, y=380)
+  2. wait
+
+=== Step 3 ===
+  1. move(x=497, y=381)
+  2. wait
+
+=== Step 4 ===
+  1. click(x=493, y=382)
+  2. click(x=468, y=238)
+  3. click(x=470, y=273)
+  4. click(x=627, y=274)
+  5. click(x=538, y=381)
+  6. click(x=458, y=413)
+  7. wait
+
+=== Step 5 ===
+  1. click(x=458, y=382)
+  2. click(x=494, y=240)
+  3. click(x=494, y=274)
+  4. click(x=628, y=274)
+  5. click(x=496, y=412)
+  6. click(x=896, y=276)
+
+=== Step 6 ===
+  1. click(x=627, y=273)
+  2. click(x=457, y=381)
+  3. click(x=896, y=277)
+
+=== Step 7 ===
+  1. move(x=457, y=380)
+  2. wait
+
+=== Step 8 ===
+  1. double_click(x=382, y=305)
+  2. wait
+
+=== Step 9 ===
+  1. click(x=626, y=273)
+  2. click(x=459, y=382)
+  3. click(x=901, y=277)
+
+=== Step 10 ===
+  1. click(x=894, y=277)
+
+=== Final response ===
+Done.
