@@ -21,7 +21,7 @@
 #       --env config/environment/playwright_gpt.json \
 #       --agent config/agent/gpt_agent.json \
 #       --task "Fill in the contact form and submit it" \
-#       --start-url "file:///C:/Users/benpk/projects/form.html" \
+#       --start-url "file:///C:/path/to/local/form.html" \
 #       --allow-local-files \
 #       --headless \
 #       --verbose

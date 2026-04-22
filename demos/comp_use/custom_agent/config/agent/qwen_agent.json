@@ -6,7 +6,7 @@
     "base_url": "http://localhost:11434/v1",
     "api_key": "ollama",
     "api_key_env": null,
-    "system_prompt": "You are an ai computer use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.",
+    "system_prompt": "You are an AI computer-use assistant. You will be given a task by the user. You will use the tools available to complete the task. At each step you will get a new screenshot of the computer.",
     "trim_strategy": "last",
     "token_counter": "approximate",
     "max_tokens": 16384,
