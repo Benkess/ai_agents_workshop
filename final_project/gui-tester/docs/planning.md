@@ -6,7 +6,7 @@ This document tracks near-term cleanup, packaging, and UX follow-up work for the
 
 - Add cleaner entrypoint-level missing-key and config errors for CLI and MCP startup.
 - Add a documented MCP startup environment variable for advanced config overrides such as `GUI_TESTER_CONFIG`.
-- Add Codex and Copilot MCP setup examples once those flows are validated.
+- Add Copilot MCP setup examples once those flows are validated.
 - Remove the remaining hard dependency on `python-dotenv` for normal MCP use.
 - Continue tightening the README so it stays user-facing.
 - Improve setup instructions where contributors still hit avoidable friction.
