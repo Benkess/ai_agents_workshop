@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery Hart | Resume</title>
+  <style>
+    :root {
+      --bg: #4b4b4b;
+      --bg-2: #464646;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.24);
+      --text: #f5f5f5;
+      --muted: #dddddd;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+    .topbar { background: var(--bg-2); border-bottom: 1px solid var(--line); }
+    .topbar-inner, .page, .footer { width: min(1280px, 100%); margin: 0 auto; }
+    .topbar-inner { padding: 18px 30px 12px; display: flex; align-items: center; gap: 42px; }
+    .brand, .nav-link { color: var(--text); text-decoration: none; font-size: 22px; line-height: 1; padding-bottom: 14px; }
+    .brand { font-weight: 700; }
+    .nav-link.active { border-bottom: 4px solid rgba(255,255,255,.94); }
+    .page { padding: 34px 30px 24px; }
+    h1 { margin: 0 0 20px; font-size: 50px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 18px 20px;
+    }
+    .card h2 { margin: 0 0 10px; font-size: 26px; }
+    .card p, .card li { margin: 0; font-size: 18px; line-height: 1.5; color: var(--muted); }
+    .card ul { margin: 0; padding-left: 22px; }
+    .footer { border-top: 1px solid var(--line); padding: 20px 30px 16px; font-size: 16px; line-height: 1.5; margin-top: 22px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">Avery Hart</a>
+      <a class="nav-link" href="blog.html">Blog Posts</a>
+      <a class="nav-link active" href="resume.html">Resume</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1>Resume</h1>
+    <section class="grid">
+      <article class="card">
+        <h2>Experience</h2>
+        <ul>
+          <li>Research Engineer Intern — Adaptive Robotics Studio</li>
+          <li>Undergraduate Researcher — Lakeside Lab</li>
+          <li>Teaching Assistant — Embedded Systems</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Education</h2>
+        <p>B.S. in Computer Engineering with focus areas in robotics, perception, and systems design.</p>
+      </article>
+      <article class="card">
+        <h2>Projects</h2>
+        <ul>
+          <li>operator dashboard for multi-robot experiments</li>
+          <li>vision-based inspection interface toolkit</li>
+          <li>evaluation environments for computer-use agents</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Interests</h2>
+        <p>Embodied AI, perception systems, user-facing research tools, and autonomous system evaluation.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © 2026 Avery Hart. Resume page.
+  </footer>
+</body>
+</html>

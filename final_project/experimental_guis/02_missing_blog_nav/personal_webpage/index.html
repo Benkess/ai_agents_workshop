@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery Hart</title>
+  <style>
+    :root {
+      --bg: #334045;
+      --shell: #20292c;
+      --surface: #4d4d4d;
+      --surface-2: #474747;
+      --line: rgba(255, 255, 255, 0.24);
+      --text: #f5f5f5;
+      --link: #74acd6;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body { padding: 16px; }
+
+    .shell {
+      width: 100%;
+      height: 100%;
+      max-width: 1280px;
+      max-height: 720px;
+      margin: 0 auto;
+      background: var(--shell);
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .site {
+      width: 100%;
+      height: 100%;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      grid-template-rows: 78px 1fr 82px;
+      overflow: hidden;
+    }
+
+    .topbar {
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .topbar-inner {
+      height: 100%;
+      padding: 12px 24px 8px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      overflow: hidden;
+    }
+
+    .brand,
+    .nav-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 18px;
+      line-height: 1;
+      padding-bottom: 11px;
+      white-space: nowrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      border-bottom: 4px solid rgba(255, 255, 255, 0.95);
+    }
+
+    .content {
+      min-height: 0;
+      overflow: hidden;
+      padding: 20px 24px 14px;
+      display: grid;
+      grid-template-columns: 206px minmax(0, 1fr);
+      gap: 34px;
+    }
+
+    .sidebar,
+    .main {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .sidebar-scroll,
+    .main-scroll {
+      height: 100%;
+      overflow: auto;
+      padding-right: 6px;
+      scrollbar-gutter: stable;
+    }
+
+    .avatar-shell {
+      width: 172px;
+      height: 172px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.62);
+      padding: 5px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 51% 47%, #f3e4c6 0 17%, transparent 17.2%),
+        radial-gradient(circle at 41% 33%, #4f3a30 0 10%, transparent 10.2%),
+        radial-gradient(circle at 61% 33%, #4f3a30 0 10%, transparent 10.2%),
+        radial-gradient(circle at 51% 55%, #d3a28d 0 5%, transparent 5.2%),
+        radial-gradient(circle at 51% 18%, #513d34 0 27%, transparent 27.2%),
+        linear-gradient(180deg, #e9e0c7 0%, #ece7db 60%, #cbc8c1 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: auto 16% -5% 16%;
+      height: 40%;
+      border-radius: 44% 44% 18% 18%;
+      background: linear-gradient(180deg, #66758b 0%, #8292a6 100%);
+      opacity: 0.92;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 5px;
+      font-size: 22px;
+      line-height: 1.08;
+    }
+
+    .sidebar p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.36;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-list a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .contact-icon {
+      width: 18px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .main h1 {
+      margin: 0 0 8px;
+      font-size: 38px;
+      line-height: 1.05;
+    }
+
+    .welcome {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    .main p {
+      margin: 0 0 14px;
+      max-width: 41ch;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .main a { color: var(--link); }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 12px 24px 8px;
+      overflow: hidden;
+    }
+
+    .footer strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .footer p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.32;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="site">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a class="brand" href="index.html">Avery Hart</a>
+          <a class="nav-link" href="resume.html">Resume</a>
+        </div>
+      </header>
+
+      <main class="content">
+        <aside class="sidebar">
+          <div class="sidebar-scroll">
+            <div class="avatar-shell"><div class="avatar" aria-hidden="true"></div></div>
+            <h2>Avery Hart</h2>
+            <p>
+              Robotics &amp; Computer Vision Engineer |
+              Research Assistant @ Lakeside Lab |
+              Embodied Systems &amp; Interactive AI
+            </p>
+
+            <ul class="contact-list">
+              <li><a href="#"><span class="contact-icon">E</span><span>Email</span></a></li>
+              <li><a href="#"><span class="contact-icon">ID</span><span>ORCID</span></a></li>
+              <li><a href="#"><span class="contact-icon">GH</span><span>GitHub</span></a></li>
+              <li><a href="#"><span class="contact-icon">in</span><span>LinkedIn</span></a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="main">
+          <div class="main-scroll">
+            <h1>Avery Hart</h1>
+            <p class="welcome">Thanks for visiting!</p>
+
+            <p>
+              I am Avery Hart, a senior B.S. student in computer engineering focused on robotics,
+              perception, and human-centered autonomous systems. I build practical tools for
+              embodied AI research and interactive interfaces.
+            </p>
+
+            <p>
+              My interests include computer vision, real-time agents, multimodal systems, and
+              collaborative human-robot workflows. I enjoy designing interfaces that make
+              complex systems easier to understand and control.
+            </p>
+
+            <p>
+              For more information, please see my <a href="#">GitHub</a>, <a href="#">LinkedIn</a>,
+              and <a href="resume.html">resume</a>. The blog page includes short notes on
+              interface design, research workflows, and evaluation environments.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <strong>FOLLOW: GITHUB</strong>
+        <p>
+          &copy; 2026 Avery Hart, Powered by Jekyll &amp; AcademicPages, a fork of Minimal Mistakes.<br>
+          Site last updated 2026-04-14
+        </p>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

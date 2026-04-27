@@ -1,0 +1,2 @@
+# Keep checked-in run logs for the final project examples.
+!*/reports/**/*.log

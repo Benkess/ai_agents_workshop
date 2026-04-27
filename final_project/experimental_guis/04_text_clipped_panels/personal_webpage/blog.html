@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery Hart | Blog Posts</title>
+  <style>
+    :root {
+      --bg: #334045;
+      --shell: #20292c;
+      --surface: #4d4d4d;
+      --surface-2: #474747;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.24);
+      --text: #f5f5f5;
+      --muted: #dddddd;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { padding: 16px; }
+    .shell {
+      width: 100%;
+      height: 100%;
+      max-width: 1280px;
+      max-height: 720px;
+      margin: 0 auto;
+      background: var(--shell);
+      padding: 14px;
+      overflow: hidden;
+    }
+    .site {
+      width: 100%;
+      height: 100%;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.08);
+      display: grid;
+      grid-template-rows: 95px 1fr 86px;
+      overflow: hidden;
+    }
+    .topbar { background: var(--surface-2); border-bottom: 1px solid var(--line); }
+    .topbar-inner, .page, .footer { width: 100%; }
+    .topbar-inner {
+      height: 100%;
+      padding: 16px 34px 10px;
+      display: flex;
+      align-items: center;
+      gap: 42px;
+      overflow: hidden;
+    }
+    .brand, .nav-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 21px;
+      line-height: 1;
+      padding-bottom: 13px;
+      white-space: nowrap;
+    }
+    .brand { font-weight: 700; }
+    .nav-link.active { border-bottom: 4px solid rgba(255,255,255,.94); }
+    .page {
+      min-height: 0;
+      overflow: hidden;
+      padding: 26px 34px 18px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 18px;
+    }
+    h1 { margin: 0; font-size: 46px; line-height: 1.05; }
+    .intro { margin: 0; font-size: 19px; line-height: 1.5; max-width: 60ch; color: var(--muted); }
+    .post-panel {
+      min-height: 0;
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 18px 20px;
+      display: grid;
+      gap: 14px;
+    }
+    .post {
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      padding-bottom: 12px;
+    }
+    .post:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .post h2 { margin: 0 0 8px; font-size: 24px; line-height: 1.25; }
+    .post p { margin: 0; font-size: 18px; line-height: 1.5; color: var(--muted); max-width: 62ch; }
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 18px 34px 14px;
+      overflow: hidden;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="site">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a class="brand" href="index.html">Avery Hart</a>
+          <a class="nav-link active" href="blog.html">Blog Posts</a>
+          <a class="nav-link" href="resume.html">Resume</a>
+        </div>
+      </header>
+
+      <main class="page">
+        <h1>Blog Posts</h1>
+        <p class="intro">
+          Short notes on interface design, robotics tooling, and evaluation environments for
+          interactive AI systems.
+        </p>
+        <section class="post-panel">
+          <article class="post">
+            <h2>Designing Better Interfaces for Research Robots</h2>
+            <p>A few recurring lessons from building dashboards and operator tools for embodied AI systems in research settings.</p>
+          </article>
+          <article class="post">
+            <h2>What Makes a Good Evaluation Environment?</h2>
+            <p>Notes on creating realistic but manageable testbeds for computer-use agents and interactive system review.</p>
+          </article>
+          <article class="post">
+            <h2>Perception Tools I Keep Rebuilding</h2>
+            <p>A roundup of interface patterns that repeatedly show up in robotics and inspection workflows.</p>
+          </article>
+          <article class="post">
+            <h2>Why Small Layout Bugs Matter</h2>
+            <p>How clipped controls, unexpected scroll, and awkward spacing can hurt usability more than obvious logic bugs.</p>
+          </article>
+        </section>
+      </main>
+
+      <footer class="footer">
+        © 2026 Avery Hart. Blog landing page.
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

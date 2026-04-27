@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery Hart</title>
+  <style>
+    :root {
+      --bg: #4b4b4b;
+      --bg-2: #464646;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.24);
+      --text: #f5f5f5;
+      --muted: #e2e2e2;
+      --link: #72add7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .topbar {
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner,
+    .page,
+    .footer {
+      width: min(1280px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      padding: 18px 30px 12px;
+      display: flex;
+      align-items: center;
+      gap: 42px;
+    }
+
+    .brand,
+    .nav-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 22px;
+      line-height: 1;
+      padding-bottom: 14px;
+    }
+
+    .brand {
+      font-weight: 700;
+      border-bottom: 4px solid rgba(255, 255, 255, 0.94);
+    }
+
+    .page {
+      padding: 40px 30px 28px;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 70px;
+    }
+
+    .avatar-shell {
+      width: 236px;
+      height: 236px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.62);
+      padding: 7px;
+      margin-bottom: 18px;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 51% 47%, #f3e4c6 0 17%, transparent 17.2%),
+        radial-gradient(circle at 41% 33%, #4f3a30 0 10%, transparent 10.2%),
+        radial-gradient(circle at 61% 33%, #4f3a30 0 10%, transparent 10.2%),
+        radial-gradient(circle at 51% 55%, #d3a28d 0 5%, transparent 5.2%),
+        radial-gradient(circle at 51% 18%, #513d34 0 27%, transparent 27.2%),
+        linear-gradient(180deg, #e9e0c7 0%, #ece7db 60%, #cbc8c1 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: auto 16% -5% 16%;
+      height: 40%;
+      border-radius: 44% 44% 18% 18%;
+      background: linear-gradient(180deg, #66758b 0%, #8292a6 100%);
+      opacity: 0.92;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.08;
+    }
+
+    .sidebar p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 26px 0 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-list a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .contact-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 18px;
+      opacity: 0.96;
+    }
+
+    .main h1 {
+      margin: 0 0 14px;
+      font-size: 52px;
+      line-height: 1.06;
+    }
+
+    .welcome {
+      margin: 0 0 28px;
+      font-size: 26px;
+    }
+
+    .main p {
+      margin: 0 0 28px;
+      max-width: 38ch;
+      font-size: 22px;
+      line-height: 1.56;
+    }
+
+    .main a {
+      color: var(--link);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 30px 16px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .footer strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">Avery Hart</a>
+      <a class="nav-link" href="blog.html">Blog Posts</a>
+      <a class="nav-link" href="resume.html">Resume</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <aside class="sidebar">
+      <div class="avatar-shell"><div class="avatar" aria-hidden="true"></div></div>
+      <h2>Avery Hart</h2>
+      <p>
+        Robotics &amp; Computer Vision Engineer |
+        Research Assistant @ Lakeside Lab |
+        Embodied Systems &amp; Interactive AI
+      </p>
+
+      <ul class="contact-list">
+        <li><a href="#"><span class="contact-icon">✉</span><span>Email</span></a></li>
+        <li><a href="#"><span class="contact-icon">iD</span><span>ORCID</span></a></li>
+        <li><a href="#"><span class="contact-icon">◉</span><span>GitHub</span></a></li>
+        <li><a href="#"><span class="contact-icon">in</span><span>LinkedIn</span></a></li>
+      </ul>
+    </aside>
+
+    <section class="main">
+      <h1>Avery Hart</h1>
+      <p class="welcome">Thanks for visiting!</p>
+
+      <p>
+        I am Avery Hart, a senior B.S. student in computer engineering focused on robotics,
+        perception, and human-centered autonomous systems. I build practical tools for
+        embodied AI research and interactive interfaces.
+      </p>
+
+      <p>
+        My interests include computer vision, real-time agents, multimodal systems, and
+        collaborative human-robot workflows. I enjoy designing interfaces that make
+        complex systems easier to understand and control.
+      </p>
+
+      <p>
+        For more information, please see my <a href="#">GitHub</a>, <a href="#">LinkedIn</a>,
+        and <a href="resume.html">resume</a>. The blog page includes short notes on
+        interface design, research workflows, and evaluation environments.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <strong>FOLLOW: GITHUB</strong>
+    © 2026 Avery Hart, Powered by Jekyll &amp; AcademicPages, a fork of Minimal Mistakes.<br>
+    Site last updated 2026-04-14
+  </footer>
+</body>
+</html>

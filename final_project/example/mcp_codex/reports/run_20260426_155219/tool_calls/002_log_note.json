@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-04-26T19:52:39Z",
+  "action": "log_note",
+  "note_path": "C:\\Users\\benpk\\Projects\\computer-use-agent-tests\\reports\\run_20260426_155219\\notes\\note_002.md",
+  "screenshot_path": "C:\\Users\\benpk\\Projects\\computer-use-agent-tests\\reports\\run_20260426_155219\\screenshots\\screenshot_002.png",
+  "include_screenshot": true,
+  "note_preview": "Confirmed landing page content does not move when attempting to scroll, indicating the page fits within the viewport but lower content is clipped/truncated rather than simply below the fold. This affects readability of the final sentence/links in the main content and hides at least one expected profile row (LinkedIn) on the left. Severity: medium, because required content is not fully visible at the specified 1280x720 viewport."
+}
