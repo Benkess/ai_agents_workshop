@@ -2,7 +2,7 @@
 
 **Ben Kessler**  
 **CS 6501 Workshop on Building AI Agents**  
-**Final Project Report — First Draft**
+**Final Project Report**
 
 ## Motivation — Why I Built It
 
