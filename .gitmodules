@@ -1,0 +1,3 @@
+[submodule "final_project/gui-tester"]
+	path = final_project/gui-tester
+	url = https://github.com/Benkess/gui-tester.git
