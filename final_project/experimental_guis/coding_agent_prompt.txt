@@ -1,0 +1,7 @@
+I had another coding agent create the personal website template in `guis\other\personal_webpage`. I gave it the spec.md included in that directory. 
+
+Can you use the launch_gui_tester tool to test this GUI? 
+
+You can use report_dir: C:\Users\benpk\Projects\computer-use-agent-tests\reports 
+
+Let me know the results but do not change any code.

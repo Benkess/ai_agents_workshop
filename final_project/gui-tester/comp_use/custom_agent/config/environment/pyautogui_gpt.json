@@ -1,6 +1,0 @@
-{
-  "type": "pyautogui",
-  "params": {
-    "model_variant": "gpt"
-  }
-}

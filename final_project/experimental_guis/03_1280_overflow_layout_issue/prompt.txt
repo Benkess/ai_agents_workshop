@@ -1,0 +1,5 @@
+You are reviewing a personal website.
+
+Open the landing page, inspect the available navigation, and check each page for layout issues, broken visual elements, and anything else that looks incorrect in the rendered site.
+
+Pay attention to whether the site fits cleanly in the viewport and whether each page looks complete and usable.

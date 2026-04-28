@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery Hart | Resume</title>
+  <style>
+    :root {
+      --bg: #334045;
+      --shell: #20292c;
+      --surface: #4d4d4d;
+      --surface-2: #474747;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.24);
+      --text: #f5f5f5;
+      --muted: #dddddd;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { padding: 16px; }
+    .shell {
+      width: 100%;
+      height: 100%;
+      max-width: 1280px;
+      max-height: 720px;
+      margin: 0 auto;
+      background: var(--shell);
+      padding: 14px;
+      overflow: hidden;
+    }
+    .site {
+      width: 100%;
+      height: 100%;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.08);
+      display: grid;
+      grid-template-rows: 95px 1fr 86px;
+      overflow: hidden;
+    }
+    .topbar { background: var(--surface-2); border-bottom: 1px solid var(--line); }
+    .topbar-inner {
+      height: 100%;
+      padding: 16px 34px 10px;
+      display: flex;
+      align-items: center;
+      gap: 42px;
+      overflow: hidden;
+    }
+    .brand, .nav-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 21px;
+      line-height: 1;
+      padding-bottom: 13px;
+      white-space: nowrap;
+    }
+    .brand { font-weight: 700; }
+    .nav-link.active { border-bottom: 4px solid rgba(255,255,255,.94); }
+    .page {
+      min-height: 0;
+      overflow: hidden;
+      padding: 24px 34px 18px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 16px;
+    }
+    h1 { margin: 0; font-size: 46px; line-height: 1.05; }
+    .grid {
+      min-height: 0;
+      overflow: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding-right: 6px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+    .card h2 { margin: 0 0 10px; font-size: 24px; }
+    .card p, .card li { margin: 0; font-size: 17px; line-height: 1.45; color: var(--muted); }
+    .card ul { margin: 0; padding-left: 20px; }
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 18px 34px 14px;
+      overflow: hidden;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="site">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <a class="brand" href="index.html">Avery Hart</a>
+          <a class="nav-link" href="blog.html">Blog Posts</a>
+          <a class="nav-link active" href="resume.html">Resume</a>
+        </div>
+      </header>
+
+      <main class="page">
+        <h1>Resume</h1>
+        <section class="grid">
+          <article class="card">
+            <h2>Experience</h2>
+            <ul>
+              <li>Research Engineer Intern — Adaptive Robotics Studio</li>
+              <li>Undergraduate Researcher — Lakeside Lab</li>
+              <li>Teaching Assistant — Embedded Systems</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h2>Education</h2>
+            <p>B.S. in Computer Engineering with focus areas in robotics, perception, and systems design.</p>
+          </article>
+          <article class="card">
+            <h2>Projects</h2>
+            <ul>
+              <li>operator dashboard for multi-robot experiments</li>
+              <li>vision-based inspection interface toolkit</li>
+              <li>evaluation environments for computer-use agents</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h2>Interests</h2>
+            <p>Embodied AI, perception systems, user-facing research tools, and autonomous system evaluation.</p>
+          </article>
+        </section>
+      </main>
+
+      <footer class="footer">
+        © 2026 Avery Hart. Resume page.
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

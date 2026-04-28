@@ -1,0 +1,30 @@
+# GUI Testing Report
+
+- Generated: 2026-04-25T00:08:07Z
+- Run directory: `C:\Users\benpk\Projects\computer-use-agent-tests\reports\run_20260424_200744`
+
+## Summary Of Task
+
+Test the static personal website for Avery Hart, focusing on whether index.html fits at 1280x720 with no scrollbars or clipping, and verifying top navigation and footer presence plus readable content on blog.html and resume.html.
+
+## Results
+
+On index.html at 1280x720, the page does not fully fit within the viewport. I observed a vertical scrollbar on the right edge. The sidebar content was visible, including the Avery Hart name/role summary and all four contact rows: Email, ORCID, GitHub, and LinkedIn. The footer was also visible. However, the main bio area did not fully fit: the third paragraph was clipped by the footer, so all three paragraphs were not fully visible at once without scrolling. On blog.html, the top navigation and footer were present and the content was readable; a scrollable content area was present, which is acceptable per instructions. On resume.html, the top navigation and footer were present and the content was readable.
+
+## Important Findings
+
+Home page still has overflow at 1280x720. A vertical scrollbar is present on index.html, so it does not meet the no-scrollbars requirement. The main intro/bio text is clipped near the bottom: the third paragraph is cut off by the footer. The previously clipped LinkedIn contact row is now visible, so that specific sidebar issue appears resolved. Navigation links to Home, Blog Posts, and Resume were present on all tested pages. Blog and resume pages had readable content with visible footers.
+
+## Suggestions
+
+Reduce vertical spacing or overall content height on index.html so all three bio paragraphs and the footer fit within 720px without a page scrollbar. Recheck the main content and footer overlap/spacing after adjustment.
+
+## Other Notes
+
+Testing was based on direct visual inspection at the provided 1280x720 viewport screenshots. Tool navigation actions sometimes returned execution-context-destroyed errors during page changes, but the resulting pages loaded and were successfully inspected.
+
+## Linked Notes
+
+- [Note 001](notes/note_001.md)
+- [Note 002](notes/note_002.md)
+- [Note 003](notes/note_003.md)

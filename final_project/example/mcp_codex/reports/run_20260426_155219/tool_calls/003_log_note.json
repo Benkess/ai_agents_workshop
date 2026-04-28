@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-04-26T19:52:47Z",
+  "action": "log_note",
+  "note_path": "C:\\Users\\benpk\\Projects\\computer-use-agent-tests\\reports\\run_20260426_155219\\notes\\note_003.md",
+  "screenshot_path": "C:\\Users\\benpk\\Projects\\computer-use-agent-tests\\reports\\run_20260426_155219\\screenshots\\screenshot_003.png",
+  "include_screenshot": true,
+  "note_preview": "Blog page is reachable via top navigation. It retains the same dark charcoal theme and top nav/footer styling. The page title 'Blog Posts' is clear and several realistic post previews are visible. However, the list of post previews is placed inside a fixed-height scrollable inner panel with its own scrollbar, and the bottom preview title ('Perception Tools I Keep Rebuilding') is clipped in the viewport. This is a minor usability/readability issue because content is partially cut off until the inner panel is scrolled."
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avery Hart | Blog Posts</title>
+  <style>
+    :root {
+      --bg: #4b4b4b;
+      --bg-2: #464646;
+      --panel: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.24);
+      --text: #f5f5f5;
+      --muted: #dddddd;
+      --link: #72add7;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+    .topbar { background: var(--bg-2); border-bottom: 1px solid var(--line); }
+    .topbar-inner, .page, .footer { width: min(1280px, 100%); margin: 0 auto; }
+    .topbar-inner { padding: 18px 30px 12px; display: flex; align-items: center; gap: 42px; }
+    .brand, .nav-link { color: var(--text); text-decoration: none; font-size: 22px; line-height: 1; padding-bottom: 14px; }
+    .brand { font-weight: 700; }
+    .nav-link.active { border-bottom: 4px solid rgba(255,255,255,.94); }
+    .page { padding: 38px 30px 28px; }
+    h1 { margin: 0 0 24px; font-size: 50px; }
+    .posts { display: grid; gap: 16px; }
+    .post {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 20px 22px;
+    }
+    .post h2 { margin: 0 0 10px; font-size: 27px; line-height: 1.2; }
+    .post p { margin: 0 0 8px; font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 58ch; }
+    .post a { color: var(--link); text-decoration: none; font-size: 17px; }
+    .footer { border-top: 1px solid var(--line); padding: 22px 30px 16px; font-size: 16px; line-height: 1.5; margin-top: 28px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">Avery Hart</a>
+      <a class="nav-link active" href="blog.html">Blog Posts</a>
+      <a class="nav-link" href="resume.html">Resume</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1>Blog Posts</h1>
+    <section class="posts">
+      <article class="post">
+        <h2>Designing Better Interfaces for Research Robots</h2>
+        <p>
+          A few recurring lessons from building dashboards and operator tools for embodied AI
+          systems in research settings.
+        </p>
+        <a href="#">Read more</a>
+      </article>
+      <article class="post">
+        <h2>What Makes a Good Evaluation Environment?</h2>
+        <p>
+          Notes on creating realistic but manageable testbeds for computer-use agents and
+          interactive system review.
+        </p>
+        <a href="#">Read more</a>
+      </article>
+      <article class="post">
+        <h2>Perception Tools I Keep Rebuilding</h2>
+        <p>
+          A roundup of interface patterns that repeatedly show up in robotics and inspection
+          workflows.
+        </p>
+        <a href="#">Read more</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © 2026 Avery Hart. Blog landing page.
+  </footer>
+</body>
+</html>

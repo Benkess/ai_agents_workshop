@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-04-24T23:57:29Z",
+  "action": "log_note",
+  "note_path": "C:\\Users\\benpk\\Projects\\computer-use-agent-tests\\reports\\run_20260424_195715\\notes\\note_002.md",
+  "screenshot_path": "C:\\Users\\benpk\\Projects\\computer-use-agent-tests\\reports\\run_20260424_195715\\screenshots\\screenshot_002.png",
+  "include_screenshot": true,
+  "note_preview": "Blog page loads via top navigation and maintains the same dark theme/nav styling. Clear 'Blog Posts' title is shown with an introductory subtitle, and multiple realistic post previews are visible with titles and summaries. Notable issue: the list of posts appears inside a fixed-height scrollable inner panel with its own scrollbar, which is unusual and may reduce usability/readability compared with a normal page flow."
+}
