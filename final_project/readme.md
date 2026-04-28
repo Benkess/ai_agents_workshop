@@ -23,7 +23,7 @@
 
 The source code for the GUI tester package is located in the [gui-tester gitrepo](https://github.com/Benkess/gui-tester.git).
 
-It is also included as submodule at `/final_project/gui-tester`. To initalize the submodule run the following command after cloning this git repo:
+It is also included as submodule at `/final_project/gui-tester`. To initialize the submodule run the following command after cloning this git repo:
 
 ```bash
 git submodule update --init --recursive
